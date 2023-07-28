@@ -71,3 +71,10 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/Imports
+/Assets/Game/EoJin/Imports
+/Assets/TextMesh Pro/Resources
+/Assets/TextMesh Pro/Shaders
+/Assets/TextMesh Pro
+/Assets/Game/EoJin/Animator
+/Assets/Game/EoJin/Materials
+/Assets/TextMesh Pro.meta
