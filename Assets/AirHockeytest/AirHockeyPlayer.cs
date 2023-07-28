@@ -40,14 +40,14 @@ public class AirHockeyPlayer : MonoBehaviour
             transform.Translate(0f, 0f, -playerSpeed * Time.deltaTime);
 
         //Collision detection with edges, basically we are restricting player movement
-        if (transform.position.x <= -4.74f)
-            transform.position = new Vector3(-4.74f, transform.position.y, transform.position.z);
-        if (transform.position.x >= 4.74f)
-            transform.position = new Vector3(4.74f, transform.position.y, transform.position.z);
-        if (transform.position.z >= -1f)
-            transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
-        if (transform.position.z <= -8.4f)
-            transform.position = new Vector3(transform.position.x, transform.position.y, -8.4f);
+        //if (transform.position.x <= -4.74f)
+        //    transform.position = new Vector3(-4.74f, transform.position.y, transform.position.z);
+        //if (transform.position.x >= 4.74f)
+        //    transform.position = new Vector3(4.74f, transform.position.y, transform.position.z);
+        //if (transform.position.z >= -1f)
+        //    transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
+        //if (transform.position.z <= -8.4f)
+        //    transform.position = new Vector3(transform.position.x, transform.position.y, -8.4f);
 
 
 
