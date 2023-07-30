@@ -30,7 +30,7 @@ public class DataManager : MonoBehaviour
             if (characterName == characters[i].characterName)
             {
                 CurCharacter = characters[i];
-                OnChangeCharacter?.Invoke();
+                OnChangeCharacter?.Invoke(); //Player.cs¿« ChangePlayerableCharacter
             }
         }
     }

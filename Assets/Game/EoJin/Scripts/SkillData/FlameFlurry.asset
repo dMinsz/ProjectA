@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: FlameFlurry
   m_EditorClassIdentifier: 
   skillName: Flame Flurry
-  skillImage: {fileID: 0}
+  image: {fileID: 0}
   description: 
-  skillKey: 2
-  skillRange: 0
+  key: 0
+  range: 0
+  rangeAmount: 100
   isDash: 0
   coolTime: 30
   playerKnockback: 6

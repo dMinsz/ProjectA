@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StatData", menuName = "Scriptable Object/StatData")]
 public class Stat : ScriptableObject
 {
-    [SerializeField] public int stagger;
+    [SerializeField] public int stagger; //Ã¼·Â
     [SerializeField] public int power;
     [SerializeField] public int speed;
 
