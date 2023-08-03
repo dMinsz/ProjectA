@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,8 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 namespace anstjddn
 {
-    public class PlayerAim : MonoBehaviour
+    public class PlayerAim : MonoBehaviourPun
     {
-
-      
-
 
         //어택범위,충돌할 레이어, 공을 미는힘
         [SerializeField] public float attacksize;
@@ -20,11 +18,7 @@ namespace anstjddn
         [SerializeField] public float attacktime;
         [SerializeField]public bool isattack;
 
-
-      
-
-
-       [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
+        [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
         private Vector3 mousepos;
 
@@ -43,7 +37,7 @@ namespace anstjddn
                 mousepos = hit.point;
                 mousepos.y = 0;
             }
-            Debug.Log(mousepos);
+            //Debug.Log(mousepos);
        
         }
         private void OnAttack(InputValue Value)
@@ -52,6 +46,7 @@ namespace anstjddn
             Attack();
         }
 
+        [PunRPC]
         private void Attack()
         {
             StartCoroutine(AttackTimeing(attacktime));
@@ -66,6 +61,7 @@ namespace anstjddn
         }
 
         //어택타이밍 구현
+        [PunRPC]
         IEnumerator AttackTimeing(float attacktime)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize, ball);

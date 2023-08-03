@@ -1,14 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using Unity.VisualScripting;
-using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.InputSystem;
 namespace anstjddn
 {
-
-
     public class playercontroll : MonoBehaviour
     {
 
@@ -48,10 +44,12 @@ namespace anstjddn
         }
         private void Move()
         {
-            playerrb.velocity = new Vector3(-movedir.x * movespeed, 0, -movedir.z * movespeed);
+            playerrb.velocity = new Vector3(movedir.z * movespeed, 0, -movedir.x * movespeed);
             if (movedir.magnitude == 0)
                 return;
-            Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-movedir), 0.1f);
+
+            Vector3 look = new Vector3(movedir.z, 0, -movedir.x);
+            Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(look), 0.1f);
             transform.rotation = lookrotation;
         
         }

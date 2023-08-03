@@ -1,10 +1,10 @@
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class Puck : MonoBehaviour
+public class Puck : MonoBehaviourPun
 {
     [SerializeField] bool isDebug = false;
     [SerializeField] LayerMask layerMask;
@@ -26,22 +26,41 @@ public class Puck : MonoBehaviour
 
     private void OnEnable()
     {
-        mainRoutine = StartCoroutine(WallCheckRoutine());
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+                mainRoutine = StartCoroutine(WallCheckRoutine());
+        }
+        else
+        {
+            Debug.Log("Puck has no master server");
+            mainRoutine = StartCoroutine(WallCheckRoutine());
+        }
     }
 
     private void OnDisable()
     {
-        StopCoroutine(mainRoutine);
+        if (PhotonNetwork.IsConnected)
+        {
+            if (PhotonNetwork.IsMasterClient)
+                if (mainRoutine != null)
+                    StopCoroutine(mainRoutine);
+        }
+        else
+        {
+            if (mainRoutine != null)
+                StopCoroutine(mainRoutine);
+        }
     }
 
     private void WallCheck()
     {
-        if (Physics.SphereCast(transform.position, (ren.bounds.extents.x + 0.1f), rb.velocity.normalized,out RaycastHit hit, rb.velocity.magnitude * Time.fixedDeltaTime))
+        if (Physics.SphereCast(transform.position, (ren.bounds.extents.x + 0.1f), rb.velocity.normalized, out RaycastHit hit, rb.velocity.magnitude * Time.fixedDeltaTime, layerMask))
         {
             rb.velocity = Vector3.Reflect(rb.velocity, hit.normal);
         }
     }
-    
+
     IEnumerator WallCheckRoutine()
     {
         Debug.Log("StartCoroutine");
@@ -53,7 +72,7 @@ public class Puck : MonoBehaviour
         }
     }
 
-    private void LimitSpeed() 
+    private void LimitSpeed()
     {
         if (rb.velocity.x > velocityMaxSpeed.x)
         {
@@ -82,7 +101,9 @@ public class Puck : MonoBehaviour
             {
                 ren = GetComponent<MeshRenderer>();
             }
-            Gizmos.DrawWireSphere(transform.position, (ren.bounds.extents.x+0.1f));
+            Gizmos.DrawWireSphere(transform.position, (ren.bounds.extents.x + 0.1f));
         }
     }
+
+
 }

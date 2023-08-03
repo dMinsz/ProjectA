@@ -1,14 +1,14 @@
 using LitJson;
 using MySql.Data.MySqlClient;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
-public class DBManager : MonoBehaviour
+public class DBManager : MonoBehaviour, IPunObservable
 {
     public MySqlConnection connection;
     public MySqlDataReader reader;
@@ -20,7 +20,7 @@ public class DBManager : MonoBehaviour
     {
         try 
         {
-            string DB_PATH = Application.dataPath + "/Imports/DataBaseConfig";
+            string DB_PATH = System.IO.Directory.GetCurrentDirectory() + "/ServerData";
             string serverinfo = SetServer(DB_PATH);
 
             if (serverinfo == string.Empty) 
@@ -73,5 +73,10 @@ public class DBManager : MonoBehaviour
         byte[] data = Encoding.UTF8.GetBytes(jsonData);
         fileStream.Write(data, 0, data.Length);
         fileStream.Close();
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new NotImplementedException();
     }
 }

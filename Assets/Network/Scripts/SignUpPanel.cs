@@ -1,12 +1,9 @@
 using MySql.Data.MySqlClient;
-using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class SignUpPanel : MonoBehaviour
 {
