@@ -14,8 +14,9 @@ public class Skill : ScriptableObject
 
     public enum Range
     {
+        Circle,
         OneDirection,
-        EveryWhere
+        Sector
     }
 
     [SerializeField] public string skillName;
@@ -26,6 +27,7 @@ public class Skill : ScriptableObject
     [SerializeField] public Range range;
     [SerializeField] public float rangeAmount;
     [SerializeField] public bool isDash;
+    [SerializeField] public float duration;
     [SerializeField] public float coolTime;
 
     [SerializeField] public int playerKnockback;

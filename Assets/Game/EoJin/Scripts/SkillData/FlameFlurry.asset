@@ -16,9 +16,10 @@ MonoBehaviour:
   image: {fileID: 0}
   description: 
   key: 0
-  range: 0
-  rangeAmount: 100
+  range: 1
+  rangeAmount: 5
   isDash: 0
+  duration: 1
   coolTime: 30
   playerKnockback: 6
   coreKnockback: 100
