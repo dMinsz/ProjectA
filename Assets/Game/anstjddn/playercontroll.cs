@@ -15,7 +15,7 @@ namespace anstjddn
         //플레이어 무브 관련
         private Rigidbody playerrb;
         private Vector3 movedir;
-        [SerializeField] private float movespeed;
+        [SerializeField] public float movespeed;
 
         private CharacterController contol;
 
@@ -48,10 +48,11 @@ namespace anstjddn
         }
         private void Move()
         {
-            playerrb.velocity = new Vector3(-movedir.x * movespeed, 0, -movedir.z * movespeed);
+            playerrb.velocity = new Vector3(movedir.z* movespeed, 0, -movedir.x * movespeed);
             if (movedir.magnitude == 0)
                 return;
-            Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(-movedir), 0.1f);
+            Vector3 viewVector = new Vector3(movedir.z, 0, -movedir.x);
+            Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(viewVector), 0.1f);
             transform.rotation = lookrotation;
         
         }

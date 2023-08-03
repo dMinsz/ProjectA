@@ -11,7 +11,7 @@ public class playerrange : MonoBehaviour
     private void Awake()
     {
        
-        size = player.attacksize *0.4f;
+        size = player.attacksize *0.01f;
       transform.localScale = new Vector3(size, size, size);
     }
 }

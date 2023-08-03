@@ -15,7 +15,7 @@ namespace anstjddn
 
         //어택범위,충돌할 레이어, 공을 미는힘
         [SerializeField] public float attacksize;
-        [SerializeField] LayerMask ball;
+     //   [SerializeField] LayerMask ball;
         [SerializeField] public float attackpower;
         [SerializeField] public float attacktime;
         [SerializeField]public bool isattack;
@@ -26,7 +26,7 @@ namespace anstjddn
 
        [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
-        private Vector3 mousepos;
+        public Vector3 mousepos;
 
         private void Start()
         {
@@ -43,7 +43,7 @@ namespace anstjddn
                 mousepos = hit.point;
                 mousepos.y = 0;
             }
-            Debug.Log(mousepos);
+         
        
         }
         private void OnAttack(InputValue Value)
@@ -68,12 +68,13 @@ namespace anstjddn
         //어택타이밍 구현
         IEnumerator AttackTimeing(float attacktime)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize, ball);
+          //  Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize, ball);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize);
             foreach (Collider collider in colliders)
             {
                 if (isattack == false && collider.gameObject.layer == 7)                //레이어 7번이 ball로 설정
                 {
-
+                    
                     isattack = true;
                     Vector3 dir = (mousepos - transform.position).normalized;
                    
