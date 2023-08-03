@@ -1,4 +1,3 @@
-using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace anstjddn
     public class PlayerAim : MonoBehaviour
     {
 
-        [SerializeField] GameObject aimobj;   //예시(나중에 삭제)
+      
 
 
         //어택범위,충돌할 레이어, 공을 미는힘
@@ -22,8 +21,7 @@ namespace anstjddn
         [SerializeField]public bool isattack;
 
 
-       // [SerializeField] Image attackimage;
-      //  [SerializeField] GameObject hideImage;
+      
 
 
        [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
@@ -46,8 +44,7 @@ namespace anstjddn
                 mousepos.y = 0;
             }
             Debug.Log(mousepos);
-            //마우스 포인터 제대로 인식하는지 예시 나중에 삭제
-            aimobj.transform.position = mousepos;
+       
         }
         private void OnAttack(InputValue Value)
         {
@@ -81,7 +78,7 @@ namespace anstjddn
                     Vector3 dir = (mousepos - transform.position).normalized;
                    
                     collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
-                    Attacksound?.Invoke();
+                  //  Attacksound?.Invoke();
                     yield return new WaitForSeconds(attacktime);
                     isattack = false;
                 }

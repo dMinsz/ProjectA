@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5911339774512456597}
   - component: {fileID: 5911339774512456602}
   - component: {fileID: 5911339774512456592}
-  - component: {fileID: 5911339774512456595}
+  - component: {fileID: 513237911}
   m_Layer: 6
   m_Name: player
   m_TagString: Untagged
@@ -162,7 +162,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &5911339774512456595
+--- !u!114 &513237911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,13 +175,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimobj: {fileID: 0}
-  attacksize: 10.66
+  attacksize: 16.7
   ball:
     serializedVersion: 2
     m_Bits: 128
-  attackpower: 200
-  attacktime: 2
-  isattack: 1
+  attackpower: 100
+  attacktime: 1
+  isattack: 0
   Attacksound:
     m_PersistentCalls:
       m_Calls: []
