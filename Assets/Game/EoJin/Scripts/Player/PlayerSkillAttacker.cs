@@ -13,6 +13,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     float rangeAmount;
     float angle;
     public bool isSkilling = false;
+    bool isPlayingSkillAnim = false;
     public UnityAction OnPlaySkillAnim;
     public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] PlayerAim aim;
@@ -62,6 +63,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     {
         yield return new WaitForSeconds(skill.duration);
         isSkilling = false;
+        isPlayingSkillAnim = false;
     }
 
     public void ApplyDamage()
@@ -106,7 +108,11 @@ public class PlayerSkillAttacker : MonoBehaviour
                 if (collider.GetComponent<PlayerGetDamage>().damaged == false)
                 {
                     collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
-                    OnPlaySkillAnim?.Invoke();
+                    if (!isPlayingSkillAnim)
+                    {
+                        OnPlaySkillAnim?.Invoke();
+                        isPlayingSkillAnim = true;
+                    }
                 }
             }
         }
@@ -121,4 +127,5 @@ public class PlayerSkillAttacker : MonoBehaviour
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, rangeAmount);
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, rangeAmount);
     }
+
 }
