@@ -12,6 +12,7 @@ public class PlayerSetup : MonoBehaviourPun
     [SerializeField] Image floorMarkImg;
     [SerializeField] List<Color> playerColor;
     [SerializeField] Renderer surface;
+    [SerializeField] Transform AttackRangeMark;
     private PlayerInput input;
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class PlayerSetup : MonoBehaviourPun
         if (!photonView.IsMine)
         {
             floorMark.gameObject.SetActive(false);
+            AttackRangeMark.gameObject.SetActive(false);
             Destroy(input);
         }
     }

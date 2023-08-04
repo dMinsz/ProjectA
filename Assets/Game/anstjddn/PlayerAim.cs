@@ -14,7 +14,7 @@ namespace anstjddn
         [SerializeField] GameObject mouse;
         //어택범위,충돌할 레이어, 공을 미는힘
         [SerializeField] public float attacksize;
-        [SerializeField] LayerMask ball;
+        [SerializeField] LayerMask layerMask;
         [SerializeField] public float attackpower;
         [SerializeField] public float attackCoolTime;
         [SerializeField]public bool isattack;
@@ -55,13 +55,13 @@ namespace anstjddn
         private void RequestAttack(Vector3 mousePos) 
         {
            
-            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, transform.position, mousePos);
+            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos , transform.position);
         }
 
         [PunRPC]
-        private void ResultAttack(Vector3 position,Vector3 mousePos, PhotonMessageInfo info)
+        private void ResultAttack(Vector3 mousePos,Vector3 playerPos , PhotonMessageInfo info)
         {
-            StartCoroutine(AttackTimeing(position,mousePos,  info));
+            StartCoroutine(AttackTimeing(mousePos, playerPos,  info));
         }
 
 
@@ -74,9 +74,9 @@ namespace anstjddn
 
         //어택타이밍 구현
         [PunRPC]
-        IEnumerator AttackTimeing(Vector3 position,Vector3 mousePos, PhotonMessageInfo info)
+        IEnumerator AttackTimeing(Vector3 mousePos, Vector3 playerPos, PhotonMessageInfo info)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize, ball);
+            Collider[] colliders = Physics.OverlapSphere(playerPos, attacksize, layerMask);
             foreach (Collider collider in colliders)
             {
                 if (isattack == false && collider.gameObject.layer == 7)                //레이어 7번이 ball로 설정
@@ -85,12 +85,12 @@ namespace anstjddn
                     isattack = true;
                     //Vector3 dir = (mousepos - transform.position).normalized;
                     
-                    Vector3 dir = (mousePos - position).normalized;
+                    Vector3 dir = (mousePos - playerPos).normalized;
 
                     Vector3 newVelocity = dir * attackpower;
                     //collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
 
-                    collider.GetComponent<Puck>().SetPos(position, newVelocity, info);
+                    collider.GetComponent<Puck>().SetPos(newVelocity, info);
 
 
                   //  Attacksound?.Invoke();
@@ -102,4 +102,6 @@ namespace anstjddn
             }
         }
     }
+
+
 }

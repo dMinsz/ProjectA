@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 namespace anstjddn
 {
-    public class playercontroll : MonoBehaviour
+    public class playercontroll : MonoBehaviourPun
     {
 
         //플레이어 무브 관련
@@ -27,20 +28,27 @@ namespace anstjddn
 
         private void Update()
         {
-            Move();
-
-            if (playerrb.velocity == new Vector3(0, 0, 0))
+            if (photonView.IsMine)
             {
-                anim.SetBool("move", false);
+                Move();
+                if (playerrb.velocity == new Vector3(0, 0, 0))
+                {
+                    anim.SetBool("move", false);
+                }
+                else
+                {
+                    anim.SetBool("move", true);
+                }
+                if (movedir.magnitude == 0)
+                {
+                    return;
+                }
             }
             else
             {
-                anim.SetBool("move", true);
+
             }
-            if (movedir.magnitude == 0)
-            {
-                return;
-            }
+
 
         }
         private void Move()
