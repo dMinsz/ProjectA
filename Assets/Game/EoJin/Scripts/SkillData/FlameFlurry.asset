@@ -16,10 +16,12 @@ MonoBehaviour:
   image: {fileID: 0}
   description: 
   key: 0
-  range: 1
+  range: 2
   rangeAmount: 5
   isDash: 0
   duration: 1
   coolTime: 30
+  skillAnimation: {fileID: -203655887218126122, guid: 963f8e5301700b14a9a6161184857240,
+    type: 3}
   playerKnockback: 6
   coreKnockback: 100
