@@ -71,6 +71,11 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (skill == null)
             return;
 
+        if (!isPlayingSkillAnim)
+        {
+            OnPlaySkillAnim?.Invoke();
+            isPlayingSkillAnim = true;
+        }
 
         if (skill.range == Skill.Range.Circle)
             angle = 180;
@@ -108,11 +113,6 @@ public class PlayerSkillAttacker : MonoBehaviour
                 if (collider.GetComponent<PlayerGetDamage>().damaged == false)
                 {
                     collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
-                    if (!isPlayingSkillAnim)
-                    {
-                        OnPlaySkillAnim?.Invoke();
-                        isPlayingSkillAnim = true;
-                    }
                 }
             }
         }
