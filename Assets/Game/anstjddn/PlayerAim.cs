@@ -1,4 +1,4 @@
-using Cinemachine.Utility;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +8,8 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 namespace anstjddn
 {
-    public class PlayerAim : MonoBehaviour
+    public class PlayerAim : MonoBehaviourPun
     {
-
-        [SerializeField] GameObject aimobj;   //예시(나중에 삭제)
-
 
         //어택범위,충돌할 레이어, 공을 미는힘
         [SerializeField] public float attacksize;
@@ -21,12 +18,7 @@ namespace anstjddn
         [SerializeField] public float attacktime;
         [SerializeField]public bool isattack;
 
-
-       // [SerializeField] Image attackimage;
-      //  [SerializeField] GameObject hideImage;
-
-
-       [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
+        [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
         private Vector3 mousepos;
 
@@ -45,9 +37,8 @@ namespace anstjddn
                 mousepos = hit.point;
                 mousepos.y = 0;
             }
-            Debug.Log(mousepos);
-            //마우스 포인터 제대로 인식하는지 예시 나중에 삭제
-            aimobj.transform.position = mousepos;
+            //Debug.Log(mousepos);
+       
         }
         private void OnAttack(InputValue Value)
         {
@@ -55,6 +46,7 @@ namespace anstjddn
             Attack();
         }
 
+        [PunRPC]
         private void Attack()
         {
             StartCoroutine(AttackTimeing(attacktime));
@@ -69,6 +61,7 @@ namespace anstjddn
         }
 
         //어택타이밍 구현
+        [PunRPC]
         IEnumerator AttackTimeing(float attacktime)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize, ball);
@@ -81,7 +74,7 @@ namespace anstjddn
                     Vector3 dir = (mousepos - transform.position).normalized;
                    
                     collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
-                    Attacksound?.Invoke();
+                  //  Attacksound?.Invoke();
                     yield return new WaitForSeconds(attacktime);
                     isattack = false;
                 }
