@@ -1,13 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
-using Unity.VisualScripting;
-using UnityEngine.Rendering;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PlayerSkillAttacker : MonoBehaviour
 {
@@ -17,9 +12,9 @@ public class PlayerSkillAttacker : MonoBehaviour
     [SerializeField] float control; //플레이어 위치에서 얼마나 떨어진 거리에서 어택 범위 발동할 지
     float rangeAmount;
     float angle;
-    bool isAttack = false;
+    public bool isSkilling = false;
     public UnityAction OnPlaySkillAnim;
-    public UnityAction<GameObject> OnPlayerAttack;
+    public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
 
@@ -31,7 +26,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     public void Update()
     {
-        if (isAttack)
+        if (isSkilling)
             ApplyDamage();
 
         mousePosObj.transform.position = aim.mousepos;
@@ -43,7 +38,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     {
         skill = data.CurCharacter.primarySkill;
         aim.attacksize = skill.rangeAmount;
-        isAttack = true;
+        isSkilling = true;
         ApplyDamageRoutine = StartCoroutine(skillDuration());
     }
 
@@ -51,7 +46,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     {
         skill = data.CurCharacter.secondarySkill;
         aim.attacksize = skill.rangeAmount;
-        isAttack = true;
+        isSkilling = true;
         ApplyDamageRoutine = StartCoroutine(skillDuration());
     }
 
@@ -59,14 +54,14 @@ public class PlayerSkillAttacker : MonoBehaviour
     {
         skill = data.CurCharacter.specialSkill;
         aim.attacksize = skill.rangeAmount;
-        isAttack = true;
+        isSkilling = true;
         ApplyDamageRoutine = StartCoroutine(skillDuration());
     }
 
     IEnumerator skillDuration()
     {
         yield return new WaitForSeconds(skill.duration);
-        isAttack = false;
+        isSkilling = false;
     }
 
     public void ApplyDamage()
@@ -93,9 +88,6 @@ public class PlayerSkillAttacker : MonoBehaviour
             Vector3 playerNTarget = (collider.transform.position - transform.position).normalized;
             Vector3 dirTarget = (collider.transform.position - transform.position).normalized;
 
-            if (!(collider.tag == "Player")) //따라서 ball의 tag도 Player여야 함
-                continue;
-
             if (Vector3.Dot(-playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
                 continue;
 
@@ -109,7 +101,14 @@ public class PlayerSkillAttacker : MonoBehaviour
                 continue;
             }
 
-            collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject);
+            if (collider.gameObject.tag == "Player")
+            {
+                if (collider.GetComponent<PlayerGetDamage>().damaged == false)
+                {
+                    collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
+                    OnPlaySkillAnim?.Invoke();
+                }
+            }
         }
     }
 
