@@ -5,7 +5,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
-using anstjddn;
 using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using UnityEngine.Events;
@@ -20,6 +19,7 @@ public class PlayerAttacker : MonoBehaviour
     float angle;
     bool isAttack = false;
     public UnityAction OnPlaySkillAnim;
+    public UnityAction<GameObject> OnPlayerAttack;
     [SerializeField] PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
 
@@ -99,15 +99,16 @@ public class PlayerAttacker : MonoBehaviour
             if (collider.isTrigger == true)
                 continue;
 
+            /*
             if (collider.gameObject.layer == 7)
             {
                 aim.Attack();
                 Debug.Log($"{collider.gameObject.name}에게 PlayerAim.Attack");
                 return;
             }
+            */
 
-            Debug.Log($"{collider.gameObject.name}에게 {skill.skillName}");
-
+            collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject);
         }
     }
 

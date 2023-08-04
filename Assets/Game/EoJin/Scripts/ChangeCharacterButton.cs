@@ -14,7 +14,7 @@ public class ChangeCharacterButton : MonoBehaviour
 
     public void Change()
     {
-        if (forChange)
+        if (!forChange)
             data.ChangeCharacter("Mario"); //character.cs(scriptableObject)의 characterName에 있는 이름을 이용
         else
             data.ChangeCharacter("Link");

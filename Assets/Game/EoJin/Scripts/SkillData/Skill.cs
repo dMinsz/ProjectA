@@ -30,7 +30,6 @@ public class Skill : ScriptableObject
     [SerializeField] public float duration;
     [SerializeField] public float coolTime;
     [SerializeField] public AnimationClip skillAnimation;
-
     [SerializeField] public int playerKnockback;
     [SerializeField] public int coreKnockback;
 
