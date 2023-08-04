@@ -20,7 +20,6 @@ public class PlayManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
 
         // Normal game mode
         if (PhotonNetwork.InRoom)

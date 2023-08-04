@@ -820,6 +820,7 @@ GameObject:
   - component: {fileID: 2942217435192893771}
   - component: {fileID: -8452105046383015105}
   - component: {fileID: 768747357149872447}
+  - component: {fileID: 7513116345151157200}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -954,12 +955,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c773f5f9cc763743898b96f52e80e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouse: {fileID: 0}
   attacksize: 3
   ball:
     serializedVersion: 2
     m_Bits: 128
-  attackpower: 100
-  attacktime: 1
+  attackpower: 150
+  attackCoolTime: 0
   isattack: 0
   Attacksound:
     m_PersistentCalls:
@@ -1001,6 +1003,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 6272833465738176555}
   - {fileID: -8452105046383015105}
+  - {fileID: 7513116345151157200}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1042,6 +1045,18 @@ MonoBehaviour:
   - {r: 0.49056602, g: 0.25222498, b: 0.30423048, a: 1}
   - {r: 0.3037113, g: 0.5799061, b: 0.990566, a: 1}
   surface: {fileID: 6092308493334928318}
+--- !u!114 &7513116345151157200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613477116505371340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0924d064864b10448f85e59b6b75653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &733107107306874600
 GameObject:
   m_ObjectHideFlags: 0

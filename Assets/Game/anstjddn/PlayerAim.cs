@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,12 @@ namespace anstjddn
 {
     public class PlayerAim : MonoBehaviourPun
     {
-
+        [SerializeField] GameObject mouse;
         //어택범위,충돌할 레이어, 공을 미는힘
         [SerializeField] public float attacksize;
         [SerializeField] LayerMask ball;
         [SerializeField] public float attackpower;
-        [SerializeField] public float attacktime;
+        [SerializeField] public float attackCoolTime;
         [SerializeField]public bool isattack;
 
         [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
@@ -29,6 +30,10 @@ namespace anstjddn
 
         private void Update()
         {
+        }
+
+        private Vector3 SetMousePos() 
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -37,19 +42,26 @@ namespace anstjddn
                 mousepos = hit.point;
                 mousepos.y = 0;
             }
-            //Debug.Log(mousepos);
-       
+
+            return mousepos;
         }
+
         private void OnAttack(InputValue Value)
         {
-
-            Attack();
+            photonView.RPC("RequestAttack", RpcTarget.MasterClient, SetMousePos());
         }
 
         [PunRPC]
-        private void Attack()
+        private void RequestAttack(Vector3 mousePos) 
         {
-            StartCoroutine(AttackTimeing(attacktime));
+           
+            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, transform.position, mousePos);
+        }
+
+        [PunRPC]
+        private void ResultAttack(Vector3 position,Vector3 mousePos, PhotonMessageInfo info)
+        {
+            StartCoroutine(AttackTimeing(position,mousePos,  info));
         }
 
 
@@ -62,7 +74,7 @@ namespace anstjddn
 
         //어택타이밍 구현
         [PunRPC]
-        IEnumerator AttackTimeing(float attacktime)
+        IEnumerator AttackTimeing(Vector3 position,Vector3 mousePos, PhotonMessageInfo info)
         {
             Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize, ball);
             foreach (Collider collider in colliders)
@@ -71,11 +83,18 @@ namespace anstjddn
                 {
 
                     isattack = true;
-                    Vector3 dir = (mousepos - transform.position).normalized;
-                   
-                    collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
+                    //Vector3 dir = (mousepos - transform.position).normalized;
+                    
+                    Vector3 dir = (mousePos - position).normalized;
+
+                    Vector3 newVelocity = dir * attackpower;
+                    //collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
+
+                    collider.GetComponent<Puck>().SetPos(position, newVelocity, info);
+
+
                   //  Attacksound?.Invoke();
-                    yield return new WaitForSeconds(attacktime);
+                    yield return new WaitForSeconds(attackCoolTime);
                     isattack = false;
                 }
                 //플레이어 공격 구현 필요

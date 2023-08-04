@@ -22,13 +22,14 @@ namespace anstjddn
             contol = GetComponent<CharacterController>();
             playerrb = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
-         //   transform.rotation = Quaternion.Euler(0, -90, 0);
+            //   transform.rotation = Quaternion.Euler(0, -90, 0);
         }
 
         private void Update()
         {
             Move();
-          if(playerrb.velocity ==new Vector3(0, 0, 0))
+
+            if (playerrb.velocity == new Vector3(0, 0, 0))
             {
                 anim.SetBool("move", false);
             }
@@ -36,11 +37,11 @@ namespace anstjddn
             {
                 anim.SetBool("move", true);
             }
-          if(movedir.magnitude == 0)
+            if (movedir.magnitude == 0)
             {
                 return;
             }
- 
+
         }
         private void Move()
         {
@@ -51,7 +52,7 @@ namespace anstjddn
             Vector3 look = new Vector3(movedir.z, 0, -movedir.x);
             Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(look), 0.1f);
             transform.rotation = lookrotation;
-        
+
         }
 
         private void OnMove(InputValue Value)
@@ -59,6 +60,6 @@ namespace anstjddn
             movedir.x = Value.Get<Vector2>().x;
             movedir.z = Value.Get<Vector2>().y;
         }
-       
+
     }
 }
