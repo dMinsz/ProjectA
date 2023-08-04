@@ -42,6 +42,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void OnPrimarySkill(InputValue value)
     {
         skill = data.CurCharacter.primarySkill;
+        aim.attacksize = skill.rangeAmount;
         isAttack = true;
         ApplyDamageRoutine = StartCoroutine(skillDuration());
     }
@@ -49,6 +50,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void OnSecondarySkill (InputValue value)
     {
         skill = data.CurCharacter.secondarySkill;
+        aim.attacksize = skill.rangeAmount;
         isAttack = true;
         ApplyDamageRoutine = StartCoroutine(skillDuration());
     }
@@ -56,6 +58,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void OnSpecailSkill(InputValue value)
     {
         skill = data.CurCharacter.specialSkill;
+        aim.attacksize = skill.rangeAmount;
         isAttack = true;
         ApplyDamageRoutine = StartCoroutine(skillDuration());
     }
@@ -90,7 +93,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             Vector3 playerNTarget = (collider.transform.position - transform.position).normalized;
             Vector3 dirTarget = (collider.transform.position - transform.position).normalized;
 
-            if (!(collider.tag == "Player"))
+            if (!(collider.tag == "Player")) //따라서 ball의 tag도 Player여야 함
                 continue;
 
             if (Vector3.Dot(-playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
@@ -98,15 +101,13 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.isTrigger == true)
                 continue;
-
             
             if (collider.gameObject.layer == 7)
             {
+                Debug.Log($"{collider.gameObject.name}에게 Attack");
                 aim.Attack();
-                Debug.Log($"{collider.gameObject.name}에게 PlayerAim.Attack");
-                return;
+                continue;
             }
-            
 
             collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject);
         }
