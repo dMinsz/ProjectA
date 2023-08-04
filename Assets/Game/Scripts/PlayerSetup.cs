@@ -13,11 +13,16 @@ public class PlayerSetup : MonoBehaviourPun
     [SerializeField] List<Color> playerColor;
     [SerializeField] Renderer surface;
     [SerializeField] Transform AttackRangeMark;
+
+    private int team;
+
     private PlayerInput input;
+
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
 
+        team = PhotonNetwork.LocalPlayer.GetTeamColor();
       
         SetPlayerColor();
 
@@ -37,9 +42,8 @@ public class PlayerSetup : MonoBehaviourPun
         if (playerColor == null || playerColor.Count <= playerNumber)
             return;
 
-        //Renderer render = GameObject.Find("Alpha_Surface").GetComponent<Renderer>();
-        surface.material.color = playerColor[playerNumber];
-        floorMarkImg.color = playerColor[playerNumber];
+        surface.material.color = playerColor[team-1];
+        floorMarkImg.color = playerColor[team-1];
        
     }
 

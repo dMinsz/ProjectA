@@ -30,7 +30,7 @@ public class RoomPanel : MonoBehaviour
 
         PhotonNetwork.LocalPlayer.SetReady(false);
         PhotonNetwork.LocalPlayer.SetLoad(false);
-        PhotonNetwork.LocalPlayer.SetTeam(0);   // ∆¿ √ ±‚»≠
+        PhotonNetwork.LocalPlayer.SetTeamColor(0);   // ∆¿ √ ±‚»≠
 
         AllPlayerReadyCheck();
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -110,11 +110,11 @@ public class RoomPanel : MonoBehaviour
 
     public void SwitchBlueTeamButton()
     {
-        PhotonNetwork.LocalPlayer.SetTeam((int)PlayerEntry.TeamColor.Blue);
+        PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
     }
 
     public void SwitchRedTeamButton()
     {
-        PhotonNetwork.LocalPlayer.SetTeam((int)PlayerEntry.TeamColor.Red);
+        PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
     }
 }

@@ -19,7 +19,7 @@ public class PlayerEntry : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(player.GetTeam());
+        //Debug.Log(player.GetTeamColor());
     }
 
     public void SetPlayer(Player player)
@@ -27,13 +27,13 @@ public class PlayerEntry : MonoBehaviour
         this.player = player;
         playerName.text = player.NickName;
         playerReady.text = player.GetReady() ? "Ready" : "";
-        Team(player.GetTeam());        
+        Team(player.GetTeamColor());        
         playerReadyButton.gameObject.SetActive(PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber);
     }
 
     public void Ready()
     {
-        int team = player.GetTeam();
+        int team = player.GetTeamColor();
 
         if (team == (int)TeamColor.None)
             return;

@@ -14,17 +14,39 @@ public class PlayManager : MonoBehaviourPunCallbacks
     [SerializeField] float startTimer;
 
     [SerializeField] Transform puckPos;
-    [SerializeField] List<Transform> playerSpwans;
+    [SerializeField] List<Transform> blueSpwans;
+    [SerializeField] List<Transform> redSpwans;
 
+
+    private List<bool> blueTeamChecker = new List<bool>();
+    private List<bool> redTeamChecker = new List<bool>();
+
+    private void SetUpTeam() 
+    {
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.GetTeamColor() == 1) // blue
+            {
+                blueTeamChecker.Add(true);
+            }
+            else
+            {
+                redTeamChecker.Add(true);
+            }
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        
         // Normal game mode
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LocalPlayer.SetLoad(true);
+
+            SetUpTeam();
         }
         // Debug game mode
         else
@@ -32,6 +54,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
             infoText.text = "Debug Mode";
             PhotonNetwork.LocalPlayer.NickName = $"DebugPlayer {Random.Range(1000, 10000)}";
             PhotonNetwork.ConnectUsingSettings();
+
+            SetUpTeam();
         }
 
     }
@@ -40,8 +64,34 @@ public class PlayManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.InstantiateRoomObject("Puck", puckPos.position, puckPos.rotation);
 
-        int num = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        PhotonNetwork.Instantiate("Player", playerSpwans[num].position, playerSpwans[num].rotation, 0);
+        //int num = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+
+        if (PhotonNetwork.LocalPlayer.GetTeamColor() == 1) // blue 
+        {
+
+           for (int i=0; i< blueTeamChecker.Count ; i++ )
+            {
+                if (blueTeamChecker[i] == true)
+                {
+                    PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0);
+                    blueTeamChecker[i] = false;
+                    break;
+                }
+            }
+        }
+        else //red
+        {
+            for (int i = 0; i < redTeamChecker.Count; i++)
+            {
+                if (redTeamChecker[i] == true)
+                {
+                    PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0);
+                    redTeamChecker[i] = false;
+                    break;
+                }
+            }
+        }
+
 
     }
 
@@ -49,8 +99,33 @@ public class PlayManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.InstantiateRoomObject("Puck", puckPos.position, puckPos.rotation);
 
-        int num = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-        PhotonNetwork.Instantiate("Player", playerSpwans[num].position, playerSpwans[num].rotation, 0);
+        //int num = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+
+        if (PhotonNetwork.LocalPlayer.GetTeamColor() == 1) // blue 
+        {
+
+            for (int i = 0; i < blueTeamChecker.Count; i++)
+            {
+                if (blueTeamChecker[i] == true)
+                {
+                    PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0);
+                    blueTeamChecker[i] = false;
+                    break;
+                }
+            }
+        }
+        else //red
+        {
+            for (int i = 0; i < redTeamChecker.Count; i++)
+            {
+                if (redTeamChecker[i] == true)
+                {
+                    PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0);
+                    redTeamChecker[i] = false;
+                    break;
+                }
+            }
+        }
     }
 
     IEnumerator DebugGameSetupDelay()

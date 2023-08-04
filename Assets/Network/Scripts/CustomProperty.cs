@@ -58,7 +58,7 @@ public static class CustomProperty
         room.SetCustomProperties(property);
     }
 
-    public static int GetTeam(this Player player)
+    public static int GetTeamColor(this Player player)
     {
         PhotonHashtable property = player.CustomProperties;
         if (property.ContainsKey(TEAM))
@@ -67,7 +67,7 @@ public static class CustomProperty
             return 0;
     }
 
-    public static void SetTeam(this Player player, int team)
+    public static void SetTeamColor(this Player player, int team)
     {
         PhotonHashtable property = player.CustomProperties;
         property[TEAM] = team;
