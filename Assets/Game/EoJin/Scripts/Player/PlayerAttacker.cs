@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 using anstjddn;
 using Unity.VisualScripting;
+using UnityEngine.Rendering;
+using UnityEngine.Events;
 
 public class PlayerAttacker : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class PlayerAttacker : MonoBehaviour
     float angle;
     bool isAttack = false;
     public UnityAction OnPlaySkillAnim;
-    PlayerAim aim;
+    [SerializeField] PlayerAim aim;
+    [SerializeField] public GameObject mousePosObj;
 
     public void Awake()
     {
@@ -31,6 +33,8 @@ public class PlayerAttacker : MonoBehaviour
     {
         if (isAttack)
             ApplyDamage();
+
+        mousePosObj.transform.position = aim.mousepos;
     }
 
     Coroutine ApplyDamageRoutine;
@@ -58,7 +62,6 @@ public class PlayerAttacker : MonoBehaviour
 
     IEnumerator skillDuration()
     {
-        OnPlaySkillAnim?.Invoke();
         yield return new WaitForSeconds(skill.duration);
         isAttack = false;
     }
@@ -78,19 +81,19 @@ public class PlayerAttacker : MonoBehaviour
 
         rangeAmount = skill.rangeAmount;
 
-        Vector3 playerNMouse = (transform.position - aim.mousepos).normalized;
         
         Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.rangeAmount);
 
         foreach (Collider collider in colliders)
         {
+            Vector3 playerNMouse = (transform.position - aim.mousepos).normalized;
             Vector3 playerNTarget = (collider.transform.position - transform.position).normalized;
+            Vector3 dirTarget = (collider.transform.position - transform.position).normalized;
 
             if (!(collider.tag == "Player"))
                 continue;
 
-
-            if (Vector3.Dot(transform.position, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
+            if (Vector3.Dot(-playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
                 continue;
 
             if (collider.isTrigger == true)
@@ -98,7 +101,6 @@ public class PlayerAttacker : MonoBehaviour
 
             if (collider.gameObject.layer == 7)
             {
-
                 aim.Attack();
                 Debug.Log($"{collider.gameObject.name}¿¡°Ô PlayerAim.Attack");
                 return;
@@ -115,7 +117,7 @@ public class PlayerAttacker : MonoBehaviour
             return;
 
         Handles.color = Color.cyan;
-        Handles.DrawSolidArc(transform.position - transform.forward * control, transform.up, aim.mousepos, -angle, rangeAmount);
-        Handles.DrawSolidArc(transform.position - transform.forward * control, transform.up, aim.mousepos, angle, rangeAmount);
+        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, rangeAmount);
+        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, rangeAmount);
     }
 }

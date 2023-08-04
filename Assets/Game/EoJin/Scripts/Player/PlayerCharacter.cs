@@ -7,7 +7,6 @@ using UnityEngine.TextCore.Text;
 public class PlayerCharacter : MonoBehaviour
 {
     private DataManager data;
-    private PlayerAttacker attacker;
     [SerializeField] Character character;
     Animator anim;
     bool forChange;
@@ -15,7 +14,6 @@ public class PlayerCharacter : MonoBehaviour
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
-        attacker = gameObject.GetComponent<PlayerAttacker>();
         anim = GetComponent<Animator>();
         data.CurCharacter = character;
     }
@@ -44,6 +42,5 @@ public class PlayerCharacter : MonoBehaviour
 
         anim.avatar = data.CurCharacter.avatar;
     }
-
 
 }
