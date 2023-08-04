@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChangeCharacterButton : MonoBehaviour
 {
     DataManager data;
-    bool forChange;
+    int index;
 
     public void Awake()
     {
@@ -14,11 +14,10 @@ public class ChangeCharacterButton : MonoBehaviour
 
     public void Change()
     {
-        if (!forChange)
-            data.ChangeCharacter("Mario"); //character.cs(scriptableObject)의 characterName에 있는 이름을 이용
-        else
-            data.ChangeCharacter("Link");
+        data.ChangeCharacter(data.characters[index].characterName);
+        index++;
 
-        forChange = !forChange;
+        if (index >= data.characters.Length)
+            index = 0;
     }
 }

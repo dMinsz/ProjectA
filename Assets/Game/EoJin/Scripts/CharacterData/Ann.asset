@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: Mario
+  m_Name: Ann
   m_EditorClassIdentifier: 
-  characterName: Mario
-  avatar: {fileID: 9000000, guid: 98c1249b33eca84478cc58f3ac7a0b5b, type: 3}
+  characterName: Ann
+  avatar: {fileID: 9000000, guid: e909ef673961b9f4cafb37c5a319b9fc, type: 3}
   stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
   primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
   secondarySkill: {fileID: 11400000, guid: 74963673851f31348941000e3c603037, type: 2}

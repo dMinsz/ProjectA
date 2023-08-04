@@ -11,10 +11,12 @@ public class PlayerSkillAttacker : MonoBehaviour
     [SerializeField] bool debug;
     [SerializeField] float control; //플레이어 위치에서 얼마나 떨어진 거리에서 어택 범위 발동할 지
     float rangeAmount;
-    float angle;
+    public float angle;
     public bool isSkilling = false;
     bool isPlayingSkillAnim = false;
     public UnityAction OnPlaySkillAnim;
+    public UnityAction OnSkillStart;
+    public UnityAction OnSkillEnd;
     public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
@@ -64,10 +66,13 @@ public class PlayerSkillAttacker : MonoBehaviour
         yield return new WaitForSeconds(skill.duration);
         isSkilling = false;
         isPlayingSkillAnim = false;
+        OnSkillEnd?.Invoke();
     }
 
     public void ApplyDamage()
     {
+        OnSkillStart?.Invoke();
+
         if (skill == null)
             return;
 
