@@ -7,13 +7,13 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] Animator anim;
-    [SerializeField] PlayerAttacker attacker;
+    [SerializeField] PlayerSkillAttacker attacker;
     [SerializeField] AnimatorController controller;
 
     public void Awake()
     {
         anim = gameObject.GetComponent<Animator>();
-        attacker = gameObject.GetComponent<PlayerAttacker>();
+        attacker = gameObject.GetComponent<PlayerSkillAttacker>();
     }
 
     public void OnEnable()

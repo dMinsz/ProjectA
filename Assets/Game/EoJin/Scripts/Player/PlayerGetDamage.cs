@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerGetDamage : MonoBehaviour
 {
-    PlayerAttacker attacker;
+    PlayerSkillAttacker attacker;
 
     public void Awake()
     {
@@ -25,7 +25,7 @@ public class PlayerGetDamage : MonoBehaviour
 
     public void GetDamaged(GameObject who)
     {
-        attacker = who.GetComponent<PlayerAttacker>();
+        attacker = who.GetComponent<PlayerSkillAttacker>();
         Debug.Log($"{gameObject.name}이 {who}에게 {attacker.skill.skillName}을 받음");
     }
 }
