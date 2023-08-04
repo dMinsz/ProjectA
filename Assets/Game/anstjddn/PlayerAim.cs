@@ -1,12 +1,9 @@
 using Photon.Pun;
-using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 namespace anstjddn
 {
     public class PlayerAim : MonoBehaviourPun
@@ -22,6 +19,8 @@ namespace anstjddn
         [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
         private Vector3 mousepos;
+
+        public GameObject puck;
 
         private void Start()
         {
@@ -48,20 +47,20 @@ namespace anstjddn
 
         private void OnAttack(InputValue Value)
         {
-            photonView.RPC("RequestAttack", RpcTarget.MasterClient, SetMousePos());
+            photonView.RPC("RequestAttack", RpcTarget.MasterClient, SetMousePos(), transform.position , puck.transform.position);
         }
 
         [PunRPC]
-        private void RequestAttack(Vector3 mousePos) 
+        private void RequestAttack(Vector3 mousePos , Vector3 playerPos, Vector3 puckPos) 
         {
            
-            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos , transform.position);
+            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos , playerPos, puckPos);
         }
 
         [PunRPC]
-        private void ResultAttack(Vector3 mousePos,Vector3 playerPos , PhotonMessageInfo info)
+        private void ResultAttack(Vector3 mousePos,Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
         {
-            StartCoroutine(AttackTimeing(mousePos, playerPos,  info));
+            StartCoroutine(AttackTimeing(mousePos, playerPos , puckPos,  info));
         }
 
 
@@ -74,32 +73,47 @@ namespace anstjddn
 
         //어택타이밍 구현
         [PunRPC]
-        IEnumerator AttackTimeing(Vector3 mousePos, Vector3 playerPos, PhotonMessageInfo info)
+        IEnumerator AttackTimeing(Vector3 mousePos, Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
         {
-            Collider[] colliders = Physics.OverlapSphere(playerPos, attacksize, layerMask);
-            foreach (Collider collider in colliders)
+
+            if (Mathf.Pow(attacksize,2) >= Mathf.Pow(playerPos.x - puckPos.x,2) + Mathf.Pow(playerPos.z - puckPos.z,2) ) // 원의 범위안에 좌표가있는지 확인 
             {
-                if (isattack == false && collider.gameObject.layer == 7)                //레이어 7번이 ball로 설정
-                {
+                isattack = true;
 
-                    isattack = true;
-                    //Vector3 dir = (mousepos - transform.position).normalized;
-                    
-                    Vector3 dir = (mousePos - playerPos).normalized;
+                Vector3 dir = (mousePos - playerPos).normalized;
+                Vector3 newVelocity = dir * attackpower;
+                //collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
 
-                    Vector3 newVelocity = dir * attackpower;
-                    //collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
+                puck.GetComponent<Puck>().SetPos(newVelocity, info);
 
-                    collider.GetComponent<Puck>().SetPos(newVelocity, info);
-
-
-                  //  Attacksound?.Invoke();
-                    yield return new WaitForSeconds(attackCoolTime);
-                    isattack = false;
-                }
-                //플레이어 공격 구현 필요
-               
+                yield return new WaitForSeconds(attackCoolTime);
+                isattack = false;
             }
+
+            //Collider[] colliders = Physics.OverlapSphere(playerPos, attacksize, layerMask);
+            //foreach (Collider collider in colliders)
+            //{
+            //    if (isattack == false && collider.gameObject.layer == 7)                //레이어 7번이 ball로 설정
+            //    {
+
+            //        isattack = true;
+            //        //Vector3 dir = (mousepos - transform.position).normalized;
+                    
+            //        Vector3 dir = (mousePos - playerPos).normalized;
+
+            //        Vector3 newVelocity = dir * attackpower;
+            //        //collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
+
+            //        collider.GetComponent<Puck>().SetPos(newVelocity, info);
+
+
+            //      //  Attacksound?.Invoke();
+            //        yield return new WaitForSeconds(attackCoolTime);
+            //        isattack = false;
+            //    }
+            //    //플레이어 공격 구현 필요
+               
+            //}
         }
     }
 

@@ -968,6 +968,7 @@ MonoBehaviour:
   Attacksound:
     m_PersistentCalls:
       m_Calls: []
+  puck: {fileID: 0}
 --- !u!114 &6272833465738176555
 MonoBehaviour:
   m_ObjectHideFlags: 0

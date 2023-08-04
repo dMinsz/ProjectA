@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
+using anstjddn;
 
 public class PlayManager : MonoBehaviourPunCallbacks
 {
@@ -21,6 +22,10 @@ public class PlayManager : MonoBehaviourPunCallbacks
     private List<bool> blueTeamChecker = new List<bool>();
     private List<bool> redTeamChecker = new List<bool>();
 
+
+    public GameObject playPuck;
+
+    private List<GameObject> pPlayerList = new List<GameObject>();
     private void SetUpTeam() 
     {
 
@@ -46,7 +51,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LocalPlayer.SetLoad(true);
 
-            SetUpTeam();
+            //SetUpTeam();
         }
         // Debug game mode
         else
@@ -55,16 +60,16 @@ public class PlayManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = $"DebugPlayer {Random.Range(1000, 10000)}";
             PhotonNetwork.ConnectUsingSettings();
 
-            SetUpTeam();
+            //SetUpTeam();
         }
 
     }
 
     private void GameStart()
     {
-        PhotonNetwork.InstantiateRoomObject("Puck", puckPos.position, puckPos.rotation);
-
-        //int num = PhotonNetwork.LocalPlayer.GetPlayerNumber();
+        SetUpTeam();
+        infoText.text = string.Format("GameStart now team ={0}", PhotonNetwork.LocalPlayer.GetTeamColor());
+        playPuck = PhotonNetwork.InstantiateRoomObject("Puck", puckPos.position, puckPos.rotation);
 
         if (PhotonNetwork.LocalPlayer.GetTeamColor() == 1) // blue 
         {
@@ -73,8 +78,14 @@ public class PlayManager : MonoBehaviourPunCallbacks
             {
                 if (blueTeamChecker[i] == true)
                 {
-                    PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0);
+                  
+                    var player = PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0);
+                    //player.GetComponent<PlayerAim>().puck = playPuck;
+                    player.GetComponent<PlayerSetup>().SentServerColor();
                     blueTeamChecker[i] = false;
+
+                    pPlayerList.Add(player);
+
                     break;
                 }
             }
@@ -85,47 +96,56 @@ public class PlayManager : MonoBehaviourPunCallbacks
             {
                 if (redTeamChecker[i] == true)
                 {
-                    PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0);
+                    var player = PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0);
+                    //player.GetComponent<PlayerAim>().puck = playPuck;
+                    player.GetComponent<PlayerSetup>().SentServerColor();
                     redTeamChecker[i] = false;
+
+                    pPlayerList.Add(player);
                     break;
                 }
             }
         }
+
+
+        foreach (var p in pPlayerList)
+        {
+            p.GetComponent<PlayerAim>().puck = playPuck;
+        }
+
 
 
     }
 
     private void DebugGameStart()
     {
-        PhotonNetwork.InstantiateRoomObject("Puck", puckPos.position, puckPos.rotation);
+        SetUpTeam();
+        playPuck = PhotonNetwork.InstantiateRoomObject("Puck", puckPos.position, puckPos.rotation);
 
-        //int num = PhotonNetwork.LocalPlayer.GetPlayerNumber();
-
-        if (PhotonNetwork.LocalPlayer.GetTeamColor() == 1) // blue 
+        if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 0)
         {
+            var player = PhotonNetwork.Instantiate("Player", blueSpwans[0].position, blueSpwans[0].rotation, 0);
+            //player.GetComponent<PlayerAim>().puck = playPuck;
+            player.GetComponent<PlayerSetup>().SentServerColor();
 
-            for (int i = 0; i < blueTeamChecker.Count; i++)
-            {
-                if (blueTeamChecker[i] == true)
-                {
-                    PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0);
-                    blueTeamChecker[i] = false;
-                    break;
-                }
-            }
+            pPlayerList.Add(player);
+
         }
-        else //red
+        else 
         {
-            for (int i = 0; i < redTeamChecker.Count; i++)
-            {
-                if (redTeamChecker[i] == true)
-                {
-                    PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0);
-                    redTeamChecker[i] = false;
-                    break;
-                }
-            }
+            var player = PhotonNetwork.Instantiate("Player", blueSpwans[0].position, blueSpwans[0].rotation, 0);
+            //player.GetComponent<PlayerAim>().puck = playPuck;
+            player.GetComponent<PlayerSetup>().SentServerColor();
+            pPlayerList.Add(player);
         }
+
+
+        foreach (var p in pPlayerList)
+        {
+            p.GetComponent<PlayerAim>().puck = playPuck;
+        }
+
+
     }
 
     IEnumerator DebugGameSetupDelay()

@@ -14,7 +14,7 @@ public class PlayerSetup : MonoBehaviourPun
     [SerializeField] Renderer surface;
     [SerializeField] Transform AttackRangeMark;
 
-    private int team;
+    //private int playerTeam;
 
     private PlayerInput input;
 
@@ -22,9 +22,10 @@ public class PlayerSetup : MonoBehaviourPun
     {
         input = GetComponent<PlayerInput>();
 
-        team = PhotonNetwork.LocalPlayer.GetTeamColor();
+        //playerTeam = PhotonNetwork.LocalPlayer.GetTeamColor();
+
       
-        SetPlayerColor();
+        //photonView.RPC("RequestSetPlayerColor", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.GetTeamColor());        
 
         if (!photonView.IsMine)
         {
@@ -34,19 +35,45 @@ public class PlayerSetup : MonoBehaviourPun
         }
     }
 
-
-    private void SetPlayerColor()
+    [PunRPC]
+    public void SentServerColor() 
     {
-        int playerNumber = photonView.Owner.GetPlayerNumber();
-
-        if (playerColor == null || playerColor.Count <= playerNumber)
-            return;
-
-        surface.material.color = playerColor[team-1];
-        floorMarkImg.color = playerColor[team-1];
-       
+        photonView.RPC("RequestSetPlayerColor", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.GetTeamColor());
     }
 
+    [PunRPC]
+    private void RequestSetPlayerColor(int team)
+    {
+        photonView.RPC("ResultSetPlayerColor", RpcTarget.AllViaServer, team);
+    }
+
+    [PunRPC]
+    private void ResultSetPlayerColor(int team)
+    {
+        SetPlayerColor(team);
+    }
+
+
+    [PunRPC]
+    public void SetPlayerColor(int team)
+    {
+        //int playerNumber = photonView.Owner.GetPlayerNumber();
+
+        //if (playerColor == null || playerColor.Count <= playerNumber)
+        //    return;
+
+        if (team == 0)
+        {
+            surface.material.color = playerColor[0];
+            floorMarkImg.color = playerColor[0];
+        }
+        else
+        {
+            surface.material.color = playerColor[team - 1];
+            floorMarkImg.color = playerColor[team - 1];
+        }
+        
+    }
 }
 
 
