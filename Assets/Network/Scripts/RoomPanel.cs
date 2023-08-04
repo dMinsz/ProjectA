@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ public class RoomPanel : MonoBehaviour
 
         PhotonNetwork.LocalPlayer.SetReady(false);
         PhotonNetwork.LocalPlayer.SetLoad(false);
+        PhotonNetwork.LocalPlayer.SetTeam(0);   // ∆¿ √ ±‚»≠
 
         AllPlayerReadyCheck();
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -104,5 +106,15 @@ public class RoomPanel : MonoBehaviour
             startButton.gameObject.SetActive(true);
         else
             startButton.gameObject.SetActive(false);
+    }
+
+    public void SwitchBlueTeamButton()
+    {
+        PhotonNetwork.LocalPlayer.SetTeam((int)PlayerEntry.TeamColor.Blue);
+    }
+
+    public void SwitchRedTeamButton()
+    {
+        PhotonNetwork.LocalPlayer.SetTeam((int)PlayerEntry.TeamColor.Red);
     }
 }

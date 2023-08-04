@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
@@ -9,23 +10,47 @@ public class PlayerEntry : MonoBehaviour
 {
     [SerializeField] TMP_Text playerName;
     [SerializeField] TMP_Text playerReady;
+    [SerializeField] TMP_Text playerTeam;
     [SerializeField] Button playerReadyButton;
 
     private Player player;
+
+    public enum TeamColor { None, Blue, Red}
+
+    private void Update()
+    {
+        Debug.Log(player.GetTeam());
+    }
 
     public void SetPlayer(Player player)
     {
         this.player = player;
         playerName.text = player.NickName;
         playerReady.text = player.GetReady() ? "Ready" : "";
+        Team(player.GetTeam());        
         playerReadyButton.gameObject.SetActive(PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber);
     }
 
     public void Ready()
     {
+        int team = player.GetTeam();
+
+        if (team == (int)TeamColor.None)
+            return;
+
         bool ready = player.GetReady();
         ready = !ready;
         player.SetReady(ready);
+    }
+
+    private void Team(int team)
+    {
+        if (team == (int)TeamColor.Blue)
+            playerTeam.text = "Blue";
+        else if (team == (int)TeamColor.Red)
+            playerTeam.text = "Red";
+        else
+            playerTeam.text = "None";
     }
 
     public void ChangeCustomProperty(PhotonHashtable property)
@@ -39,5 +64,13 @@ public class PlayerEntry : MonoBehaviour
         {
             playerReady.text = "";
         }
+
+        if (property.TryGetValue(CustomProperty.TEAM, out object teamvalue))
+        {
+            int team = (int)teamvalue;
+            Team(team); 
+        }
+        else
+            playerTeam.text = "None";
     }
 }

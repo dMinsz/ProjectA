@@ -1,10 +1,12 @@
 using Photon.Realtime;
+using System;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 public static class CustomProperty
 {
     public const string READY = "Ready";
     public const string LOAD = "Load";
     public const string NUMBER = "Number";
+    public const string TEAM = "Team";
 
     public const string LOADTIME = "LoadTime";
 
@@ -54,5 +56,21 @@ public static class CustomProperty
         PhotonHashtable property = room.CustomProperties;
         property[LOADTIME] = loadTime;
         room.SetCustomProperties(property);
+    }
+
+    public static int GetTeam(this Player player)
+    {
+        PhotonHashtable property = player.CustomProperties;
+        if (property.ContainsKey(TEAM))
+            return (int)property[TEAM];
+        else
+            return 0;
+    }
+
+    public static void SetTeam(this Player player, int team)
+    {
+        PhotonHashtable property = player.CustomProperties;
+        property[TEAM] = team;
+        player.SetCustomProperties(property);
     }
 }
