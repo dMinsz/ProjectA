@@ -41,10 +41,20 @@ public class PlayerAnimation : MonoBehaviour
         {
             if (state.state.name == "Skill")
             {
-                state.state.motion = attacker.skill.skillAnimation;
+                if (state.state.motion != attacker.skill.skillAnimation)
+                {
+                    state.state.motion = attacker.skill.skillAnimation;
+                    Invoke("SetSkillTrigger", 0.1f); //motion을 바꾸자마자 setTrigger을 하면 씹히기 때문에 invoke로 시간차를 줌
+                }
                 break;
             }
         }
     }
+
+    public void SetSkillTrigger()
+    {
+        anim.SetTrigger("Skill");
+    }
+
 }
 
