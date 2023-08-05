@@ -10,7 +10,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     DataManager data;
     [SerializeField] bool debug;
     [SerializeField] float control; //플레이어 위치에서 얼마나 떨어진 거리에서 어택 범위 발동할 지
-    float rangeAmount;
+    float range;
     public float angle;
     public bool isSkilling = false;
     bool isPlayingSkillAnim = false;
@@ -42,7 +42,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (!isSkilling) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
             skill = data.CurCharacter.primarySkill;
-            aim.attacksize = skill.rangeAmount;
+            aim.attacksize = skill.range;
             isSkilling = true;
             ApplyDamageRoutine = StartCoroutine(skillDuration());
         }
@@ -54,7 +54,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (!isSkilling)
         {
             skill = data.CurCharacter.secondarySkill;
-            aim.attacksize = skill.rangeAmount;
+            aim.attacksize = skill.range;
             isSkilling = true;
             ApplyDamageRoutine = StartCoroutine(skillDuration());
         }
@@ -66,7 +66,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (!isSkilling)
         {
             skill = data.CurCharacter.specialSkill;
-            aim.attacksize = skill.rangeAmount;
+            aim.attacksize = skill.range;
             isSkilling = true;
             ApplyDamageRoutine = StartCoroutine(skillDuration());
         }
@@ -93,17 +93,11 @@ public class PlayerSkillAttacker : MonoBehaviour
             isPlayingSkillAnim = true;
         }
 
-        if (skill.range == Skill.Range.Circle)
-            angle = 180;
-        else if (skill.range == Skill.Range.OneDirection)
-            angle = 15;
-        else
-            angle = 60;
-
-        rangeAmount = skill.rangeAmount;
+        angle = skill.angle;
+        range = skill.range;
 
         
-        Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.rangeAmount);
+        Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
 
         foreach (Collider collider in colliders)
         {
@@ -140,8 +134,8 @@ public class PlayerSkillAttacker : MonoBehaviour
             return;
 
         Handles.color = Color.cyan;
-        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, rangeAmount);
-        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, rangeAmount);
+        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, range);
+        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, range);
     }
 
 }

@@ -12,20 +12,13 @@ public class Skill : ScriptableObject
         Special
     }
 
-    public enum Range
-    {
-        Circle,
-        OneDirection,
-        Sector
-    }
-
     [SerializeField] public string skillName;
     [SerializeField] public Sprite image;
     [SerializeField] public string description;
 
     [SerializeField] public Key key;
-    [SerializeField] public Range range;
-    [SerializeField] public float rangeAmount;
+    [SerializeField] public float angle; //실제 원하는 각도의 * 0.5로 설정바람
+    [SerializeField] public float range;
     [SerializeField] public bool isDash;
     [SerializeField] public float duration;
     [SerializeField] public float coolTime;
@@ -39,7 +32,7 @@ public class Skill : ScriptableObject
 
         skill.key = key;
         skill.range = range;
-        skill.rangeAmount = rangeAmount;
+        skill.angle = angle;
         skill.isDash = isDash;
         skill.coolTime = coolTime;
 
