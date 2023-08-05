@@ -21,7 +21,6 @@ MonoBehaviour:
   isDash: 1
   duration: 1
   coolTime: 14
-  skillAnimation: {fileID: -203655887218126122, guid: ea77702b2ecccce4a95af75394db4ea9,
-    type: 3}
+  skillAnimation: {fileID: 7400000, guid: e5dd8ae71386b664998bad41bc7d4bb7, type: 2}
   playerKnockback: 160
   coreKnockback: 920

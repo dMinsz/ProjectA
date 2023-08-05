@@ -39,26 +39,37 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     public void OnPrimarySkill(InputValue value)
     {
-        skill = data.CurCharacter.primarySkill;
-        aim.attacksize = skill.rangeAmount;
-        isSkilling = true;
-        ApplyDamageRoutine = StartCoroutine(skillDuration());
+        if (!isSkilling) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
+        {
+            skill = data.CurCharacter.primarySkill;
+            aim.attacksize = skill.rangeAmount;
+            isSkilling = true;
+            ApplyDamageRoutine = StartCoroutine(skillDuration());
+        }
+            
     }
 
     public void OnSecondarySkill (InputValue value)
     {
-        skill = data.CurCharacter.secondarySkill;
-        aim.attacksize = skill.rangeAmount;
-        isSkilling = true;
-        ApplyDamageRoutine = StartCoroutine(skillDuration());
+        if (!isSkilling)
+        {
+            skill = data.CurCharacter.secondarySkill;
+            aim.attacksize = skill.rangeAmount;
+            isSkilling = true;
+            ApplyDamageRoutine = StartCoroutine(skillDuration());
+        }
+            
     }
 
     public void OnSpecailSkill(InputValue value)
     {
-        skill = data.CurCharacter.specialSkill;
-        aim.attacksize = skill.rangeAmount;
-        isSkilling = true;
-        ApplyDamageRoutine = StartCoroutine(skillDuration());
+        if (!isSkilling)
+        {
+            skill = data.CurCharacter.specialSkill;
+            aim.attacksize = skill.rangeAmount;
+            isSkilling = true;
+            ApplyDamageRoutine = StartCoroutine(skillDuration());
+        }
     }
 
     IEnumerator skillDuration()
@@ -115,9 +126,9 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.gameObject.tag == "Player")
             {
-                if (collider.GetComponent<PlayerGetDamage>().damaged == false)
+                if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
                 {
-                    collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
+                    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
                 }
             }
         }

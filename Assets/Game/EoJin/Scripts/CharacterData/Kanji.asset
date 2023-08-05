@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: Link
+  m_Name: Kanji
   m_EditorClassIdentifier: 
-  characterName: Link
-  avatar: {fileID: 9000000, guid: 44fe62638a4f4d543b00b85a5fd2b734, type: 3}
+  characterName: Kanji
+  avatar: {fileID: 9000000, guid: f7ad42a6d418d0b4d974cb46a4131ec9, type: 3}
   stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
   primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
   secondarySkill: {fileID: 11400000, guid: 74963673851f31348941000e3c603037, type: 2}
