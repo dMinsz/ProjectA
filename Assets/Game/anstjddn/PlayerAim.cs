@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 namespace anstjddn
 {
-    public class PlayerAim : MonoBehaviourPun
+    public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
     {
         [SerializeField] GameObject mouse;
         //어택범위,충돌할 레이어, 공을 미는힘
@@ -21,6 +21,12 @@ namespace anstjddn
         private Vector3 mousepos;
 
         public GameObject puck;
+        private float circleReuslt;
+
+        private void Awake()
+        {
+            circleReuslt = Mathf.Pow(attacksize, 2);
+        }
 
         private void Start()
         {
@@ -47,21 +53,37 @@ namespace anstjddn
 
         private void OnAttack(InputValue Value)
         {
-            photonView.RPC("RequestAttack", RpcTarget.MasterClient, SetMousePos(), transform.position , puck.transform.position);
+            //photonView.RPC("RequestAttack", RpcTarget.MasterClient, SetMousePos(), transform.position , puck.transform.position);
+
+            //StartCoroutine(AttackTimeing(SetMousePos(), transform.position, puck.transform.position));
+            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, SetMousePos(), transform.position, puck.transform.position);
         }
 
         [PunRPC]
-        private void RequestAttack(Vector3 mousePos , Vector3 playerPos, Vector3 puckPos) 
+        private void RequestAttack(Vector3 mousePos, Vector3 playerPos, Vector3 puckPos) 
         {
-           
-            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos , playerPos, puckPos);
+            photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos, playerPos, puckPos);
+        }
+        
+        [PunRPC]
+        private void ResultAttack(Vector3 mousePos, Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
+        {
+            StartCoroutine(AttackTimeing(mousePos, playerPos, puckPos));
         }
 
-        [PunRPC]
-        private void ResultAttack(Vector3 mousePos,Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
-        {
-            StartCoroutine(AttackTimeing(mousePos, playerPos , puckPos,  info));
-        }
+
+        //[PunRPC]
+        //private void RequestAttack(Vector3 mousePos , Vector3 playerPos, Vector3 puckPos) 
+        //{
+
+        //    photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos , playerPos, puckPos);
+        //}
+
+        //[PunRPC]
+        //private void ResultAttack(Vector3 mousePos,Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
+        //{
+        //    StartCoroutine(AttackTimeing(mousePos, playerPos , puckPos,  info));
+        //}
 
 
         // 어택 범위 설정
@@ -73,19 +95,18 @@ namespace anstjddn
 
         //어택타이밍 구현
         [PunRPC]
-        IEnumerator AttackTimeing(Vector3 mousePos, Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
+        IEnumerator AttackTimeing(Vector3 mousePos, Vector3 playerPos, Vector3 puckPos)//, PhotonMessageInfo info)
         {
 
-            if (Mathf.Pow(attacksize,2) >= Mathf.Pow(playerPos.x - puckPos.x,2) + Mathf.Pow(playerPos.z - puckPos.z,2) ) // 원의 범위안에 좌표가있는지 확인 
+            if (circleReuslt >= Mathf.Pow(playerPos.x - puckPos.x, 2) + Mathf.Pow(playerPos.z - puckPos.z, 2)) // 원의 범위안에 좌표가있는지 확인 
             {
-                isattack = true;
 
                 Vector3 dir = (mousePos - playerPos).normalized;
                 Vector3 newVelocity = dir * attackpower;
-                //collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
 
-                puck.GetComponent<Puck>().SetPos(newVelocity, info);
+                puck.GetComponent<Puck>().SetPos(newVelocity , puckPos);//, info);
 
+                isattack = true;
                 yield return new WaitForSeconds(attackCoolTime);
                 isattack = false;
             }
@@ -98,24 +119,40 @@ namespace anstjddn
 
             //        isattack = true;
             //        //Vector3 dir = (mousepos - transform.position).normalized;
-                    
+
             //        Vector3 dir = (mousePos - playerPos).normalized;
 
             //        Vector3 newVelocity = dir * attackpower;
             //        //collider.GetComponent<Rigidbody>().velocity = dir * attackpower;
 
-            //        collider.GetComponent<Puck>().SetPos(newVelocity, info);
+            //        collider.GetComponent<Puck>().SetPos(newVelocity);
 
 
-            //      //  Attacksound?.Invoke();
+            //        //  Attacksound?.Invoke();
             //        yield return new WaitForSeconds(attackCoolTime);
             //        isattack = false;
             //    }
             //    //플레이어 공격 구현 필요
-               
+
             //}
         }
+
+
+
+        public void OnPhotonInstantiate(PhotonMessageInfo info)
+        {
+            object[] instantiationData = info.photonView.InstantiationData;
+            int puckViewID = (int)instantiationData[0];
+
+            var puckview = PhotonView.Find(puckViewID);
+
+            puck = puckview.gameObject;
+
+        }
+
+
     }
+
 
 
 }

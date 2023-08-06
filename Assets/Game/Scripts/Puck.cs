@@ -106,9 +106,9 @@ public class Puck : MonoBehaviourPun
     }
 
 
-    public void SetPos(Vector3 newvelocity , PhotonMessageInfo info)
+    public void SetPos(Vector3 newvelocity,Vector3 puckPos) //, PhotonMessageInfo info)
     {
-        //rb.velocity = Vector3.zero;
+        //transform.position = puckPos;
         rb.velocity = newvelocity; 
     }
 

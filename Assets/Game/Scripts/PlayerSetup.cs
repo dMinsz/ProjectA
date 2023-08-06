@@ -22,11 +22,6 @@ public class PlayerSetup : MonoBehaviourPun
     {
         input = GetComponent<PlayerInput>();
 
-        //playerTeam = PhotonNetwork.LocalPlayer.GetTeamColor();
-
-      
-        //photonView.RPC("RequestSetPlayerColor", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.GetTeamColor());        
-
         if (!photonView.IsMine)
         {
             floorMark.gameObject.SetActive(false);

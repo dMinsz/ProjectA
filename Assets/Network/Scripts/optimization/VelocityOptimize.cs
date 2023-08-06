@@ -1,8 +1,9 @@
 using UnityEngine;
 using Photon.Pun;
+using anstjddn;
+
 public class VelocityOptimize : MonoBehaviourPun, IPunObservable
 {
-    //Values that will be synced over network
     Vector3 latestPos;
     Quaternion latestRot;
     Vector3 latestVel;

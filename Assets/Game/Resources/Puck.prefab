@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4879990131856591327}
   - component: {fileID: 4696916939752997064}
   - component: {fileID: 4696088597815211373}
+  - component: {fileID: 4684028944464254959}
   m_Layer: 7
   m_Name: Puck
   m_TagString: Untagged
@@ -98,9 +99,9 @@ Rigidbody:
   m_GameObject: {fileID: 2977464821111569417}
   serializedVersion: 2
   m_Mass: 0.02
-  m_Drag: 0.1
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_Drag: 0.01
+  m_AngularDrag: 0
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
@@ -134,7 +135,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 256
-  maxSpeed: 30
+  maxSpeed: 20
 --- !u!114 &4879990131856591327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +157,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 4696916939752997064}
   - {fileID: 4696088597815211373}
+  - {fileID: 4684028944464254959}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -173,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
   m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
+  m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &4696088597815211373
 MonoBehaviour:
@@ -187,3 +189,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c8cca42da7ec0547ad1470f7f91f9fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4684028944464254959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2977464821111569417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
