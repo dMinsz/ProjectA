@@ -7,6 +7,8 @@ public static class CustomProperty
     public const string LOAD = "Load";
     public const string NUMBER = "Number";
     public const string TEAM = "Team";
+    public const string BLUETEAMSCOUNT = "BlueTeamsCount";
+    public const string REDTEAMSCOUNT = "RedTeamsCount";
 
     public const string LOADTIME = "LoadTime";
 
@@ -72,5 +74,39 @@ public static class CustomProperty
         PhotonHashtable property = player.CustomProperties;
         property[TEAM] = team;
         player.SetCustomProperties(property);
+    }
+
+    public static int GetTeamPlayersCount(this Room room, PlayerEntry.TeamColor teamColor)
+    {
+        PhotonHashtable property = room.CustomProperties;
+        if (teamColor == PlayerEntry.TeamColor.Blue)
+        {
+            if (property.ContainsKey(BLUETEAMSCOUNT))
+                return (int)property[BLUETEAMSCOUNT];
+            else
+                return 0;
+        }
+        else
+        {
+            if (property.ContainsKey(REDTEAMSCOUNT))
+                return (int)property[REDTEAMSCOUNT];
+            else
+                return 0;
+        }
+    }
+
+    public static void SetTeamPlayersCount(this Room room, PlayerEntry.TeamColor teamColor, int teamPlayersCount)
+    {
+        PhotonHashtable property = room.CustomProperties;
+        if (teamColor == PlayerEntry.TeamColor.Blue)
+        {
+            property[BLUETEAMSCOUNT] = teamPlayersCount;
+            room.SetCustomProperties(property);
+        }
+        else if (teamColor == PlayerEntry.TeamColor.Red)
+        {
+            property[REDTEAMSCOUNT] = teamPlayersCount;
+            room.SetCustomProperties(property);
+        }
     }
 }

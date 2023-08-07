@@ -92,6 +92,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomPanel.PlayerPropertiesUpdate(targetPlayer, changedProps);
     }
 
+    public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
+    {
+        roomPanel.RoomPropertiesUpdate(propertiesThatChanged);
+    }
+
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         roomPanel.MasterClientSwitched(newMasterClient);

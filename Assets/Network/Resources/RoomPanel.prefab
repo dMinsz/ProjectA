@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1204404545}
   - component: {fileID: 1204404544}
   m_Layer: 5
-  m_Name: PlayerPanel
+  m_Name: BlueTeamPlayerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.2}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -200, y: -200}
+  m_AnchoredPosition: {x: 0, y: 199.99998}
+  m_SizeDelta: {x: -200, y: -600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1204404546
 CanvasRenderer:
@@ -217,10 +217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00bc5bcb7a03914e9d569605879cd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerContent: {fileID: 1204404543}
+  BlueTeamPlayerContent: {fileID: 1204404543}
+  RedTeamPlayerContent: {fileID: 5865679734357598368}
   playerEntryPrefab: {fileID: 3731023699572381743, guid: e6e87caa82c916447b533b2eb2185a63,
     type: 3}
   startButton: {fileID: 5916088861808141049}
+  localPlayerEntry: {fileID: 0}
 --- !u!1 &1670856568764299203
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +256,7 @@ RectTransform:
   m_Children:
   - {fileID: 9115455685286108609}
   m_Father: {fileID: 2035593201935963733}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.2}
   m_AnchorMax: {x: 0, y: 0.2}
@@ -345,7 +347,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2096640689}
         m_TargetAssemblyTypeName: RoomPanel, Assembly-CSharp
-        m_MethodName: SwitchRedTeamButton
+        m_MethodName: SwitchLocalPlayerRedTeam
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -658,7 +660,7 @@ RectTransform:
   m_Children:
   - {fileID: 8462854891856828967}
   m_Father: {fileID: 2035593201935963733}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.2}
   m_AnchorMax: {x: 0, y: 0.2}
@@ -749,7 +751,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2096640689}
         m_TargetAssemblyTypeName: RoomPanel, Assembly-CSharp
-        m_MethodName: SwitchBlueTeamButton
+        m_MethodName: SwitchLocalPlayerBlueTeam
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -792,7 +794,7 @@ RectTransform:
   m_Children:
   - {fileID: 3534591086354487245}
   m_Father: {fileID: 2035593201935963733}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.2}
   m_AnchorMax: {x: 0, y: 0.2}
@@ -893,6 +895,109 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &5537836925672664378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5865679734357598368}
+  - component: {fileID: 1916652747390551184}
+  - component: {fileID: 4347777659912932661}
+  - component: {fileID: 6176732449621995084}
+  m_Layer: 5
+  m_Name: RedTeamPlayerPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5865679734357598368
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5537836925672664378}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2035593201935963733}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.2}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -200}
+  m_SizeDelta: {x: -200, y: -600}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1916652747390551184
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5537836925672664378}
+  m_CullTransparentMesh: 1
+--- !u!114 &4347777659912932661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5537836925672664378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6176732449621995084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5537836925672664378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 10
+  m_ChildAlignment: 0
+  m_Spacing: 10
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 1
+  m_ReverseArrangement: 0
 --- !u!1 &6269966179399734727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,7 +1166,7 @@ RectTransform:
   m_Children:
   - {fileID: 1688336357423545094}
   m_Father: {fileID: 2035593201935963733}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.2}
   m_AnchorMax: {x: 1, y: 0.2}
@@ -1193,6 +1298,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1204404543}
+  - {fileID: 5865679734357598368}
   - {fileID: 1059314874164842684}
   - {fileID: 2852808761482133313}
   - {fileID: 190378674137743658}

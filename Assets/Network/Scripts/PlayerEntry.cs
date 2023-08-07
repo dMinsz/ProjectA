@@ -15,7 +15,7 @@ public class PlayerEntry : MonoBehaviour
 
     private Player player;
 
-    public enum TeamColor { None, Blue, Red}
+    public enum TeamColor { Blue, Red}
 
     private void Update()
     {
@@ -35,8 +35,8 @@ public class PlayerEntry : MonoBehaviour
     {
         int team = player.GetTeamColor();
 
-        if (team == (int)TeamColor.None)
-            return;
+        //if (team == (int)TeamColor.None)
+        //    return;
 
         bool ready = player.GetReady();
         ready = !ready;
@@ -49,8 +49,8 @@ public class PlayerEntry : MonoBehaviour
             playerTeam.text = "Blue";
         else if (team == (int)TeamColor.Red)
             playerTeam.text = "Red";
-        else
-            playerTeam.text = "None";
+        //else
+        //    playerTeam.text = "None";
     }
 
     public void ChangeCustomProperty(PhotonHashtable property)
