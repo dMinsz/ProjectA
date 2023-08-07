@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerSkillAttacker : MonoBehaviour
 {
+    /*
+     * 윗면의 반만 투명화된 메쉬를 입힌 큐브를 기준으로 작성 됐으므로 무조건 prefab에 있는 큐브에 적용시킬 것
+     */
+
     public Skill skill;
     DataManager data;
     [SerializeField] bool debug;
@@ -108,26 +112,35 @@ public class PlayerSkillAttacker : MonoBehaviour
     private void MakeSkillRangeSquareForm()
     {
         float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 153f;
-        Vector3 boxSize = new Vector3(additionalRange, 0.1f, range);
+        //additionalRange에 float를 곱해주며 스킬범위 민감도 설정가능
+        Vector3 boxSize = new Vector3(additionalRange * 0.6f, 0.1f, range);
 
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, Quaternion.Euler(0f, angle, 0f));
-        DetectObjectsInCollider(colliders);
+        DetectObjectsCollider(colliders);
     }
 
     private void MakeSkillRangeSectorForm()
     {
         Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
-        DetectObjectsInCollider(colliders);
+        DetectObjectsCollider(colliders);
     }
 
-    private void DetectObjectsInCollider(Collider[] colliders)
+    private void DetectObjectsCollider(Collider[] colliders)
     {
         foreach (Collider collider in colliders)
         {
-            Vector3 playerNMouse = (transform.position - aim.mousepos).normalized;
-            Vector3 playerNTarget = (collider.transform.position - transform.position).normalized;
+            Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
+            Vector3 colliderPosButYIsZero = new Vector3 (collider.transform.position.x, 0f, collider.transform.position.z);
+            Vector3 playerNTarget = (colliderPosButYIsZero - transform.position).normalized;
+            if (collider.gameObject.layer == 7)
+            {
+                Debug.Log(Vector3.Dot(playerNMouse, playerNTarget));
+            }
 
-            if (Vector3.Dot(-playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
+            if (skill.rangeStyle == Skill.RangeStyle.Square)
+                angle = 90f;
+
+            if (Vector3.Dot(playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
                 continue;
 
             if (collider.isTrigger == true)
