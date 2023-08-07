@@ -11,7 +11,7 @@ public class Skill : ScriptableObject
         Secondary,
         Special
     }
-    
+
     public enum RangeStyle
     {
         Arc,
@@ -53,7 +53,7 @@ public class Skill : ScriptableObject
 
     public void Use(Skill skill)
     {
-        
+
     }
 
 

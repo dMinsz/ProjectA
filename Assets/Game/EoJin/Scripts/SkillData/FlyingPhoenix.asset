@@ -19,7 +19,7 @@ MonoBehaviour:
   rangeStyle: 2
   angle: 0
   range: 10
-  additionalRange: 1.5
+  additionalRange: 2
   isDash: 1
   duration: 1
   coolTime: 14

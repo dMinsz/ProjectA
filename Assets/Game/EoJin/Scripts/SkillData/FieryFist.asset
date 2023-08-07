@@ -16,8 +16,10 @@ MonoBehaviour:
   image: {fileID: 0}
   description: 
   key: 0
-  angle: 10
-  range: 10
+  rangeStyle: 0
+  angle: 60
+  range: 6
+  additionalRange: 0
   isDash: 0
   duration: 1
   coolTime: 7

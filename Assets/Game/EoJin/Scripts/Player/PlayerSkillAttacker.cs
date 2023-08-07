@@ -51,10 +51,10 @@ public class PlayerSkillAttacker : MonoBehaviour
             isSkilling = true;
             ApplyDamageRoutine = StartCoroutine(skillDuration());
         }
-            
+
     }
 
-    public void OnSecondarySkill (InputValue value)
+    public void OnSecondarySkill(InputValue value)
     {
         if (!isSkilling)
         {
@@ -63,7 +63,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             isSkilling = true;
             ApplyDamageRoutine = StartCoroutine(skillDuration());
         }
-            
+
     }
 
     public void OnSpecailSkill(InputValue value)
@@ -130,12 +130,8 @@ public class PlayerSkillAttacker : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
-            Vector3 colliderPosButYIsZero = new Vector3 (collider.transform.position.x, 0f, collider.transform.position.z);
+            Vector3 colliderPosButYIsZero = new Vector3(collider.transform.position.x, 0f, collider.transform.position.z);
             Vector3 playerNTarget = (colliderPosButYIsZero - transform.position).normalized;
-            if (collider.gameObject.layer == 7)
-            {
-                Debug.Log(Vector3.Dot(playerNMouse, playerNTarget));
-            }
 
             if (skill.rangeStyle == Skill.RangeStyle.Square)
                 angle = 90f;
@@ -148,7 +144,6 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.gameObject.layer == 7)
             {
-                Debug.Log($"{collider.gameObject.name}에게 Attack");
                 aim.Attack();
                 continue;
             }
@@ -165,27 +160,21 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (!debug)
-            return;
-
-        if (skill.rangeStyle == Skill.RangeStyle.Square)
+        if (skill == null || !debug || skill.rangeStyle == Skill.RangeStyle.Square)
             return;
 
         Handles.color = Color.cyan;
 
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, range);
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, range);
-        
+
     }
 
     private void OnDrawGizmos()
     {
         //Style Square의 Gizmos의 경우 플레이어의 뒷부분까지 그려지나 실제 Skill 범위는 Gizmos의 반에 플레이어 앞쪽을 향함
 
-        if (!debug)
-            return;
-
-        if (skill.rangeStyle != Skill.RangeStyle.Square)
+        if (skill == null || !debug || skill.rangeStyle != Skill.RangeStyle.Square || skill.rangeStyle != Skill.RangeStyle.Square)
             return;
 
         Gizmos.color = Color.cyan;

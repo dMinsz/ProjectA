@@ -77,12 +77,12 @@ public class DrawSkillRange : MonoBehaviour
         }
 
         line.gameObject.SetActive(true);
+        line.GetComponent<LineRenderer>().startWidth = thickness;
+        line.GetComponent<LineRenderer>().endWidth = thickness;
         line.GetComponent<LineRenderer>().materials[0].SetColor("_EmissionColor", color);
 
         Vector3 position1 = new Vector3(transform.position.x - sphereInCube2.transform.position.x, 0f, transform.position.z - sphereInCube2.transform.position.z);
         Vector3 position2 = new Vector3(transform.position.x - sphereInCube.transform.position.x, 0f, transform.position.z - sphereInCube.transform.position.z);
-
-        //MakeArc(position2, position1);
 
         line.GetComponent<LineRenderer>().SetPosition(0, -position1);
         line.GetComponent<LineRenderer>().SetPosition(1, (-position1 + -position2) / 2);
@@ -125,7 +125,7 @@ public class DrawSkillRange : MonoBehaviour
             cube.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, attacker.angle + angle, cube.transform.rotation.z);
             cube2.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, -attacker.angle + angle, cube.transform.rotation.z);
         }
-        
+
     }
 
     public void SetIsDrawingTrue()
