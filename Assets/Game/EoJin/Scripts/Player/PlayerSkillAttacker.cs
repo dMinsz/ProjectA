@@ -11,6 +11,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     [SerializeField] bool debug;
     [SerializeField] float control; //플레이어 위치에서 얼마나 떨어진 거리에서 어택 범위 발동할 지
     float range;
+    float additionalRange;
     public float angle;
     public bool isSkilling = false;
     bool isPlayingSkillAnim = false;
@@ -95,22 +96,43 @@ public class PlayerSkillAttacker : MonoBehaviour
 
         angle = skill.angle;
         range = skill.range;
+        additionalRange = skill.additionalRange;
 
-        
+        if (skill.rangeStyle == Skill.RangeStyle.Square)
+            MakeSkillRangeSquareForm();
+        else
+            MakeSkillRangeSectorForm();
+
+    }
+
+    private void MakeSkillRangeSquareForm()
+    {
+        float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 153f;
+        Vector3 boxSize = new Vector3(additionalRange, 0.1f, range);
+
+        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, Quaternion.Euler(0f, angle, 0f));
+        DetectObjectsInCollider(colliders);
+    }
+
+    private void MakeSkillRangeSectorForm()
+    {
         Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
+        DetectObjectsInCollider(colliders);
+    }
 
+    private void DetectObjectsInCollider(Collider[] colliders)
+    {
         foreach (Collider collider in colliders)
         {
             Vector3 playerNMouse = (transform.position - aim.mousepos).normalized;
             Vector3 playerNTarget = (collider.transform.position - transform.position).normalized;
-            Vector3 dirTarget = (collider.transform.position - transform.position).normalized;
 
             if (Vector3.Dot(-playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
                 continue;
 
             if (collider.isTrigger == true)
                 continue;
-            
+
             if (collider.gameObject.layer == 7)
             {
                 Debug.Log($"{collider.gameObject.name}에게 Attack");
@@ -133,9 +155,32 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (!debug)
             return;
 
+        if (skill.rangeStyle == Skill.RangeStyle.Square)
+            return;
+
         Handles.color = Color.cyan;
+
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, range);
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, range);
+        
     }
 
+    private void OnDrawGizmos()
+    {
+        //Style Square의 Gizmos의 경우 플레이어의 뒷부분까지 그려지나 실제 Skill 범위는 Gizmos의 반에 플레이어 앞쪽을 향함
+
+        if (!debug)
+            return;
+
+        if (skill.rangeStyle != Skill.RangeStyle.Square)
+            return;
+
+        Gizmos.color = Color.cyan;
+
+        float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 150f;
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, Quaternion.Euler(0f, angle, 0f), new Vector3(1f, 1f, 1f));
+        Gizmos.matrix = rotationMatrix;
+
+        Gizmos.DrawCube(Vector3.zero, new Vector3(additionalRange, 0.01f, range * 2f));
+    }
 }

@@ -9,8 +9,8 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] GameObject line;
     [SerializeField] GameObject cube;
     [SerializeField] GameObject cube2;
-    [SerializeField] GameObject sphereInCube;
-    [SerializeField] GameObject sphereInCube2;
+    GameObject sphereInCube;
+    GameObject sphereInCube2;
     [SerializeField] int linePoints;
     [SerializeField] float thickness;
     [SerializeField] Color color;
@@ -32,6 +32,13 @@ public class DrawSkillRange : MonoBehaviour
         line.SetActive(false);
         cube.SetActive(false);
         cube2.SetActive(false);
+
+        line.transform.position = transform.position;
+        cube.transform.position = transform.position;
+        cube2.transform.position = transform.position;
+
+        cube.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
+        cube2.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
     }
 
     public void Update()
@@ -57,7 +64,8 @@ public class DrawSkillRange : MonoBehaviour
     public void Draw()
     {
         DrawWithTwoCubes();
-        DrawWithLineRenderer();
+        if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
+            DrawWithLineRenderer();
     }
 
     public void DrawWithLineRenderer()
@@ -82,38 +90,9 @@ public class DrawSkillRange : MonoBehaviour
 
     }
 
-    public void MakeLineToArc(Vector3 startLoc, Vector3 endLoc)
-    {
-        float angle = attacker.skill.angle;
-        Vector3 outDirection = (transform.position - aim.mousepos).normalized;
-
-        float radAngle = angle * (Mathf.PI / 360);
-
-        List<Vector3> points = new List<Vector3>();
-        Vector3 initialDirection = (endLoc - startLoc).normalized;
-        Vector3 maxOutDirection = Vector3.RotateTowards(initialDirection, outDirection, radAngle, 0);
-
-        Vector3 maxInDirection = Vector3.RotateTowards(initialDirection, outDirection * -1, radAngle, 0);
-
-        Vector3 currentDirection = maxOutDirection;
-        points.Add(startLoc);
-
-        float tChange = linePoints - 1;
-        tChange /= (linePoints - 1) * (linePoints - 1);
-
-        for (int index = 1; index <= linePoints; index++)
-        {
-            points.Add(points[index - 1] + (currentDirection / linePoints));
-            currentDirection = Vector3.Lerp(maxOutDirection, maxInDirection, (index * tChange));
-        }
-
-        line.GetComponent<LineRenderer>().positionCount = points.Count;
-        line.GetComponent<LineRenderer>().SetPositions(points.ToArray());
-    }
-
     public void DrawWithTwoCubes()
     {
-        if (attacker.angle == 180)
+        if (attacker.skill.rangeStyle == Skill.RangeStyle.Circle)
         {
             cube.SetActive(false);
             cube2.SetActive(false);
@@ -123,19 +102,30 @@ public class DrawSkillRange : MonoBehaviour
         cube.SetActive(true);
         cube2.SetActive(true);
 
-        cube.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
-        cube2.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
-        //스킬마다 색을 다르게 구현하는 게 아닌 플레이어마다 고유의 스킬 색 하나가 있는 경우는 SetColor을 Awake로 옮길 것
+        if (attacker.skill.rangeStyle == Skill.RangeStyle.Square)
+        {
+            cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
+            cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
+            //localScale.y가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-        cube.transform.localScale = new Vector3(thickness, 0.1f, attacker.skill.range * -1.35f);
-        cube2.transform.localScale = new Vector3(thickness, 0.1f, attacker.skill.range * -1.35f);
-        //localScale.y가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
+            float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 150f;
+            cube.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, angle, cube.transform.rotation.z);
+            cube2.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, angle, cube.transform.rotation.z);
+        }
 
-        float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 153f;
-        //각도 계산식이 왜 이렇게 나왔는지는 모르겠음..
+        if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
+        {
+            cube.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
+            cube2.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
+            //localScale.z가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-        cube.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, attacker.angle + angle, cube.transform.rotation.z);
-        cube2.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, -attacker.angle + angle, cube.transform.rotation.z);
+            float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 153f;
+            //각도 계산식이 왜 이렇게 나왔는지는 모르겠음..
+
+            cube.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, attacker.angle + angle, cube.transform.rotation.z);
+            cube2.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, -attacker.angle + angle, cube.transform.rotation.z);
+        }
+        
     }
 
     public void SetIsDrawingTrue()
