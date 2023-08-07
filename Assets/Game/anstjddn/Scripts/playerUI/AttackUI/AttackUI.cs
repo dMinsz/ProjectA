@@ -43,6 +43,9 @@ public class AttackUI : BaseUI
 
     IEnumerator cooltime(float time)
     {
+
+
+
         if (mouseattackcolltimeUI.GetComponent<Image>().fillAmount > 0)
         {
             playerAttackCoolTime.text = mouseattackcolltimeUI.GetComponent<Image>().fillAmount.ToString("F1");

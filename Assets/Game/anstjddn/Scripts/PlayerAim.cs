@@ -56,7 +56,7 @@ namespace anstjddn
 
         }
 
-        private void Attack()
+        public void Attack()
         {
             if (!isattack)
             {
@@ -79,7 +79,7 @@ namespace anstjddn
         {
           
                 isattack = true;
-             // playeranim.SetTrigger("attack");
+             playeranim.SetTrigger("attack");
                 Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize);
                 foreach (Collider collider in colliders)
                 {

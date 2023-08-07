@@ -11,22 +11,20 @@ namespace anstjddn
 
     public class playercontroll : MonoBehaviour
     {
-
+   
         //플레이어 무브 관련
         private Rigidbody playerrb;
         private Vector3 movedir;
         [SerializeField] public float movespeed;
 
-        private CharacterController contol;
 
         private Animator anim;
 
         private void Awake()
         {
-            contol = GetComponent<CharacterController>();
             playerrb = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
-         //   transform.rotation = Quaternion.Euler(0, -90, 0);
+  
         }
 
         private void Update()
