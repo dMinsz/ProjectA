@@ -53,9 +53,6 @@ namespace anstjddn
 
         private void OnAttack(InputValue Value)
         {
-            //photonView.RPC("RequestAttack", RpcTarget.MasterClient, SetMousePos(), transform.position , puck.transform.position);
-
-            //StartCoroutine(AttackTimeing(SetMousePos(), transform.position, puck.transform.position));
             photonView.RPC("ResultAttack", RpcTarget.AllViaServer, SetMousePos(), transform.position, puck.transform.position);
         }
 
@@ -71,19 +68,6 @@ namespace anstjddn
             StartCoroutine(AttackTimeing(mousePos, playerPos, puckPos));
         }
 
-
-        //[PunRPC]
-        //private void RequestAttack(Vector3 mousePos , Vector3 playerPos, Vector3 puckPos) 
-        //{
-
-        //    photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos , playerPos, puckPos);
-        //}
-
-        //[PunRPC]
-        //private void ResultAttack(Vector3 mousePos,Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
-        //{
-        //    StartCoroutine(AttackTimeing(mousePos, playerPos , puckPos,  info));
-        //}
 
 
         // 어택 범위 설정

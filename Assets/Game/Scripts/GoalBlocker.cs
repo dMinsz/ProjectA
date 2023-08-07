@@ -1,7 +1,8 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class GoalBlocker : MonoBehaviour
+public class GoalBlocker : MonoBehaviourPun
 {
     [SerializeField] bool isDebug;
     [SerializeField] GameObject blocker1;
@@ -11,13 +12,18 @@ public class GoalBlocker : MonoBehaviour
 
     private Coroutine moveRoutine;
     private bool movePossible = true;
+    private Collider coll;
 
+    private void Awake()
+    {
+        coll = GetComponent<Collider>();
+    }
     private void Start()    // Debug용
     {
         if (!isDebug)
             return;
 
-        moveRoutine = StartCoroutine(MoveRoutine());
+        //moveRoutine = StartCoroutine(MoveRoutine());
     }
 
     private void OnCollisionEnter(Collision collision)  // Puck 닿았으면 루틴 시작
@@ -25,10 +31,18 @@ public class GoalBlocker : MonoBehaviour
         if (!movePossible)
             return;
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
-            moveRoutine = StartCoroutine(MoveRoutine());
+            photonView.RPC("MoveBlockerToServer", RpcTarget.AllViaServer);
         }
+    }
+
+
+    [PunRPC]
+    public void MoveBlockerToServer() 
+    {
+        this.gameObject.GetComponent<Collider>().enabled = false;
+        moveRoutine = StartCoroutine(MoveRoutine());
     }
 
     IEnumerator MoveRoutine()
@@ -36,7 +50,7 @@ public class GoalBlocker : MonoBehaviour
         movePossible = false;
         float moveTime = 0;
 
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
 
         while (moveTime < moveStopTime)
         {
@@ -46,7 +60,8 @@ public class GoalBlocker : MonoBehaviour
             yield return null;
         }
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
 
         yield break;
     }

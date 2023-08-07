@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Puck : MonoBehaviourPun
@@ -13,14 +14,12 @@ public class Puck : MonoBehaviourPun
 
     private Rigidbody rb;
     private Renderer ren;
-
     Coroutine mainRoutine;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         ren = GetComponent<MeshRenderer>();
-
         velocityMaxSpeed = new Vector3(maxSpeed, 0, maxSpeed);
     }
 

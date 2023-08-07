@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -14,12 +15,17 @@ public class PlayerSetup : MonoBehaviourPun
     [SerializeField] Renderer surface;
     [SerializeField] Transform AttackRangeMark;
 
-    //private int playerTeam;
+    [HideInInspector]public int playerTeam;
+
+    [HideInInspector] public Vector3 originPos;
+    [HideInInspector] public Quaternion originRot;
+
 
     private PlayerInput input;
 
     private void Awake()
     {
+    
         input = GetComponent<PlayerInput>();
 
         if (!photonView.IsMine)
@@ -52,22 +58,22 @@ public class PlayerSetup : MonoBehaviourPun
     [PunRPC]
     public void SetPlayerColor(int team)
     {
-        //int playerNumber = photonView.Owner.GetPlayerNumber();
-
-        //if (playerColor == null || playerColor.Count <= playerNumber)
-        //    return;
 
         if (team == 0)
         {
+            playerTeam = 0;
             surface.material.color = playerColor[0];
             floorMarkImg.color = playerColor[0];
         }
         else
         {
+            playerTeam = team;
             surface.material.color = playerColor[team - 1];
             floorMarkImg.color = playerColor[team - 1];
         }
-        
+
+        originPos = transform.position;
+        originRot = transform.rotation;
     }
 }
 
