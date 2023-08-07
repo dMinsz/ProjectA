@@ -15,7 +15,7 @@ public class PlayerEntry : MonoBehaviour
 
     private Player player;
 
-    public enum TeamColor { Blue, Red}
+    public enum TeamColor { Blue, Red }
 
     private void Update()
     {
@@ -33,7 +33,7 @@ public class PlayerEntry : MonoBehaviour
 
     public void Ready()
     {
-        int team = player.GetTeamColor();
+        //int team = player.GetTeamColor();
 
         //if (team == (int)TeamColor.None)
         //    return;
@@ -43,12 +43,18 @@ public class PlayerEntry : MonoBehaviour
         player.SetReady(ready);
     }
 
-    private void Team(int team)
+    public void Team(int team)
     {
         if (team == (int)TeamColor.Blue)
+        {
             playerTeam.text = "Blue";
-        else if (team == (int)TeamColor.Red)
+            //player.SetTeamColor(team);
+        }
+        else
+        {
             playerTeam.text = "Red";
+            //player.SetTeamColor(team);
+        }
         //else
         //    playerTeam.text = "None";
     }
@@ -70,7 +76,7 @@ public class PlayerEntry : MonoBehaviour
             int team = (int)teamvalue;
             Team(team); 
         }
-        else
-            playerTeam.text = "None";
+        //else
+        //    playerTeam.text = "None";
     }
 }

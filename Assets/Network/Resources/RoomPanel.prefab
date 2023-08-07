@@ -217,12 +217,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00bc5bcb7a03914e9d569605879cd1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlueTeamPlayerContent: {fileID: 1204404543}
-  RedTeamPlayerContent: {fileID: 5865679734357598368}
+  blueTeamPlayerContent: {fileID: 1204404543}
+  redTeamPlayerContent: {fileID: 5865679734357598368}
   playerEntryPrefab: {fileID: 3731023699572381743, guid: e6e87caa82c916447b533b2eb2185a63,
     type: 3}
   startButton: {fileID: 5916088861808141049}
-  localPlayerEntry: {fileID: 0}
 --- !u!1 &1670856568764299203
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +346,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2096640689}
         m_TargetAssemblyTypeName: RoomPanel, Assembly-CSharp
-        m_MethodName: SwitchLocalPlayerRedTeam
+        m_MethodName: OnSwitchRedTeamButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -751,7 +750,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2096640689}
         m_TargetAssemblyTypeName: RoomPanel, Assembly-CSharp
-        m_MethodName: SwitchLocalPlayerBlueTeam
+        m_MethodName: OnSwitchBlueTeamButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

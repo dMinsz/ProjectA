@@ -9,10 +9,9 @@ using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomPanel : MonoBehaviour
 {
-    [SerializeField] RectTransform BlueTeamPlayerContent;
-    [SerializeField] RectTransform RedTeamPlayerContent;
+    [SerializeField] RectTransform blueTeamPlayerContent;
+    [SerializeField] RectTransform redTeamPlayerContent;
     [SerializeField] PlayerEntry playerEntryPrefab;
-    [SerializeField] PlayerEntry localPlayerEntry;
     [SerializeField] Button startButton;
 
     private int blueTeamsCount;
@@ -27,33 +26,32 @@ public class RoomPanel : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(blueTeamsCount + "blueTeamsCount");
         Debug.Log(PhotonNetwork.CurrentRoom.GetTeamPlayersCount(PlayerEntry.TeamColor.Blue) + "GetBlueTeamPlayersCount");
-        Debug.Log(redTeamsCount + "redTeamsCount");
         Debug.Log(PhotonNetwork.CurrentRoom.GetTeamPlayersCount(PlayerEntry.TeamColor.Red) + "GetRedTeamPlayersCount");
     }
 
     private void OnEnable()
     {
-        //foreach (Player player in PhotonNetwork.PlayerList)
-        //{
-        //if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)   // 팀별로 구분
-        //{
-        //    PlayerEntry entry = Instantiate(playerEntryPrefab, BlueTeamplayerContent);
-        //    entry.SetPlayer(player);
-        //    playerDictionary.Add(player.ActorNumber, entry);
-        //}
-        //else
-        //{
-        //    PlayerEntry entry = Instantiate(playerEntryPrefab, RedTeamplayerContent);
-        //    entry.SetPlayer(player);
-        //    playerDictionary.Add(player.ActorNumber, entry);
-        //}
-        //}
-        TeamDivision();
-        PhotonNetwork.LocalPlayer.SetReady(false);
-        PhotonNetwork.LocalPlayer.SetLoad(false);
-        // PhotonNetwork.LocalPlayer.SetTeamColor(0);   // 팀 초기화
+        foreach (Player player in PhotonNetwork.PlayerList)     // 팀별로 구분
+        {
+            if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+            {
+                PlayerEntry entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
+                entry.SetPlayer(player);
+                playerDictionary.Add(player.ActorNumber, entry);
+                PhotonNetwork.LocalPlayer.SetReady(false);
+                PhotonNetwork.LocalPlayer.SetLoad(false);
+            }
+            else if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red)
+            {
+                PlayerEntry entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
+                entry.SetPlayer(player);
+                playerDictionary.Add(player.ActorNumber, entry);
+                PhotonNetwork.LocalPlayer.SetReady(false);
+                PhotonNetwork.LocalPlayer.SetLoad(false);
+            }
+        }
+        AllPlayerTeamCheck();
 
         AllPlayerReadyCheck();
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -65,79 +63,51 @@ public class RoomPanel : MonoBehaviour
         {
             Destroy(playerDictionary[actorNumber].gameObject);
         }
+
         playerDictionary.Clear();
 
         PhotonNetwork.AutomaticallySyncScene = false;
     }
 
-    private void TeamDivision()     // 팀별로 구분
-    {
-        blueTeamsCount = 0;
-        redTeamsCount = 0;
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-            {
-                //PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Blue, ++blueTeamsCount);
-                ++blueTeamsCount;
-                PlayerEntry entry = Instantiate(playerEntryPrefab, BlueTeamPlayerContent);
-                entry.SetPlayer(player);
-                playerDictionary.Add(player.ActorNumber, entry);
-
-                if (player == PhotonNetwork.LocalPlayer)
-                    localPlayerEntry = entry;
-            }
-            else
-            {
-                //PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Red, ++redTeamsCount);
-                ++redTeamsCount;
-                PlayerEntry entry = Instantiate(playerEntryPrefab, RedTeamPlayerContent);
-                entry.SetPlayer(player);
-                playerDictionary.Add(player.ActorNumber, entry);
-
-                if (player == PhotonNetwork.LocalPlayer)
-                    localPlayerEntry = entry;
-            }
-        }
-    }
-
     public void PlayerEnterRoom(Player newPlayer)
     {
         if (blueTeamsCount <= redTeamsCount)
-        {
-            PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
-            //PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Blue, ++blueTeamsCount);
-        }
+            newPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
         else
+            newPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
+
+        if (newPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
         {
-            PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
-            //PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Red, ++redTeamsCount);
+            PlayerEntry entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
+            entry.SetPlayer(newPlayer);
+            playerDictionary.Add(newPlayer.ActorNumber, entry);
+        }
+        else if (newPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Red)
+        {
+            PlayerEntry entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
+            entry.SetPlayer(newPlayer);
+            playerDictionary.Add(newPlayer.ActorNumber, entry);
         }
 
-        TeamDivision();
-
-        //PlayerEntry entry = Instantiate(playerEntryPrefab, playerContent);
-        //entry.SetPlayer(newPlayer);
-        //playerDictionary.Add(newPlayer.ActorNumber, entry);
+        AllPlayerTeamCheck();
         AllPlayerReadyCheck();
     }
 
     public void PlayerLeftRoom(Player otherPlayer)
     {
-        //if (otherPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-        //    PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Blue, --blueTeamsCount);
-        //else
-        //    PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Red, --redTeamsCount);
-
         Destroy(playerDictionary[otherPlayer.ActorNumber].gameObject);
         playerDictionary.Remove(otherPlayer.ActorNumber);
-        TeamDivision();
+        AllPlayerTeamCheck();
         AllPlayerReadyCheck();
     }
 
     public void PlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
     {
         playerDictionary[targetPlayer.ActorNumber].ChangeCustomProperty(changedProps);
+
+        if (changedProps.ContainsKey(CustomProperty.TEAM))
+            RenewalPlayerEntry();
+
         AllPlayerReadyCheck();
     }
 
@@ -147,12 +117,13 @@ public class RoomPanel : MonoBehaviour
             PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Blue, blueTeamsCount);
         else if (propertiesThatChanged.ContainsKey(CustomProperty.REDTEAMSCOUNT))
             PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Red, redTeamsCount);
-        TeamDivision();
+
+        //AllPlayerTeamCheck();
     }
 
     public void MasterClientSwitched(Player newMasterClient)
     {
-        TeamDivision();
+        AllPlayerTeamCheck();
         AllPlayerReadyCheck();
     }
 
@@ -191,39 +162,79 @@ public class RoomPanel : MonoBehaviour
             startButton.gameObject.SetActive(false);
     }
 
-    public void SwitchLocalPlayerBlueTeam()
+    private void AllPlayerTeamCheck()     // 팀별 Player 수
+    {
+        blueTeamsCount = 0;
+        redTeamsCount = 0;
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+                ++blueTeamsCount;
+            else if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red)
+                ++redTeamsCount;
+        }
+    }
+
+    private void RenewalPlayerEntry()      // PlayerEntry 갱신
+    {
+        blueTeamsCount = 0;
+        redTeamsCount = 0;
+
+        foreach (PlayerEntry playerEntry in playerDictionary.Values)    // PlayerEntry 초기화
+        {
+            Destroy(playerEntry.gameObject);
+        }
+
+        playerDictionary.Clear();
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+            {
+                ++blueTeamsCount;
+                PlayerEntry entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
+                entry.SetPlayer(player);
+                playerDictionary.Add(player.ActorNumber, entry);
+            }
+            else if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red)
+            {
+                ++redTeamsCount;
+                PlayerEntry entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
+                entry.SetPlayer(player);
+                playerDictionary.Add(player.ActorNumber, entry);
+            }
+        }
+    }
+
+    private void SwitchLocalPlayerBlueTeam()
     {
         if (PhotonNetwork.LocalPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue || PhotonNetwork.LocalPlayer.GetReady())
             return;
 
         PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
-        localPlayerEntry = Instantiate(playerEntryPrefab, BlueTeamPlayerContent);
-
-        if (playerDictionary.TryGetValue(PhotonNetwork.LocalPlayer.ActorNumber, out PlayerEntry removeEntry))
-            Destroy(removeEntry.gameObject);
-
-        localPlayerEntry.SetPlayer(PhotonNetwork.LocalPlayer);
-        playerDictionary[PhotonNetwork.LocalPlayer.ActorNumber] = localPlayerEntry;
-        ++blueTeamsCount;
-        --redTeamsCount;
-        //PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Blue, blueTeamsCount);
+        RenewalPlayerEntry();
+        AllPlayerTeamCheck();
     }
 
-    public void SwitchLocalPlayerRedTeam()
+    private void SwitchLocalPlayerRedTeam()
     {
         if (PhotonNetwork.LocalPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Red || PhotonNetwork.LocalPlayer.GetReady())
             return;
 
+        Destroy(playerDictionary[PhotonNetwork.LocalPlayer.ActorNumber].gameObject);
         PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
-        localPlayerEntry = Instantiate(playerEntryPrefab, RedTeamPlayerContent);
+        RenewalPlayerEntry();
+        AllPlayerTeamCheck();
+    }
 
-        if (playerDictionary.TryGetValue(PhotonNetwork.LocalPlayer.ActorNumber, out PlayerEntry removeEntry))
-            Destroy(removeEntry.gameObject);
+    public void OnSwitchBlueTeamButton()
+    {
+        SwitchLocalPlayerBlueTeam();
+    }
 
-        localPlayerEntry.SetPlayer(PhotonNetwork.LocalPlayer);
-        playerDictionary[PhotonNetwork.LocalPlayer.ActorNumber] = localPlayerEntry;
-        ++redTeamsCount;
-        --blueTeamsCount;
-        //PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Red, redTeamsCount);
+    public void OnSwitchRedTeamButton()
+    {
+        SwitchLocalPlayerRedTeam();
     }
 }

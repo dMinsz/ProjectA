@@ -84,14 +84,14 @@ public static class CustomProperty
             if (property.ContainsKey(BLUETEAMSCOUNT))
                 return (int)property[BLUETEAMSCOUNT];
             else
-                return 0;
+                return -1;
         }
         else
         {
             if (property.ContainsKey(REDTEAMSCOUNT))
                 return (int)property[REDTEAMSCOUNT];
             else
-                return 0;
+                return -1;
         }
     }
 
