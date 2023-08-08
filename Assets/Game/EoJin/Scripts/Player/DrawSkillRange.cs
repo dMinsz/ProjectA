@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UIElements;
 using static UnityEngine.LightAnchor;
+using static UnityEngine.Rendering.HableCurve;
 
 public class DrawSkillRange : MonoBehaviour
 {
@@ -15,10 +16,12 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] int linePoints;
     [SerializeField] float thickness;
     [SerializeField] Color color;
+    [SerializeField] int segments;
     PlayerSkillAttacker attacker;
     anstjddn.PlayerAim aim;
     bool isDrawing;
     Vector3 oldRotation;
+    [SerializeField] List<Vector3> arcPoints;
 
     public void Awake()
     {
@@ -67,7 +70,10 @@ public class DrawSkillRange : MonoBehaviour
     {
         DrawWithTwoCubes();
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
+        {
             DrawWithLineRenderer();
+            MakeArcWithLine();
+        }
     }
 
     public void DrawWithLineRenderer()
@@ -83,18 +89,9 @@ public class DrawSkillRange : MonoBehaviour
         line.GetComponent<LineRenderer>().endWidth = thickness;
         line.GetComponent<LineRenderer>().materials[0].SetColor("_EmissionColor", color);
 
-        Vector3 dir = (aim.mousepos - transform.position).normalized;
-        line.transform.rotation = Quaternion.Euler(dir);
-
-        Vector3 position1 = sphereInCube2.transform.position;
-        Vector3 position2 = sphereInCube.transform.position;
-
-        line.GetComponent<LineRenderer>().SetPosition(0, position1);
-        line.GetComponent<LineRenderer>().SetPosition(1, (position1 + position2) / 2);
-        line.GetComponent<LineRenderer>().SetPosition(2, position2);
+        
 
         line.transform.position = Vector3.zero;
-
     }
 
     public void DrawWithTwoCubes()
@@ -132,6 +129,31 @@ public class DrawSkillRange : MonoBehaviour
             cube2.transform.rotation = Quaternion.LookRotation(rightDir);
         }
 
+    }
+
+    public void MakeArcWithLine()
+    {
+        line.GetComponent<LineRenderer>().positionCount = segments;
+
+        Vector3 dir = (aim.mousepos - transform.position).normalized;
+        arcPoints = new List<Vector3>();
+        float startAngle = -attacker.skill.angle;
+        float arcLength = attacker.skill.angle - -attacker.skill.angle;
+        for (int i = 0; i <= segments; i++)
+        {
+            float x = Mathf.Sin(Mathf.Deg2Rad * startAngle) * attacker.skill.range;
+            float z = Mathf.Cos(Mathf.Deg2Rad * startAngle) * attacker.skill.range;
+            arcPoints.Add(new Vector3(x, 0f, z));
+
+            startAngle += (arcLength / segments);
+        }
+
+        for (int i = 0; i < segments; i++)
+        {
+            line.GetComponent<LineRenderer>().SetPosition(i, arcPoints[i]);
+        }
+
+        line.transform.LookAt(aim.mousepos);
     }
 
     public void SetIsDrawingTrue()
