@@ -7,6 +7,8 @@ public static class CustomProperty
     public const string LOAD = "Load";
     public const string NUMBER = "Number";
     public const string TEAM = "Team";
+    public const string BLUETEAMSCOUNT = "BlueTeamsCount";
+    public const string REDTEAMSCOUNT = "RedTeamsCount";
 
     public const string LOADTIME = "LoadTime";
 
@@ -21,7 +23,7 @@ public static class CustomProperty
 
     public static void SetReady(this Player player, bool ready)
     {
-        PhotonHashtable property = player.CustomProperties;
+        PhotonHashtable property = new PhotonHashtable();
         property[READY] = ready;
         player.SetCustomProperties(property);
     }
@@ -37,7 +39,7 @@ public static class CustomProperty
 
     public static void SetLoad(this Player player, bool load)
     {
-        PhotonHashtable property = player.CustomProperties;
+        PhotonHashtable property = new PhotonHashtable();
         property[LOAD] = load;
         player.SetCustomProperties(property);
     }
@@ -53,7 +55,7 @@ public static class CustomProperty
 
     public static void SetLoadTime(this Room room, int loadTime)
     {
-        PhotonHashtable property = room.CustomProperties;
+        PhotonHashtable property = new PhotonHashtable();
         property[LOADTIME] = loadTime;
         room.SetCustomProperties(property);
     }
@@ -69,8 +71,40 @@ public static class CustomProperty
 
     public static void SetTeamColor(this Player player, int team)
     {
-        PhotonHashtable property = player.CustomProperties;
+        PhotonHashtable property = new PhotonHashtable();
         property[TEAM] = team;
         player.SetCustomProperties(property);
+    }
+
+    public static int GetBlueTeamsCount(this Room room)
+    {
+        PhotonHashtable property = room.CustomProperties;
+        if (property.ContainsKey(BLUETEAMSCOUNT))
+            return (int)property[BLUETEAMSCOUNT];
+        else
+            return -1;
+    }
+
+    public static int GetRedTeamsCount(this Room room)
+    {
+        PhotonHashtable property = room.CustomProperties;
+        if (property.ContainsKey(REDTEAMSCOUNT))
+            return (int)property[REDTEAMSCOUNT];
+        else
+            return -1;
+    }
+
+    public static void SetBlueTeamsCount(this Room room, int blueTeamsCount)
+    {
+        PhotonHashtable property = new PhotonHashtable();
+        property[BLUETEAMSCOUNT] = blueTeamsCount;
+        room.SetCustomProperties(property);
+    }
+
+    public static void SetRedTeamsCount(this Room room, int redTeamsCount)
+    {
+        PhotonHashtable property = new PhotonHashtable();
+        property[REDTEAMSCOUNT] = redTeamsCount;
+        room.SetCustomProperties(property);
     }
 }
