@@ -16,27 +16,30 @@ public class MenuPanel : MonoBehaviour
     [SerializeField] TMP_Text threeToThreeText;
 
     private Button choosedButton;
-    private ColorBlock beforeButtonCol;
+    private ColorBlock choosedButtonCol;
     private ColorBlock curButtonCol;
-    private bool hasMaxPlayer;
+    private bool choosedGameType;
     private int maxPlayerCount;
 
 
     private void OnEnable()
     {
-        hasMaxPlayer = false;
+        choosedGameType = false;
         maxPlayerCount = 0;
         createRoomPanel.SetActive(false);
     }
 
     public void CreateRoomMenu()
     {
+        choosedGameType = false;
+        roomNameInputField.text = "";
+        ResetNomalColor();
         createRoomPanel.SetActive(true);
     }
 
     public void CreateRoomConfirm()
     {
-        if (!hasMaxPlayer)
+        if (!choosedGameType)
             return;
 
         string roomName = roomNameInputField.text;
@@ -45,63 +48,53 @@ public class MenuPanel : MonoBehaviour
 
         RoomOptions options = new RoomOptions { MaxPlayers = maxPlayerCount };
         PhotonNetwork.CreateRoom(roomName, options);
+    }
 
-        
+    private void ResetNomalColor()
+    {
+        if (choosedButton != null)
+        {
+            choosedButtonCol = choosedButton.colors;
+            choosedButtonCol.normalColor = Color.white;
+            choosedButton.colors = choosedButtonCol;
+        }
+    }
+
+    private void ChangeNormalColor(Button curButton)
+    {
+        ResetNomalColor();
+        curButtonCol = curButton.colors;
+        curButtonCol.normalColor = Color.yellow;
+        curButton.colors = curButtonCol;
+        choosedButton = curButton;
     }
 
     public void OnOneOnOneButton()
     {
-        if (choosedButton != null)
-        {
-            beforeButtonCol = choosedButton.colors;
-            beforeButtonCol.normalColor = Color.white;
-            choosedButton.colors = beforeButtonCol;
-        }
-
-        curButtonCol = oneOnOneButton.colors;    // 선택 후 RoomNameText 누르면 색깔 풀리는거 방지
-        curButtonCol.normalColor = Color.yellow;
-        oneOnOneButton.colors = curButtonCol;
-        choosedButton = oneOnOneButton;
-        hasMaxPlayer = true;
+        ChangeNormalColor(oneOnOneButton);
+        choosedGameType = true;
         maxPlayerCount = 2;
     }
 
     public void OnTwoToTwoButton()
     {
-        if (choosedButton != null)
-        {
-            beforeButtonCol = choosedButton.colors;
-            beforeButtonCol.normalColor = Color.white;
-            choosedButton.colors = beforeButtonCol;
-        }
-
-        curButtonCol = twoToTwoButton.colors;
-        curButtonCol.normalColor = Color.yellow;
-        twoToTwoButton.colors = curButtonCol;
-        choosedButton = twoToTwoButton;
-        hasMaxPlayer = true;
+        ChangeNormalColor(twoToTwoButton);
+        choosedGameType = true;
         maxPlayerCount = 4;
     }
 
     public void OnThreeToThreeButton()
     {
-        if (choosedButton != null)
-        {
-            beforeButtonCol = choosedButton.colors;
-            beforeButtonCol.normalColor = Color.white;
-            choosedButton.colors = beforeButtonCol;
-        }
-
-        curButtonCol = threeToThreeButton.colors;
-        curButtonCol.normalColor = Color.yellow;
-        threeToThreeButton.colors = curButtonCol;
-        choosedButton = threeToThreeButton;
-        hasMaxPlayer = true;
+        ChangeNormalColor(threeToThreeButton);
+        choosedGameType = true;
         maxPlayerCount = 6;
     }
 
     public void CreateRoomCancel()
     {
+        choosedGameType = false;
+        roomNameInputField.text = "";
+        ResetNomalColor();
         createRoomPanel.SetActive(false);
     }
 
@@ -121,4 +114,5 @@ public class MenuPanel : MonoBehaviour
     {
         PhotonNetwork.Disconnect();
     }
+
 }
