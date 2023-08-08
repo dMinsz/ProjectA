@@ -18,7 +18,15 @@ public class RoomEntry : MonoBehaviour
         this.info = info;
         roomName.text = info.Name;
         currentPlayer.text = $"{info.PlayerCount} / {info.MaxPlayers}";
-        
+        int curGameType = info.MaxPlayers / 2;
+
+        if (curGameType == 2)
+            currnetGameType.text = "1 vs 1";
+        else if (curGameType == 4)
+            currnetGameType.text = "2 vs 2";
+        else
+            currnetGameType.text = "3 vs 3";
+
         joinRoomButton.interactable = info.PlayerCount < info.MaxPlayers;
     }
 

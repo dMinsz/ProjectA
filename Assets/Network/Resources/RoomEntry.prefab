@@ -364,6 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: {fileID: 357019294366316985}
   currentPlayer: {fileID: 2616448059591944038}
+  currnetGameType: {fileID: 851339227332218126}
   joinRoomButton: {fileID: 5564003483403808042}
 --- !u!1 &1812641854389840327
 GameObject:
@@ -535,8 +536,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.4, y: 0}
   m_AnchorMax: {x: 0.8, y: 1}
-  m_AnchoredPosition: {x: 5, y: 0}
-  m_SizeDelta: {x: -10, y: -10}
+  m_AnchoredPosition: {x: 220, y: 0}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4697630519689259133
 CanvasRenderer:
