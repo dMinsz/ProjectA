@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,7 +21,8 @@ public class DataManager : MonoBehaviour
     }
 
     [SerializeField] public Character[] characters;
-    [SerializeField] public Avatar[] avatars;
+    //[SerializeField] public Avatar[] avatars;
+    //[SerializeField] public AnimatorController[] animators;
     public UnityAction OnChangeCharacter;
 
     public void ChangeCharacter(string characterName)

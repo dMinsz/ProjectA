@@ -25,6 +25,8 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] anstjddn.PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
+    [SerializeField] public GameObject cubeForLookAt;
+    Quaternion lookAtMouse;
 
     public void Awake()
     {
@@ -34,6 +36,9 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     public void Update()
     {
+        cubeForLookAt.transform.LookAt(aim.mousepos);
+        lookAtMouse = cubeForLookAt.transform.rotation;
+
         if (isSkilling)
             ApplyDamage();
 
@@ -111,11 +116,11 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     private void MakeSkillRangeSquareForm()
     {
-        float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 153f;
+        float angle = Vector3.Angle(transform.position, aim.mousepos);
         //additionalRange에 float를 곱해주며 스킬범위 민감도 설정가능
         Vector3 boxSize = new Vector3(additionalRange, 0.1f, range);
 
-        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, Quaternion.Euler(0f, angle, 0f));
+        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, lookAtMouse);
         DetectObjectsCollider(colliders);
     }
 
@@ -178,9 +183,8 @@ public class PlayerSkillAttacker : MonoBehaviour
             return;
 
         Gizmos.color = Color.cyan;
-
-        float angle = Vector3.SignedAngle(transform.position, aim.mousepos, Vector3.up);
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.localPosition, Quaternion.Euler(0f, angle, 0f), new Vector3(1f, 1f, 1f));
+        
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, lookAtMouse, new Vector3(1f, 1f, 1f));
         Gizmos.matrix = rotationMatrix;
 
         Gizmos.DrawCube(Vector3.zero, new Vector3(additionalRange, 0.01f, range * 2f));

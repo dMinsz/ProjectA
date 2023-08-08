@@ -83,12 +83,17 @@ public class DrawSkillRange : MonoBehaviour
         line.GetComponent<LineRenderer>().endWidth = thickness;
         line.GetComponent<LineRenderer>().materials[0].SetColor("_EmissionColor", color);
 
-        Vector3 position1 = new Vector3(transform.position.x - sphereInCube2.transform.position.x, 0f, transform.position.z - sphereInCube2.transform.position.z);
-        Vector3 position2 = new Vector3(transform.position.x - sphereInCube.transform.position.x, 0f, transform.position.z - sphereInCube.transform.position.z);
+        Vector3 dir = (aim.mousepos - transform.position).normalized;
+        line.transform.rotation = Quaternion.Euler(dir);
 
-        line.GetComponent<LineRenderer>().SetPosition(0, -position1);
-        line.GetComponent<LineRenderer>().SetPosition(1, (-position1 + -position2) / 2);
-        line.GetComponent<LineRenderer>().SetPosition(2, -position2);
+        Vector3 position1 = sphereInCube2.transform.position;
+        Vector3 position2 = sphereInCube.transform.position;
+
+        line.GetComponent<LineRenderer>().SetPosition(0, position1);
+        line.GetComponent<LineRenderer>().SetPosition(1, (position1 + position2) / 2);
+        line.GetComponent<LineRenderer>().SetPosition(2, position2);
+
+        line.transform.position = Vector3.zero;
 
     }
 
@@ -106,8 +111,8 @@ public class DrawSkillRange : MonoBehaviour
 
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Square)
         {
-            cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, attacker.skill.range * 0.8f);
-            cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, attacker.skill.range * 0.8f);
+            cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
+            cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
 
             cube.transform.LookAt(aim.mousepos);
             cube2.transform.LookAt(aim.mousepos);
@@ -119,10 +124,14 @@ public class DrawSkillRange : MonoBehaviour
             cube2.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
             //localScale.z가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-            cube.transform.LookAt(aim.mousepos);
-            cube2.transform.LookAt(aim.mousepos);
+            Vector3 dir = (aim.mousepos - transform.position).normalized;
+            Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
+            Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
 
-            
+            Debug.Log($"{attacker.skill.angle}");
+
+            cube.transform.rotation = Quaternion.LookRotation(leftDir);
+            cube2.transform.rotation = Quaternion.LookRotation(rightDir);
         }
 
     }
