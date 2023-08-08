@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 using anstjddn;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class PlayManager : MonoBehaviourPunCallbacks
 {
@@ -27,30 +28,14 @@ public class PlayManager : MonoBehaviourPunCallbacks
     [HideInInspector] public GameObject playPuck;
 
     [HideInInspector] public List<GameObject> pPlayerList = new List<GameObject>();
-
+    [HideInInspector] public List<int> playersViewId = new List<int>();
     private ScoreChecker scoreChecker;
 
     private void Awake()
     {
         scoreChecker = GetComponent<ScoreChecker>();
     }
-    private void SetUpTeam()
-    {
-
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            if (player.GetTeamColor() == 1) // blue
-            {
-                blueTeamChecker.Add(true);
-            }
-            else
-            {
-                redTeamChecker.Add(true);
-            }
-        }
-    }
-
-    // Start is called before the first frame update
+ 
     void Start()
     {
 
@@ -72,11 +57,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     private void GameStart()
     {
-        infoText.text = string.Format("GameStart now team ={0}", PhotonNetwork.LocalPlayer.GetTeamColor());
-
         if (PhotonNetwork.LocalPlayer.GetTeamColor() == 1) // blue 
         {
-
             for (int i = 0; i < blueTeamChecker.Count; i++)
             {
                 if (blueTeamChecker[i] == true)
@@ -84,9 +66,14 @@ public class PlayManager : MonoBehaviourPunCallbacks
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
                     var player = PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0, puckData);
 
+                    //player.GetComponent<DelayCompensation>().SetSyncronize(true);
+
                     player.GetComponent<PlayerSetup>().SentServerColor();
 
                     pPlayerList.Add(player);
+
+                    object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
+                    photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
 
                     blueTeamChecker[i] = false;
                     break;
@@ -101,8 +88,13 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 {
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
                     var player = PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0, puckData);
+                    
+                    //player.GetComponent<DelayCompensation>().SetSyncronize(true);
 
                     player.GetComponent<PlayerSetup>().SentServerColor();
+
+                    object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
+                    photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
 
                     pPlayerList.Add(player);
 
@@ -122,17 +114,25 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
             var player = PhotonNetwork.Instantiate("Player", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
+            
             pPlayerList.Add(player);
-            player.GetComponent<PlayerSetup>().SentServerColor();
+
+            object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
+            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
+
+            player.GetComponent<PlayerSetup>().SetPlayerColor(0);
         }
         else
         {
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-            var player = PhotonNetwork.Instantiate("Player", redSpwans[1].position, redSpwans[1].rotation, 0, puckData);
-
+            var player = PhotonNetwork.Instantiate("Player", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
+ 
             pPlayerList.Add(player);
 
-            player.GetComponent<PlayerSetup>().SentServerColor();
+            object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
+            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
+
+            player.GetComponent<PlayerSetup>().SetPlayerColor(1);
         }
 
         scoreChecker.StartTimer();
@@ -145,17 +145,6 @@ public class PlayManager : MonoBehaviourPunCallbacks
         MakePlayPuck();
         MakeBlocker();
         DebugGameStart();
-    }
-
-    private int PlayerLoadCount()
-    {
-        int loadCount = 0;
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            if (player.GetLoad())
-                loadCount++;
-        }
-        return loadCount;
     }
 
     IEnumerator GameStartTimer()
@@ -180,6 +169,115 @@ public class PlayManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
         infoText.text = "";
     }
+
+    private void SetUpTeam()
+    {
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.GetTeamColor() == 1) // blue
+            {
+                blueTeamChecker.Add(true);
+            }
+            else
+            {
+                redTeamChecker.Add(true);
+            }
+        }
+    }
+
+    private int PlayerLoadCount()
+    {
+        int loadCount = 0;
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.GetLoad())
+                loadCount++;
+        }
+        return loadCount;
+    }
+
+    private void MakePlayPuck()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playPuck = PhotonNetwork.Instantiate("Puck", puckPos.position, puckPos.rotation);
+            photonView.RPC("RequestPuckID", RpcTarget.OthersBuffered, playPuck.GetComponent<PhotonView>().ViewID);
+        }
+    }
+
+    private void MakeBlocker()
+    {
+
+        PhotonNetwork.InstantiateRoomObject("GoalBlocker", new Vector3(0, 1, 22), Quaternion.identity);
+        PhotonNetwork.InstantiateRoomObject("GoalBlocker", new Vector3(0, 1, -22), Quaternion.identity);
+
+    }
+
+    public void ResetRound()
+    {
+
+        RespawnPuck();
+        ResetPlayers();
+    }
+
+    private void ResetPlayers()
+    {
+        foreach (var player in pPlayerList)
+        {
+            player.GetComponent<PlayerDelayCompensation>().SetSyncronize(false);
+
+            player.transform.position = player.GetComponent<PlayerSetup>().originPos;
+            player.transform.rotation = player.GetComponent<PlayerSetup>().originRot;
+
+            player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
+        }
+    }
+    public void RespawnPuck()
+    {
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Destroy(playPuck);
+
+            playPuck = PhotonNetwork.Instantiate("Puck", puckPos.position, puckPos.rotation);
+
+            foreach (var player in pPlayerList)
+            {
+                player.GetComponent<PlayerAim>().puck = playPuck;
+            }
+
+            photonView.RPC("BroadCastingRespawnPuck", RpcTarget.OthersBuffered, playPuck.GetComponent<PhotonView>().ViewID);
+        }
+    }
+
+    #region RPC Funcs
+    [PunRPC]
+    private void RequestPuckID(int id)
+    {
+        playPuck = PhotonView.Find(id).gameObject;
+    }
+
+    [PunRPC]
+    private void AddPlayer(int viewId)
+    {
+        var player = PhotonView.Find(viewId).gameObject;
+        pPlayerList.Add(player);
+    }
+
+    [PunRPC]
+    public void BroadCastingRespawnPuck(int id)
+    {
+        playPuck = PhotonView.Find(id).gameObject;
+
+        foreach (var player in pPlayerList)
+        {
+            player.GetComponent<PlayerAim>().puck = playPuck;
+        }
+    }
+
+    #endregion
+
 
     #region ServerCallbacks
 
@@ -245,50 +343,6 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     #endregion
 
-    private void MakePlayPuck()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playPuck = PhotonNetwork.Instantiate("Puck", puckPos.position, puckPos.rotation);
-            photonView.RPC("RequestPuckID", RpcTarget.OthersBuffered, playPuck.GetComponent<PhotonView>().ViewID);
-        }
-    }
+  
 
-    private void MakeBlocker() 
-    {
-
-        PhotonNetwork.InstantiateRoomObject("GoalBlocker", new Vector3(0,1,22), Quaternion.identity);
-        PhotonNetwork.InstantiateRoomObject("GoalBlocker", new Vector3(0, 1, -22), Quaternion.identity);
-
-    }
-
-    [PunRPC]
-    private void RequestPuckID(int id)
-    {
-        playPuck = PhotonView.Find(id).gameObject;
-    }
-
-    private void ResetPlayers()
-    {
-        foreach (var player in pPlayerList)
-        {
-            player.transform.position = player.GetComponent<PlayerSetup>().originPos;
-            player.transform.rotation = player.GetComponent<PlayerSetup>().originRot;
-        }
-
-    }
-
-    public void ResetRound()
-    {
-        ResetPlayers();
-        playPuck.gameObject.SetActive(true);
-    }
-
-    public void DiablePuck() 
-    {
-        playPuck.gameObject.SetActive(false);
-        playPuck.transform.position = puckPos.position;
-        playPuck.transform.rotation = puckPos.rotation;
-        playPuck.GetComponent<Rigidbody>().velocity = Vector3.zero;
-    }
 }

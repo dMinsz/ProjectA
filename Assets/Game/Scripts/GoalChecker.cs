@@ -18,9 +18,9 @@ public class GoalChecker : MonoBehaviourPun
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ball"))
+        if (PhotonNetwork.IsMasterClient)
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Ball"))
             {
                 if (myTeam == team.blue)
                 {
@@ -31,31 +31,6 @@ public class GoalChecker : MonoBehaviourPun
                     photonView.RPC("ScoreBlue", RpcTarget.AllViaServer);
                 }
             }
-            //else 
-            //{
-            //    if (myTeam == team.blue)
-            //    {
-            //        photonView.RPC("Scoring", RpcTarget.MasterClient , 0);
-            //    }
-            //    else if (myTeam == team.red)
-            //    {
-            //        photonView.RPC("Scoring", RpcTarget.MasterClient , 1);
-            //    }
-            //}
-        }
-    }
-
-
-    [PunRPC]
-    public void Scoring(int team) 
-    {
-        if (team == 0) // blue
-        {
-            photonView.RPC("ScoreRed", RpcTarget.AllViaServer);
-        }
-        else//red 
-        {
-            photonView.RPC("ScoreBlue", RpcTarget.AllViaServer);
         }
     }
 

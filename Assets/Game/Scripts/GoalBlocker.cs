@@ -30,10 +30,11 @@ public class GoalBlocker : MonoBehaviourPun
     {
         if (!movePossible)
             return;
-
+        
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
-            photonView.RPC("MoveBlockerToServer", RpcTarget.AllViaServer);
+            if (PhotonNetwork.IsMasterClient)
+                photonView.RPC("MoveBlockerToServer", RpcTarget.AllViaServer);
         }
     }
 
@@ -60,8 +61,8 @@ public class GoalBlocker : MonoBehaviourPun
             yield return null;
         }
 
-        //Destroy(gameObject);
-        PhotonNetwork.Destroy(gameObject);
+        if (photonView.IsMine)
+            PhotonNetwork.Destroy(gameObject);
 
         yield break;
     }

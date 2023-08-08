@@ -14,6 +14,7 @@ public class Puck : MonoBehaviourPun
 
     private Rigidbody rb;
     private Renderer ren;
+
     Coroutine mainRoutine;
 
     private void Awake()
@@ -25,6 +26,7 @@ public class Puck : MonoBehaviourPun
 
     private void OnEnable()
     {
+    
         if (PhotonNetwork.IsConnected)
         {
             if (PhotonNetwork.IsMasterClient)
@@ -39,6 +41,7 @@ public class Puck : MonoBehaviourPun
 
     private void OnDisable()
     {
+
         if (PhotonNetwork.IsConnected)
         {
             if (PhotonNetwork.IsMasterClient)

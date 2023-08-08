@@ -21,7 +21,7 @@ public class ScoreChecker : MonoBehaviour
     private int BluePoint = 0;
     private int RedPoint = 0;
 
-    private PlayManager pm;
+    public PlayManager pm;
 
     Coroutine mainRoutine;
     private void Awake()
@@ -42,20 +42,21 @@ public class ScoreChecker : MonoBehaviour
     }
     public void ScoreBlue() 
     {
-        pm.DiablePuck();
-        pm.ResetRound();
         var nowScore = ++BluePoint;
         blueScore.text = nowScore.ToString();
+
+        pm.ResetRound();
     }
 
 
     public void ScoreRed()
     {
-        pm.DiablePuck();
-        pm.ResetRound();
         var nowScore = ++RedPoint;
         redScore.text = nowScore.ToString();
+
+        pm.ResetRound();
     }
+
 
     IEnumerator TimeTicking() 
     {
@@ -94,7 +95,7 @@ public class ScoreChecker : MonoBehaviour
     //just test
     public void EndBattle() 
     {
-        pm.DiablePuck();
+        pm.RespawnPuck();
 
         testEnd.gameObject.SetActive(true);
 

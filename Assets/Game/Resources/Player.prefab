@@ -816,12 +816,10 @@ GameObject:
   - component: {fileID: 307067200992876015}
   - component: {fileID: 307067200992876014}
   - component: {fileID: 307067200992876020}
-  - component: {fileID: 6272833465738176555}
   - component: {fileID: 2942217435192893771}
-  - component: {fileID: -8452105046383015105}
   - component: {fileID: 768747357149872447}
-  - component: {fileID: 7513116345151157200}
   - component: {fileID: 4643177905351597771}
+  - component: {fileID: 5870386294824905732}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -882,7 +880,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -969,22 +967,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   puck: {fileID: 0}
---- !u!114 &6272833465738176555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613477116505371340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &2942217435192893771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,29 +986,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6272833465738176555}
-  - {fileID: -8452105046383015105}
-  - {fileID: 7513116345151157200}
   - {fileID: 4643177905351597771}
+  - {fileID: 5870386294824905732}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-8452105046383015105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613477116505371340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &768747357149872447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,18 +1013,6 @@ MonoBehaviour:
   playerTeam: 0
   originPos: {x: 0, y: 0, z: 0}
   originRot: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7513116345151157200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 613477116505371340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0924d064864b10448f85e59b6b75653, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4643177905351597771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1082,6 +1034,19 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &5870386294824905732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613477116505371340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0924d064864b10448f85e59b6b75653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSyncronize: 1
 --- !u!1 &733107107306874600
 GameObject:
   m_ObjectHideFlags: 0

@@ -81,7 +81,7 @@ namespace anstjddn
         [PunRPC]
         IEnumerator AttackTimeing(Vector3 mousePos, Vector3 playerPos, Vector3 puckPos)//, PhotonMessageInfo info)
         {
-
+      
             if (circleReuslt >= Mathf.Pow(playerPos.x - puckPos.x, 2) + Mathf.Pow(playerPos.z - puckPos.z, 2)) // 원의 범위안에 좌표가있는지 확인 
             {
 
