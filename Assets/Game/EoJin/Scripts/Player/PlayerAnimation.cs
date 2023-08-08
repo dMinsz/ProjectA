@@ -9,6 +9,7 @@ public class PlayerAnimation : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] PlayerSkillAttacker attacker;
     [SerializeField] AnimatorController controller;
+    [SerializeField] Skill curSkill;
 
     public void Awake()
     {
@@ -28,32 +29,18 @@ public class PlayerAnimation : MonoBehaviour
 
     public void PlaySkillAnim()
     {
-        ChangeSkillAnim();
-        anim.SetTrigger("Skill");
-    }
-
-    public void ChangeSkillAnim()
-    {
-        AnimatorControllerLayer layer = controller.layers[0];
-        AnimatorStateMachine machine = layer.stateMachine;
-        ChildAnimatorState[] states = machine.states;
-        foreach (ChildAnimatorState state in states)
+        if (attacker.skill.key == Skill.Key.Primary)
         {
-            if (state.state.name == "Skill")
-            {
-                if (state.state.motion != attacker.skill.skillAnimation)
-                {
-                    state.state.motion = attacker.skill.skillAnimation;
-                    Invoke("SetSkillTrigger", 0.1f); //motion을 바꾸자마자 setTrigger을 하면 씹히기 때문에 invoke로 시간차를 줌
-                }
-                break;
-            }
+            anim.SetTrigger("Primary");
         }
-    }
-
-    public void SetSkillTrigger()
-    {
-        anim.SetTrigger("Skill");
+        else if (attacker.skill.key == Skill.Key.Secondary)
+        {
+            anim.SetTrigger("Secondary");
+        }
+        else
+        {
+            anim.SetTrigger("Special");
+        }
     }
 
 }

@@ -23,13 +23,13 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnSkillStart;
     public UnityAction OnSkillEnd;
     public UnityAction<GameObject, float> OnPlayerAttack;
-    [SerializeField] PlayerAim aim;
+    [SerializeField] anstjddn.PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
 
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
-        aim = gameObject.GetComponent<PlayerAim>();
+        aim = gameObject.GetComponent<anstjddn.PlayerAim>();
     }
 
     public void Update()
@@ -113,7 +113,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     {
         float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 153f;
         //additionalRange에 float를 곱해주며 스킬범위 민감도 설정가능
-        Vector3 boxSize = new Vector3(additionalRange * 0.6f, 0.1f, range);
+        Vector3 boxSize = new Vector3(additionalRange, 0.1f, range);
 
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, Quaternion.Euler(0f, angle, 0f));
         DetectObjectsCollider(colliders);
@@ -139,7 +139,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (Vector3.Dot(playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
                 continue;
 
-            if (collider.isTrigger == true)
+            if (collider.gameObject == this.gameObject)
                 continue;
 
             if (collider.gameObject.layer == 7)
@@ -179,8 +179,8 @@ public class PlayerSkillAttacker : MonoBehaviour
 
         Gizmos.color = Color.cyan;
 
-        float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 150f;
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, Quaternion.Euler(0f, angle, 0f), new Vector3(1f, 1f, 1f));
+        float angle = Vector3.SignedAngle(transform.position, aim.mousepos, Vector3.up);
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.localPosition, Quaternion.Euler(0f, angle, 0f), new Vector3(1f, 1f, 1f));
         Gizmos.matrix = rotationMatrix;
 
         Gizmos.DrawCube(Vector3.zero, new Vector3(additionalRange, 0.01f, range * 2f));

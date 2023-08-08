@@ -5,13 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StatData", menuName = "Scriptable Object/StatData")]
 public class Stat : ScriptableObject
 {
-    [SerializeField] public int stagger; //체력
+    [SerializeField] public int hp; //체력
     [SerializeField] public int power;
     [SerializeField] public int speed;
 
     public void Init(Stat stat)
     {
-        stat.stagger = this.stagger;
+        stat.hp = this.hp;
         stat.power = this.power;
         stat.speed = this.speed;
     }

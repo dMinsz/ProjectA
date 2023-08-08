@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.UIElements;
 using static UnityEngine.LightAnchor;
 
 public class DrawSkillRange : MonoBehaviour
@@ -15,13 +16,14 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] float thickness;
     [SerializeField] Color color;
     PlayerSkillAttacker attacker;
-    PlayerAim aim;
+    anstjddn.PlayerAim aim;
     bool isDrawing;
+    Vector3 oldRotation;
 
     public void Awake()
     {
         attacker = gameObject.GetComponent<PlayerSkillAttacker>();
-        aim = gameObject.GetComponent<PlayerAim>();
+        aim = gameObject.GetComponent<anstjddn.PlayerAim>();
 
         sphereInCube = cube.transform.GetChild(0).gameObject;
         sphereInCube2 = cube2.transform.GetChild(0).gameObject;
@@ -104,13 +106,11 @@ public class DrawSkillRange : MonoBehaviour
 
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Square)
         {
-            cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
-            cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
-            //localScale.y가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
+            cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, attacker.skill.range * 0.8f);
+            cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, attacker.skill.range * 0.8f);
 
-            float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 150f;
-            cube.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, angle, cube.transform.rotation.z);
-            cube2.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, angle, cube.transform.rotation.z);
+            cube.transform.LookAt(aim.mousepos);
+            cube2.transform.LookAt(aim.mousepos);
         }
 
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
@@ -119,11 +119,10 @@ public class DrawSkillRange : MonoBehaviour
             cube2.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
             //localScale.z가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-            float angle = Vector3.SignedAngle(transform.position, (aim.mousepos - transform.position), Vector3.up) + 153f;
-            //각도 계산식이 왜 이렇게 나왔는지는 모르겠음..
+            cube.transform.LookAt(aim.mousepos);
+            cube2.transform.LookAt(aim.mousepos);
 
-            cube.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, attacker.angle + angle, cube.transform.rotation.z);
-            cube2.transform.rotation = Quaternion.Euler(cube.transform.rotation.x, -attacker.angle + angle, cube.transform.rotation.z);
+            
         }
 
     }
