@@ -128,8 +128,6 @@ public class DrawSkillRange : MonoBehaviour
             Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
             Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
 
-            Debug.Log($"{attacker.skill.angle}");
-
             cube.transform.rotation = Quaternion.LookRotation(leftDir);
             cube2.transform.rotation = Quaternion.LookRotation(rightDir);
         }

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Link
   avatar: {fileID: 9000000, guid: 44fe62638a4f4d543b00b85a5fd2b734, type: 3}
+  animator: {fileID: 9100000, guid: 3ef153356bf412841ba21c72f722b735, type: 2}
   stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
   primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
   secondarySkill: {fileID: 11400000, guid: 74963673851f31348941000e3c603037, type: 2}
