@@ -13,6 +13,7 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] PlayerEntry playerEntryPrefab;
     [SerializeField] TMP_Text blueTeamsCountText;
     [SerializeField] TMP_Text redTeamsCountText;
+    [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
 
     private int blueTeamsCount;
@@ -53,6 +54,7 @@ public class RoomPanel : MonoBehaviour
         AllPlayerReadyCheck();
         maxBlueTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
         maxRedTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
+        GameTypeText();
         PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
         PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -132,6 +134,16 @@ public class RoomPanel : MonoBehaviour
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
+    }
+
+    private void GameTypeText()
+    {
+        if (PhotonNetwork.CurrentRoom.MaxPlayers == 2)
+            gameTypeText.text = "1 vs 1";
+        else if (PhotonNetwork.CurrentRoom.MaxPlayers == 4)
+            gameTypeText.text = "2 vs 2";
+        else
+            gameTypeText.text = "3 vs 3";
     }
 
     private void AllPlayerReadyCheck()
