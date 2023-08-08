@@ -153,6 +153,7 @@ public class DrawSkillRange : MonoBehaviour
             line.GetComponent<LineRenderer>().SetPosition(i, arcPoints[i]);
         }
 
+        line.transform.position = transform.position;
         line.transform.LookAt(aim.mousepos);
     }
 
