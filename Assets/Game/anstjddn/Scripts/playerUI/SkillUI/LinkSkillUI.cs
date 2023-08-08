@@ -11,6 +11,7 @@ public class LinkSkillUI : BaseUI
     public TMP_Text qskilCoolTime;       // attacktime
     [SerializeField] public GameObject qskilcolltimeUI;   //q스킬
     [SerializeField] float curtime;
+    private bool isqskill; //나중에 스킬쪽에서 받어
     protected override void Awake()
     {
         base.Awake();
@@ -18,16 +19,26 @@ public class LinkSkillUI : BaseUI
         qskilCoolTime.text = (qskilcolltimeUI.GetComponent<Image>().fillAmount*character.primarySkill.coolTime).ToString("F1");
         //fillamount 최대값이 1.0이라서 쿨타임 곱함
         qskilcolltimeUI.SetActive(false);
+        isqskill = false;
 
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Q))
+        if (!isqskill &&Input.GetKey(KeyCode.Q))
         {
-            StartCoroutine(SkillCoolTime(character.primarySkill.coolTime));
+            isqskill=true;//나중에 스킬쪽에서 받어
+           
 
         }
-       
+        if (isqskill == true)
+        {
+            skillcool();
+        }
+
+    }
+    private void skillcool()
+    {
+        StartCoroutine(SkillCoolTime(character.primarySkill.coolTime));
     }
 
     IEnumerator SkillCoolTime(float cooltime)
@@ -46,6 +57,7 @@ public class LinkSkillUI : BaseUI
         {
             qskilcolltimeUI.GetComponent<Image>().fillAmount = 1f;
             qskilcolltimeUI.SetActive(false);
+            isqskill = false;   //나중에 스킬쪽에서 받어
         }
             
     }

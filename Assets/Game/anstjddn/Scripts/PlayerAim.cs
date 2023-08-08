@@ -6,13 +6,9 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
-namespace anstjddn
-{
+
     public class PlayerAim : MonoBehaviour
     {
-
-      
-
 
         //어택범위,충돌할 레이어, 공을 미는힘
         [SerializeField] public float attacksize;
@@ -22,10 +18,10 @@ namespace anstjddn
         [SerializeField]public bool isattack;
 
         private Animator playeranim;
-      
 
 
-       [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
+
+    [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
         public Vector3 mousepos;
         private void Awake()
@@ -77,7 +73,7 @@ namespace anstjddn
         //어택타이밍 구현
         IEnumerator AttackTimeing(float attacktime)
         {
-          
+
                 isattack = true;
              playeranim.SetTrigger("attack");
                 Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize);
@@ -99,5 +95,5 @@ namespace anstjddn
         }
  
         }
-    }
+
 

@@ -17,7 +17,6 @@ namespace anstjddn
         private Vector3 movedir;
         [SerializeField] public float movespeed;
 
-
         private Animator anim;
 
         private void Awake()

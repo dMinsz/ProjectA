@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 118922312146463455}
   - component: {fileID: 118922312146463452}
   m_Layer: 6
-  m_Name: LinkskillUI
+  m_Name: skillUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1094,6 +1094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ada6c451dde19145949fd60203e0f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 062ac108c16a94e45882780a23524907, type: 2}
+  character: {fileID: 0}
   qskilCoolTime: {fileID: 0}
   qskilcolltimeUI: {fileID: 118922311336593137}
+  curtime: 0
