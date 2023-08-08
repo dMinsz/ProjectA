@@ -45,6 +45,8 @@ public class MenuPanel : MonoBehaviour
 
         RoomOptions options = new RoomOptions { MaxPlayers = maxPlayerCount };
         PhotonNetwork.CreateRoom(roomName, options);
+
+        
     }
 
     public void OnOneOnOneButton()

@@ -1,10 +1,9 @@
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomPanel : MonoBehaviour
@@ -12,6 +11,8 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] RectTransform blueTeamPlayerContent;
     [SerializeField] RectTransform redTeamPlayerContent;
     [SerializeField] PlayerEntry playerEntryPrefab;
+    [SerializeField] TMP_Text blueTeamsCountText;
+    [SerializeField] TMP_Text redTeamsCountText;
     [SerializeField] Button startButton;
 
     private int blueTeamsCount;
@@ -115,6 +116,8 @@ public class RoomPanel : MonoBehaviour
             RenewalPlayerEntry();
 
         AllPlayerReadyCheck();
+        blueTeamsCountText.text = $"{blueTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
+        redTeamsCountText.text = $"{redTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
     }
 
     public void MasterClientSwitched(Player newMasterClient)
