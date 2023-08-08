@@ -3,6 +3,7 @@ using Photon.Pun;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoginPanel : MonoBehaviour
 {
@@ -18,6 +19,25 @@ public class LoginPanel : MonoBehaviour
     private void Start()
     {
         DB.Connect();
+    }
+
+    private void Update()
+    {
+        if (idInputField.isFocused && Input.GetKey(KeyCode.Tab))
+            Tab();
+
+        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
+            Enter();
+    }
+
+    private void Tab()
+    {
+        PWInputField.Select();
+    }
+
+    private void Enter()
+    {
+        Login();
     }
 
     public void Login()
