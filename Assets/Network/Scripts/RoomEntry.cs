@@ -8,6 +8,7 @@ public class RoomEntry : MonoBehaviour
 {
     [SerializeField] TMP_Text roomName;
     [SerializeField] TMP_Text currentPlayer;
+    [SerializeField] TMP_Text currnetGameType;
     [SerializeField] Button joinRoomButton;
 
     private RoomInfo info;
@@ -17,6 +18,7 @@ public class RoomEntry : MonoBehaviour
         this.info = info;
         roomName.text = info.Name;
         currentPlayer.text = $"{info.PlayerCount} / {info.MaxPlayers}";
+        
         joinRoomButton.interactable = info.PlayerCount < info.MaxPlayers;
     }
 
