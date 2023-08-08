@@ -16,18 +16,22 @@ public class RoomPanel : MonoBehaviour
 
     private int blueTeamsCount;
     private int redTeamsCount;
+    private int maxBlueTeamsCount;
+    private int maxRedTeamsCount;
 
     private Dictionary<int, PlayerEntry> playerDictionary;
 
     private void Awake()
     {
         playerDictionary = new Dictionary<int, PlayerEntry>();
+        maxBlueTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
+        maxRedTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
     }
 
     private void Update()
     {
-        Debug.Log(PhotonNetwork.CurrentRoom.GetTeamPlayersCount(PlayerEntry.TeamColor.Blue) + "GetBlueTeamPlayersCount");
-        Debug.Log(PhotonNetwork.CurrentRoom.GetTeamPlayersCount(PlayerEntry.TeamColor.Red) + "GetRedTeamPlayersCount");
+        Debug.Log(PhotonNetwork.CurrentRoom.GetBlueTeamsCount() + "GetBlueTeamPlayersCount");
+        Debug.Log(PhotonNetwork.CurrentRoom.GetRedTeamsCount() + "GetRedTeamPlayersCount");
     }
 
     private void OnEnable()
@@ -51,9 +55,11 @@ public class RoomPanel : MonoBehaviour
                 PhotonNetwork.LocalPlayer.SetLoad(false);
             }
         }
-        AllPlayerTeamCheck();
 
+        AllPlayerTeamCheck();
         AllPlayerReadyCheck();
+        PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
+        PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
@@ -111,16 +117,6 @@ public class RoomPanel : MonoBehaviour
         AllPlayerReadyCheck();
     }
 
-    public void RoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
-    {
-        if (propertiesThatChanged.ContainsKey(CustomProperty.BLUETEAMSCOUNT))
-            PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Blue, blueTeamsCount);
-        else if (propertiesThatChanged.ContainsKey(CustomProperty.REDTEAMSCOUNT))
-            PhotonNetwork.CurrentRoom.SetTeamPlayersCount(PlayerEntry.TeamColor.Red, redTeamsCount);
-
-        //AllPlayerTeamCheck();
-    }
-
     public void MasterClientSwitched(Player newMasterClient)
     {
         AllPlayerTeamCheck();
@@ -156,10 +152,19 @@ public class RoomPanel : MonoBehaviour
                 readyCount++;
         }
 
-        if (readyCount == PhotonNetwork.PlayerList.Length)
+        if (readyCount == PhotonNetwork.PlayerList.Length && StartCheck())
             startButton.gameObject.SetActive(true);
         else
             startButton.gameObject.SetActive(false);
+    }
+
+    private bool StartCheck()
+    {
+        if (PhotonNetwork.CurrentRoom.GetBlueTeamsCount() == PhotonNetwork.CurrentRoom.GetRedTeamsCount()
+            && PhotonNetwork.CurrentRoom.GetBlueTeamsCount() + PhotonNetwork.CurrentRoom.GetRedTeamsCount() == PhotonNetwork.CurrentRoom.MaxPlayers)
+            return true;
+        else
+            return false;
     }
 
     private void AllPlayerTeamCheck()     // ÆÀº° Player ¼ö
@@ -205,11 +210,14 @@ public class RoomPanel : MonoBehaviour
                 playerDictionary.Add(player.ActorNumber, entry);
             }
         }
+
+        PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
+        PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
     }
 
     private void SwitchLocalPlayerBlueTeam()
     {
-        if (PhotonNetwork.LocalPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue || PhotonNetwork.LocalPlayer.GetReady())
+        if (PhotonNetwork.LocalPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue || PhotonNetwork.LocalPlayer.GetReady() || blueTeamsCount >= maxBlueTeamsCount)
             return;
 
         PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
@@ -219,7 +227,7 @@ public class RoomPanel : MonoBehaviour
 
     private void SwitchLocalPlayerRedTeam()
     {
-        if (PhotonNetwork.LocalPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Red || PhotonNetwork.LocalPlayer.GetReady())
+        if (PhotonNetwork.LocalPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Red || PhotonNetwork.LocalPlayer.GetReady() || redTeamsCount >= maxRedTeamsCount)
             return;
 
         Destroy(playerDictionary[PhotonNetwork.LocalPlayer.ActorNumber].gameObject);
