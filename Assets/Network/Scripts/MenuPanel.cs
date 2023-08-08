@@ -1,8 +1,10 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MenuPanel : MonoBehaviour
 {
@@ -21,7 +23,6 @@ public class MenuPanel : MonoBehaviour
     private bool choosedGameType;
     private int maxPlayerCount;
 
-
     private void OnEnable()
     {
         choosedGameType = false;
@@ -32,6 +33,7 @@ public class MenuPanel : MonoBehaviour
     public void CreateRoomMenu()
     {
         choosedGameType = false;
+        maxPlayerCount = 0;
         roomNameInputField.text = "";
         ResetNomalColor();
         createRoomPanel.SetActive(true);
@@ -69,21 +71,21 @@ public class MenuPanel : MonoBehaviour
         choosedButton = curButton;
     }
 
-    public void OnOneOnOneButton()
+    public void OnCreateOneOnOneButton()
     {
         ChangeNormalColor(oneOnOneButton);
         choosedGameType = true;
         maxPlayerCount = 2;
     }
 
-    public void OnTwoToTwoButton()
+    public void OnCreateTwoToTwoButton()
     {
         ChangeNormalColor(twoToTwoButton);
         choosedGameType = true;
         maxPlayerCount = 4;
     }
 
-    public void OnThreeToThreeButton()
+    public void OnCreateThreeToThreeButton()
     {
         ChangeNormalColor(threeToThreeButton);
         choosedGameType = true;
@@ -93,16 +95,39 @@ public class MenuPanel : MonoBehaviour
     public void CreateRoomCancel()
     {
         choosedGameType = false;
+        maxPlayerCount = 0;
         roomNameInputField.text = "";
         ResetNomalColor();
         createRoomPanel.SetActive(false);
     }
 
-    public void RandomMatching()
+    private void RandomMathing(int maxPlayerCount)
+    {
+        this.maxPlayerCount = maxPlayerCount;
+        PhotonHashtable roomProperies = new PhotonHashtable();
+        PhotonNetwork.JoinRandomRoom(roomProperies, (byte)maxPlayerCount);
+    }
+
+    public void JoinRandomMathingFailed()   // 인원 수 지정을 위해 분리구현, OnJoinRandomFailed in LobbyManager 에서 실행
     {
         string name = $"Room {Random.Range(1000, 10000)}";
-        RoomOptions options = new RoomOptions { MaxPlayers = 8 };
-        PhotonNetwork.JoinRandomOrCreateRoom(roomName: name, roomOptions: options);
+        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayerCount };  // 팀 변경, 새로 만들면 이전 팀으로 설정됨
+        PhotonNetwork.CreateRoom(name, options);
+    }
+
+    public void OnMathingOneOnOneButton()
+    {
+        RandomMathing(2);
+    }
+
+    public void OnMathingTwoToTwoButton()
+    {
+        RandomMathing(4);
+    }
+    
+    public void OnMathingThreeToThreeButton()
+    {
+        RandomMathing(6);
     }
 
     public void JoinLobby()

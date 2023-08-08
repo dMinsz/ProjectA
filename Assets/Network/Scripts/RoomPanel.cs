@@ -25,14 +25,6 @@ public class RoomPanel : MonoBehaviour
     private void Awake()
     {
         playerDictionary = new Dictionary<int, PlayerEntry>();
-        maxBlueTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
-        maxRedTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
-    }
-
-    private void Update()
-    {
-        Debug.Log(PhotonNetwork.CurrentRoom.GetBlueTeamsCount() + "GetBlueTeamPlayersCount");
-        Debug.Log(PhotonNetwork.CurrentRoom.GetRedTeamsCount() + "GetRedTeamPlayersCount");
     }
 
     private void OnEnable()
@@ -59,6 +51,8 @@ public class RoomPanel : MonoBehaviour
 
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
+        maxBlueTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
+        maxRedTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
         PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
         PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -78,7 +72,7 @@ public class RoomPanel : MonoBehaviour
 
     public void PlayerEnterRoom(Player newPlayer)
     {
-        if (blueTeamsCount <= redTeamsCount)
+        if (PhotonNetwork.CurrentRoom.GetBlueTeamsCount() <= PhotonNetwork.CurrentRoom.GetRedTeamsCount())
             newPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
         else
             newPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
