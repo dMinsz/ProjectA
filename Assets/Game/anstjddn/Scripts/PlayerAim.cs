@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,6 +21,9 @@ using UnityEngine.UI;
         private Animator playeranim;
 
 
+    public Vector3 attackdir;
+
+    [SerializeField]private GameObject effectprefabs;
 
     [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
@@ -62,7 +66,6 @@ using UnityEngine.UI;
          
         }
 
-
         // 어택 범위 설정
         private void OnDrawGizmos()
         {
@@ -73,9 +76,10 @@ using UnityEngine.UI;
         //어택타이밍 구현
         IEnumerator AttackTimeing(float attacktime)
         {
-
-                isattack = true;
+             attackdir = mousepos;              //여기서 어택방향 정해서 playercontroll에서 위치 받아서 look으로보게끔 설정
+             isattack = true;
              playeranim.SetTrigger("attack");
+             
                 Collider[] colliders = Physics.OverlapSphere(transform.position, attacksize);
                 foreach (Collider collider in colliders)
                 {
@@ -92,6 +96,7 @@ using UnityEngine.UI;
                 }
             yield return new WaitForSeconds(attacktime);
             isattack = false;
+      
         }
  
         }

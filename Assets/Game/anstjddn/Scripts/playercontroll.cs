@@ -19,6 +19,11 @@ namespace anstjddn
 
         private Animator anim;
 
+
+
+
+        [SerializeField] PlayerAim playerat;
+
         private void Awake()
         {
             playerrb = GetComponent<Rigidbody>();
@@ -26,9 +31,19 @@ namespace anstjddn
   
         }
 
-        private void Update()
+        private void Update()                          
         {
-            Move();
+            if (!playerat.isattack)
+            {
+                Move();
+                Look();
+            }
+            else                                       
+            {
+                transform.LookAt(playerat.attackdir);
+                Move();
+            }
+
           if(playerrb.velocity ==new Vector3(0, 0, 0))
             {
                 anim.SetBool("move", false);
@@ -41,17 +56,22 @@ namespace anstjddn
             {
                 return;
             }
- 
+          
+        
         }
         private void Move()
         {
+          
             playerrb.velocity = new Vector3(movedir.z* movespeed, 0, -movedir.x * movespeed);
+
+        }
+        private void Look()                     //기존에 무비에 던 바라보는 방향 수정
+        {
             if (movedir.magnitude == 0)
                 return;
             Vector3 viewVector = new Vector3(movedir.z, 0, -movedir.x);
             Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(viewVector), 0.1f);
             transform.rotation = lookrotation;
-        
         }
 
         private void OnMove(InputValue Value)

@@ -13,28 +13,33 @@ public class PlayerState : MonoBehaviour
     [SerializeField] private UnityEvent ondied;
     private Animator anim;
     private bool isdie;
+
+    public UnityAction die;
     private void Awake()
     {
-        playermaxhp = character.stat.stagger;
+        playermaxhp = character.stat.hp;
         playercurhp = playermaxhp;
         anim = GetComponent<Animator>();
         isdie = false;
     }
-    private void Update()
+
+    private void Start()
     {
-        if (!isdie&&playercurhp <= 0)
+        StartCoroutine(died());
+    }
+  private void Update()
+    {
+      /*  if (!isdie&&playercurhp <= 0)
         {
             Debug.Log("Á×À½");
             Destroy(gameObject,3f);
-               isdie=true;
+             isdie=true;
                if (isdie)
                {
                    ondied?.Invoke();
                }
-        
-
-
-        }
+ 
+        }*/
         if (Input.GetKey(KeyCode.Z))
         {
             playercurhp -= 10;
@@ -46,6 +51,25 @@ public class PlayerState : MonoBehaviour
        anim.SetTrigger("die");
     }
 
-
-
+    public void check()
+    {
+        if (playercurhp > 0)
+        {
+            return;
+        }
+        else
+        {
+            ondied?.Invoke();
+        }
+    }
+    IEnumerator died()
+    {
+        while (playercurhp>0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            check();
+        }
+        yield return null;
+    }
+  
 }
