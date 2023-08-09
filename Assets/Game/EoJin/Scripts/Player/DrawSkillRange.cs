@@ -74,6 +74,8 @@ public class DrawSkillRange : MonoBehaviour
             DrawWithLineRenderer();
             MakeArcWithLine();
         }
+        else
+            line.SetActive(false);
     }
 
     public void DrawWithLineRenderer()

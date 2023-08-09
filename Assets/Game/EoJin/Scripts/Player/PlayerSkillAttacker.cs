@@ -17,7 +17,12 @@ public class PlayerSkillAttacker : MonoBehaviour
     float range;
     float additionalRange;
     public float angle;
-    public bool isSkilling = false;
+    public bool isSkillingPrimary = false;
+    public bool isSkillingSecondary = false;
+    public bool isSkillingSpecial = false;
+    public bool canSkillPrimary = true;
+    public bool canSkillSecondary = true;
+    public bool canSkillSpecial = true;
     bool isPlayingSkillAnim = false;
     public UnityAction OnPlaySkillAnim;
     public UnityAction OnSkillStart;
@@ -39,55 +44,112 @@ public class PlayerSkillAttacker : MonoBehaviour
         cubeForLookAt.transform.LookAt(aim.mousepos);
         lookAtMouse = cubeForLookAt.transform.rotation;
 
-        if (isSkilling)
-            ApplyDamage();
-
         mousePosObj.transform.position = aim.mousepos;
+
+        
     }
 
-    Coroutine ApplyDamageRoutine;
+    Coroutine primarySkillCoroutine;
+    Coroutine secondarySkillCoroutine;
+    Coroutine specialSkillCoroutine;
 
     public void OnPrimarySkill(InputValue value)
     {
-        if (!isSkilling) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
+        if (canSkillPrimary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
+            canSkillPrimary = false;
             skill = data.CurCharacter.primarySkill;
             aim.attacksize = skill.range;
-            isSkilling = true;
-            ApplyDamageRoutine = StartCoroutine(skillDuration());
+
+            ApplyDamage();
+            isSkillingPrimary = true;
+            primarySkillCoroutine = StartCoroutine(skillDurationPrimary());
         }
 
     }
 
     public void OnSecondarySkill(InputValue value)
     {
-        if (!isSkilling)
+        if (canSkillSecondary)
         {
+            canSkillSecondary = false;
             skill = data.CurCharacter.secondarySkill;
             aim.attacksize = skill.range;
-            isSkilling = true;
-            ApplyDamageRoutine = StartCoroutine(skillDuration());
+
+            ApplyDamage();
+            isSkillingSecondary = true;
+            secondarySkillCoroutine = StartCoroutine(skillDurationSecondary());
         }
 
     }
 
     public void OnSpecailSkill(InputValue value)
     {
-        if (!isSkilling)
+        if (canSkillSpecial)
         {
+            canSkillSpecial = false;
             skill = data.CurCharacter.specialSkill;
             aim.attacksize = skill.range;
-            isSkilling = true;
-            ApplyDamageRoutine = StartCoroutine(skillDuration());
+
+            ApplyDamage();
+            isSkillingSpecial = true;
+            specialSkillCoroutine = StartCoroutine(skillDurationSpecial());
         }
     }
 
-    IEnumerator skillDuration()
+    IEnumerator skillDurationPrimary()
+    {
+        
+        yield return new WaitForSeconds(skill.duration);
+        isSkillingPrimary = false;
+        isPlayingSkillAnim = false;
+
+        if (secondarySkillCoroutine == null && specialSkillCoroutine == null)
+            OnSkillEnd?.Invoke();
+
+        primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
+    }
+
+    IEnumerator skillDurationSecondary()
     {
         yield return new WaitForSeconds(skill.duration);
-        isSkilling = false;
+        isSkillingSecondary = false;
         isPlayingSkillAnim = false;
-        OnSkillEnd?.Invoke();
+
+        if (primarySkillCoroutine == null && specialSkillCoroutine == null)
+            OnSkillEnd?.Invoke();
+
+        secondarySkillCoroutine = StartCoroutine(skillCoolTimeSecondary());
+    }
+
+    IEnumerator skillDurationSpecial()
+    {
+        yield return new WaitForSeconds(skill.duration);
+        isSkillingSpecial = false;
+        isPlayingSkillAnim = false;
+
+        if (primarySkillCoroutine == null && secondarySkillCoroutine == null)
+            OnSkillEnd?.Invoke();
+
+        specialSkillCoroutine = StartCoroutine(skillCoolTimeSpecial());
+    }
+
+    IEnumerator skillCoolTimePrimary()
+    {
+        yield return new WaitForSeconds(skill.coolTime);
+        canSkillPrimary = true;
+    }
+
+    IEnumerator skillCoolTimeSecondary()
+    {
+        yield return new WaitForSeconds(skill.coolTime);
+        canSkillSecondary = true;
+    }
+
+    IEnumerator skillCoolTimeSpecial()
+    {
+        yield return new WaitForSeconds(skill.coolTime);
+        canSkillSpecial = true;
     }
 
     public void ApplyDamage()
