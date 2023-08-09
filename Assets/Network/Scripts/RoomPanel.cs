@@ -16,10 +16,10 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] TMP_Text redTeamsCountText;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
-    [SerializeField] TMP_Text ACaracterButton;
-    [SerializeField] TMP_Text BCaracterButton;
-    [SerializeField] TMP_Text CCaracterButton;
-    [SerializeField] TMP_Text DCaracterButton;
+    [SerializeField] TMP_Text ACaracterText;
+    [SerializeField] TMP_Text BCaracterText;
+    [SerializeField] TMP_Text CCaracterText;
+    [SerializeField] TMP_Text DCaracterText;
 
     private int blueTeamsCount;
     private int redTeamsCount;
@@ -253,6 +253,7 @@ public class RoomPanel : MonoBehaviour
     public void OnSwitchBlueTeamButton()
     {
         SwitchLocalPlayerBlueTeam();
+        Debug.Log(PhotonNetwork.LocalPlayer.GetTeamColor());
     }
 
     public void OnSwitchRedTeamButton()
@@ -265,6 +266,7 @@ public class RoomPanel : MonoBehaviour
         // TODO : 각 버튼이 가지고 있는 CharacterName 넣기
 
         GameObject clickButton = EventSystem.current.currentSelectedGameObject;
-        PhotonNetwork.LocalPlayer.SetCharacter((clickButton.GetComponentInChildren<TMP_Text>().text));
+        Debug.Log(clickButton.GetComponentInChildren<TMP_Text>().text);
+        //PhotonNetwork.LocalPlayer.SetCharacter((clickButton.GetComponentInChildren<TMP_Text>().text));
     }
 }

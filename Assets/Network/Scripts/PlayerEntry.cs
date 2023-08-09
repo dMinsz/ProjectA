@@ -16,20 +16,25 @@ public class PlayerEntry : MonoBehaviour
     [SerializeField] TMP_Text characterName;
     [SerializeField] Image characterImage;
     [SerializeField] Button playerReadyButton;
+    [SerializeField] Character NoneChar;
+    [SerializeField] Character AChar;
+    [SerializeField] Character BChar;
+    [SerializeField] Character CChar;
+    [SerializeField] Character DChar;
 
-    //DirectoryInfo directoryInfo = new DirectoryInfo(Application.dataPath + "/Imports/Character");
-    //List<FileInfo> charcterList = new List<FileInfo>();
+    [SerializeField] Character curCharacter;
+    private List<Character> charactersList = new List<Character>();
     private Player player;
 
     public enum TeamColor { Blue, Red }
 
     private void OnEnable()
-    {   
-        //foreach (FileInfo file in directoryInfo.GetFiles())
-        //{
-        //    if (file.Extension.ToLower().CompareTo(".png") == 0)
-        //        charcterList.Add(file);
-        //}
+    {
+        charactersList.Add(NoneChar);
+        charactersList.Add(AChar);
+        charactersList.Add(BChar);
+        charactersList.Add(CChar);
+        charactersList.Add(DChar);
     }
 
     public void SetPlayer(Player player)
@@ -37,7 +42,8 @@ public class PlayerEntry : MonoBehaviour
         this.player = player;
         playerName.text = player.NickName;
         playerReady.text = player.GetReady() ? "Ready" : "";
-        //Team(player.GetTeamColor());        
+        Team(player.GetTeamColor());
+        //ChangeCharacter(player.GetCharacter());
         playerReadyButton.gameObject.SetActive(PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber);
     }
 
@@ -60,13 +66,25 @@ public class PlayerEntry : MonoBehaviour
         }
     }
 
-    public void Character(string character)
+    public void ChangeCharacter(string selectCharacterName)
     {
-        //string character = player.GetCharacter();
-        //characterImage
-        //resoursece, scriptableobject
-        //if (charcterList.FindIndex(0, 1, FileInfo => FileInfo.FullName = character))
-        characterName.text = character;
+        foreach (Character character in charactersList)
+        {
+            if (selectCharacterName == character.name)
+            {
+                curCharacter = character;
+                break;
+            }
+            else
+            {
+                Debug.Log("NotFoundCharacterName");
+                characterName.text = curCharacter.name;
+                characterImage.sprite = curCharacter.Image;
+            }
+        }
+
+        characterName.text = curCharacter.name;
+        characterImage.sprite = curCharacter.Image;
     }
 
     public void ChangeCustomProperty(PhotonHashtable property)
@@ -81,15 +99,16 @@ public class PlayerEntry : MonoBehaviour
             playerReady.text = "";
         }
 
-        if (property.TryGetValue(CustomProperty.TEAM, out object teamvalue))
+        if (property.TryGetValue(CustomProperty.TEAM, out object teamValue))
         {
-            int team = (int)teamvalue;
+            int team = (int)teamValue;
             Team(team); 
         }
 
-        if (property.TryGetValue(CustomProperty.CHARACTER, out object character))
-        {
-            Character((string)character);
-        }
+        //if (property.TryGetValue(CustomProperty.CHARACTERNAME, out object characterValue))
+        //{
+        //    string character = (string)characterValue;
+        //    ChangeCharacter(character);
+        //}
     }
 }

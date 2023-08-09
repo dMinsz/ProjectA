@@ -511,10 +511,10 @@ MonoBehaviour:
   redTeamsCountText: {fileID: 476276543603048821}
   gameTypeText: {fileID: 2666859358590443367}
   startButton: {fileID: 5916088861808141049}
-  ACaracterButton: {fileID: 0}
-  BCaracterButton: {fileID: 0}
-  CCaracterButton: {fileID: 0}
-  DCaracterButton: {fileID: 0}
+  ACaracterText: {fileID: 7336835480688125804}
+  BCaracterText: {fileID: 467375384441829967}
+  CCaracterText: {fileID: 5025998953305277461}
+  DCaracterText: {fileID: 3933790102779363129}
 --- !u!1 &1670856568764299203
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +715,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: C Char
+  m_text: CChar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1673,7 +1673,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: D Char
+  m_text: DChar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1808,7 +1808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: B Char
+  m_text: BChar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2873,7 +2873,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A Char
+  m_text: AChar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -637,7 +637,14 @@ MonoBehaviour:
   playerReady: {fileID: 577569469}
   playerTeam: {fileID: 3310270052916392608}
   characterName: {fileID: 3310270052916392608}
+  characterImage: {fileID: 1628759371569721695}
   playerReadyButton: {fileID: 788518147}
+  NoneChar: {fileID: 11400000, guid: 18a6619101e57f24b9a8928ce64677dd, type: 2}
+  AChar: {fileID: 11400000, guid: d4c628f4b1e686445978149b417cd5a7, type: 2}
+  BChar: {fileID: 11400000, guid: c79de625f44a7e04a805b976eedaf887, type: 2}
+  CChar: {fileID: 11400000, guid: 1fcf5c71edf7f564098a48fca4f97893, type: 2}
+  DChar: {fileID: 11400000, guid: d277c43d57ad40e458e7e7cde08f2809, type: 2}
+  curCharacter: {fileID: 0}
 --- !u!1 &4617487163434985949
 GameObject:
   m_ObjectHideFlags: 0

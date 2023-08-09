@@ -6,10 +6,10 @@ public static class CustomProperty
     public const string READY = "Ready";
     public const string LOAD = "Load";
     public const string NUMBER = "Number";
-    public const string CHARACTER = "Character";
     public const string TEAM = "Team";
     public const string BLUETEAMSCOUNT = "BlueTeamsCount";
     public const string REDTEAMSCOUNT = "RedTeamsCount";
+    public const string CHARACTERNAME = "CharacterName";
 
     public const string LOADTIME = "LoadTime";
 
@@ -109,19 +109,19 @@ public static class CustomProperty
         room.SetCustomProperties(property);
     }
 
-    public static string GetCharacter(this Player player)   // int로 하는게 좋을 것 같음
+    public static string GetCharacter(this Player player)
     {
         PhotonHashtable property = player.CustomProperties;
-        if (property.ContainsKey(CHARACTER))
-            return (string)property[CHARACTER];
+        if (property.ContainsKey(CHARACTERNAME))
+            return (string)property[CHARACTERNAME];
         else
-            return "";
+            return "-";
     }
 
-    public static void SetCharacter(this Player player, string character)
+    public static void SetCharacter(this Player player, string characterName)
     {
         PhotonHashtable property = new PhotonHashtable();
-        property[CHARACTER] = character;
+        property[CHARACTERNAME] = characterName;
         player.SetCustomProperties(property);
     }
 }
