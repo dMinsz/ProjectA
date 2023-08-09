@@ -59,18 +59,10 @@ public class PlayerSetup : MonoBehaviourPun
     public void SetPlayerColor(int team)
     {
 
-        if (team == 0)
-        {
-            playerTeam = 0;
-            surface.material.color = playerColor[0];
-            floorMarkImg.color = playerColor[0];
-        }
-        else
-        {
-            playerTeam = team;
-            surface.material.color = playerColor[team - 1];
-            floorMarkImg.color = playerColor[team - 1];
-        }
+        playerTeam = team;
+        surface.material.color = playerColor[team];
+        floorMarkImg.color = playerColor[team];
+        
 
         originPos = transform.position;
         originRot = transform.rotation;

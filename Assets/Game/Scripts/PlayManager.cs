@@ -66,7 +66,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
                     var player = PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0, puckData);
 
-                    //player.GetComponent<DelayCompensation>().SetSyncronize(true);
+                    player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
                     player.GetComponent<PlayerSetup>().SentServerColor();
 
@@ -88,8 +88,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 {
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
                     var player = PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0, puckData);
-                    
-                    //player.GetComponent<DelayCompensation>().SetSyncronize(true);
+
+                    player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
                     player.GetComponent<PlayerSetup>().SentServerColor();
 
