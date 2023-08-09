@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -15,6 +16,10 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] TMP_Text redTeamsCountText;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
+    [SerializeField] TMP_Text ACaracterButton;
+    [SerializeField] TMP_Text BCaracterButton;
+    [SerializeField] TMP_Text CCaracterButton;
+    [SerializeField] TMP_Text DCaracterButton;
 
     private int blueTeamsCount;
     private int redTeamsCount;
@@ -253,5 +258,13 @@ public class RoomPanel : MonoBehaviour
     public void OnSwitchRedTeamButton()
     {
         SwitchLocalPlayerRedTeam();
+    }
+
+    public void OnSelectCharacterButton()
+    {
+        // TODO : 각 버튼이 가지고 있는 CharacterName 넣기
+
+        GameObject clickButton = EventSystem.current.currentSelectedGameObject;
+        PhotonNetwork.LocalPlayer.SetCharacter((clickButton.GetComponentInChildren<TMP_Text>().text));
     }
 }
