@@ -7,6 +7,7 @@ using UnityEngine;
 public class Character : ScriptableObject
 {
     [SerializeField] public string characterName; //dataManager에서 이 이름으로 캐릭터 전환
+    [SerializeField] public Sprite Image; //dataManager에서 이 이름으로 캐릭터 전환
     [SerializeField] public Avatar avatar; //모델은 이미 플레이어가 갖고 있게 했으므로 아바타만 변경해줌
     [SerializeField] public AnimatorController animator;
 
