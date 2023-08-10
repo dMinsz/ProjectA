@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DChar
   m_EditorClassIdentifier: 
   characterName: DChar
-  Image: {fileID: -752253485, guid: 94c6fb38910865d4e8d3e54d14e1a232, type: 3}
+  Image: {fileID: -1007670380, guid: 94c6fb38910865d4e8d3e54d14e1a232, type: 3}
   avatar: {fileID: 0}
   animator: {fileID: 0}
   stat: {fileID: 0}

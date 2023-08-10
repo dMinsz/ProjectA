@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AChar
   m_EditorClassIdentifier: 
   characterName: AChar
-  Image: {fileID: 2006801689, guid: c5832afac1794a6479ec5e09a07f8d54, type: 3}
+  Image: {fileID: 20535933, guid: 8e41f658eba1b6a41a54de40df6725fa, type: 3}
   avatar: {fileID: 0}
   animator: {fileID: 0}
   stat: {fileID: 0}

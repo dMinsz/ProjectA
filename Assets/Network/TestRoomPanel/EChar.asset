@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: BChar
+  m_Name: EChar
   m_EditorClassIdentifier: 
-  characterName: BChar
-  Image: {fileID: 1965397675, guid: 97dceadc4ae9ad34c860d6abda849065, type: 3}
+  characterName: EChar
+  Image: {fileID: 453642891, guid: d7ac720ebe166734486928a6462f653d, type: 3}
   avatar: {fileID: 0}
   animator: {fileID: 0}
   stat: {fileID: 0}

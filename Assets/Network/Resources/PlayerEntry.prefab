@@ -637,10 +637,8 @@ MonoBehaviour:
   playerTeam: {fileID: 3310270052916392608}
   characterName: {fileID: 0}
   characterImage: {fileID: 0}
-  playerReadyButton: {fileID: 788518147}
   curCharacter: {fileID: 0}
   dataManager: {fileID: 0}
-  test: 0
 --- !u!1 &8711742722721840547
 GameObject:
   m_ObjectHideFlags: 0

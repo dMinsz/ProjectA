@@ -72,6 +72,7 @@ public class RoomPanel : MonoBehaviour
             Destroy(playerDictionary[actorNumber].gameObject);
         }
 
+        //PhotonNetwork.LocalPlayer.SetTeamColor(0);
         playerDictionary.Clear();
         PhotonNetwork.AutomaticallySyncScene = false;
     }
@@ -266,5 +267,15 @@ public class RoomPanel : MonoBehaviour
 
         GameObject clickButton = EventSystem.current.currentSelectedGameObject;
         PhotonNetwork.LocalPlayer.SetCharacterName((clickButton.GetComponentInChildren<TMP_Text>().text));
+    }
+
+    public void OnReadyButton()
+    {
+        if (PhotonNetwork.LocalPlayer.GetCharacterName() == "None")
+            return;
+
+        bool ready = PhotonNetwork.LocalPlayer.GetReady();
+        ready = !ready;
+        PhotonNetwork.LocalPlayer.SetReady(ready);
     }
 }
