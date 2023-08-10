@@ -13,7 +13,6 @@ public class cameraHpbar : BaseUI
     {
         base.Awake();
         hpbar = sliders["HpSlider"];
-       
 
     }
     private void Start()

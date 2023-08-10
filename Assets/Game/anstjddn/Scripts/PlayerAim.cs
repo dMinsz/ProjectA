@@ -52,8 +52,7 @@ using UnityEngine.UI;
         }
         private void OnAttack(InputValue Value)
         {
-              Attack();
-
+                Attack();
         }
 
         public void Attack()

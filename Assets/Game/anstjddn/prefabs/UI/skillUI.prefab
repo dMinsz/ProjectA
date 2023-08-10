@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -356, y: -408}
+  m_AnchoredPosition: {x: -366, y: -408}
   m_SizeDelta: {x: 129.1736, y: 117.2662}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &118922310342447767
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.018629164, g: 0.9811321, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -419,7 +419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -497, y: -408}
+  m_AnchoredPosition: {x: -512, y: -408}
   m_SizeDelta: {x: 129.1736, y: 117.2662}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &118922311323651700
@@ -457,7 +457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: -408}
+  m_AnchoredPosition: {x: -221, y: -408}
   m_SizeDelta: {x: 129.1736, y: 117.2662}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &118922311336593137
@@ -1094,7 +1094,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ada6c451dde19145949fd60203e0f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 0}
+  character: {fileID: 11400000, guid: 062ac108c16a94e45882780a23524907, type: 2}
   qskilCoolTime: {fileID: 0}
   qskilcolltimeUI: {fileID: 118922311336593137}
   curtime: 0
+  playerskill: {fileID: 0}
+  eskilCoolTime: {fileID: 0}
+  eskilcolltimeUI: {fileID: 118922311759085508}
+  rskilCoolTime: {fileID: 0}
+  rskilcolltimeUI: {fileID: 118922311729852827}

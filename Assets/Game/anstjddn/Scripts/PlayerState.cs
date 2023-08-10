@@ -22,24 +22,18 @@ public class PlayerState : MonoBehaviour
         anim = GetComponent<Animator>();
         isdie = false;
     }
-
-    private void Start()
-    {
-        StartCoroutine(died());
-    }
   private void Update()
     {
-      /*  if (!isdie&&playercurhp <= 0)
+       if (!isdie&&playercurhp <= 0)
         {
-            Debug.Log("Á×À½");
-            Destroy(gameObject,3f);
+            Destroy(gameObject,2f);
              isdie=true;
                if (isdie)
                {
                    ondied?.Invoke();
                }
  
-        }*/
+        }
         if (Input.GetKey(KeyCode.Z))
         {
             playercurhp -= 10;
@@ -51,25 +45,6 @@ public class PlayerState : MonoBehaviour
        anim.SetTrigger("die");
     }
 
-    public void check()
-    {
-        if (playercurhp > 0)
-        {
-            return;
-        }
-        else
-        {
-            ondied?.Invoke();
-        }
-    }
-    IEnumerator died()
-    {
-        while (playercurhp>0)
-        {
-            yield return new WaitForSeconds(0.1f);
-            check();
-        }
-        yield return null;
-    }
-  
+ 
+
 }
