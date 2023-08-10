@@ -39,7 +39,7 @@ namespace anstjddn
             }
             else                                       
             {
-                transform.LookAt(playerat.attackdir);
+                transform.LookAt(new Vector3(0f, playerat.attackdir.y, 0f));
                 Move();
             }
 
@@ -70,7 +70,7 @@ namespace anstjddn
                 return;
             Vector3 viewVector = new Vector3(movedir.z, 0, -movedir.x);
             Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(viewVector), 0.1f);
-            transform.rotation = lookrotation;
+            transform.rotation = Quaternion.Euler(new Vector3(0f, lookrotation.y, 0f));
         }
 
         private void OnMove(InputValue Value)
