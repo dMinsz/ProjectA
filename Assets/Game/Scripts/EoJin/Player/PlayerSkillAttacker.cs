@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -249,30 +248,4 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (skill == null || !debug || skill.rangeStyle == Skill.RangeStyle.Square)
-            return;
-
-        //Handles.color = Color.cyan;
-
-        //Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, range);
-        //Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, range);
-
-    }
-
-    private void OnDrawGizmos()
-    {
-        //Style Square의 Gizmos의 경우 플레이어의 뒷부분까지 그려지나 실제 Skill 범위는 Gizmos의 반에 플레이어 앞쪽을 향함
-
-        if (skill == null || !debug || skill.rangeStyle != Skill.RangeStyle.Square || skill.rangeStyle != Skill.RangeStyle.Square)
-            return;
-
-        Gizmos.color = Color.cyan;
-        
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, lookAtMouse, new Vector3(1f, 1f, 1f));
-        Gizmos.matrix = rotationMatrix;
-
-        Gizmos.DrawCube(Vector3.zero, new Vector3(additionalRange, 0.01f, range * 2f));
-    }
 }
