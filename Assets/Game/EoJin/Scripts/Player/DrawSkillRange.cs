@@ -22,6 +22,7 @@ public class DrawSkillRange : MonoBehaviour
     bool isDrawing;
     Vector3 oldRotation;
     [SerializeField] List<Vector3> arcPoints;
+    float time;
 
     public void Awake()
     {
@@ -49,7 +50,9 @@ public class DrawSkillRange : MonoBehaviour
     public void Update()
     {
         if (isDrawing)
+        {
             Draw();
+        }
         else
             SetActiveFalse();
     }
@@ -57,13 +60,11 @@ public class DrawSkillRange : MonoBehaviour
     public void OnEnable()
     {
         attacker.OnSkillStart += SetIsDrawingTrue;
-        attacker.OnSkillEnd += SetIsDrawingFalse;
     }
 
     public void OnDisable()
     {
         attacker.OnSkillStart -= SetIsDrawingTrue;
-        attacker.OnSkillEnd -= SetIsDrawingFalse;
     }
 
     public void Draw()
@@ -159,14 +160,34 @@ public class DrawSkillRange : MonoBehaviour
         line.transform.LookAt(aim.mousepos);
     }
 
+    Coroutine DrawLineCoroutine;
+
     public void SetIsDrawingTrue()
     {
         isDrawing = true;
+        StopAllCoroutines();
+        DrawLineCoroutine = StartCoroutine(DrawLineRoutine());
+    }
+
+    IEnumerator DrawLineRoutine()
+    {
+        time = 1;
+        while(attacker.skill.duration >= time)
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log($"{attacker.skill.skillName}이 {time}초동안 실행되는 중");
+            time += 1;
+        }
+        
+        //yield return new WaitForSeconds(attacker.skill.duration);
+        //while문 지우고 위 문장 주석 해지할 것
+        SetIsDrawingFalse();
     }
 
     public void SetIsDrawingFalse()
     {
         isDrawing = false;
+        SetActiveFalse();
     }
 
     public void SetActiveFalse()
@@ -175,4 +196,5 @@ public class DrawSkillRange : MonoBehaviour
         cube.SetActive(false);
         cube2.SetActive(false);
     }
+
 }

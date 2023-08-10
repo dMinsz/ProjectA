@@ -15,15 +15,13 @@ MonoBehaviour:
   skillName: Flame Flurry
   image: {fileID: 0}
   description: 
-  key: 0
+  key: 1
   rangeStyle: 0
-  angle: 30
-  range: 5
+  angle: 15
+  range: 8
   additionalRange: 1.5
   isDash: 0
   duration: 1
-  coolTime: 30
-  skillAnimation: {fileID: -203655887218126122, guid: 6cb06eb4ca3a9424abe37b25ccf9e085,
-    type: 3}
+  coolTime: 4
   playerKnockback: 6
   coreKnockback: 100

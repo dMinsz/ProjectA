@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -26,12 +27,15 @@ public class PlayerSkillAttacker : MonoBehaviour
     bool isPlayingSkillAnim = false;
     public UnityAction OnPlaySkillAnim;
     public UnityAction OnSkillStart;
-    public UnityAction OnSkillEnd;
     public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] anstjddn.PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
     [SerializeField] public GameObject cubeForLookAt;
     Quaternion lookAtMouse;
+    float time;
+    float coolTimeP;
+    float coolTimeS;
+    float coolTimeSP;
 
     public void Awake()
     {
@@ -104,9 +108,6 @@ public class PlayerSkillAttacker : MonoBehaviour
         isSkillingPrimary = false;
         isPlayingSkillAnim = false;
 
-        if (secondarySkillCoroutine == null && specialSkillCoroutine == null)
-            OnSkillEnd?.Invoke();
-
         primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
     }
 
@@ -115,9 +116,6 @@ public class PlayerSkillAttacker : MonoBehaviour
         yield return new WaitForSeconds(skill.duration);
         isSkillingSecondary = false;
         isPlayingSkillAnim = false;
-
-        if (primarySkillCoroutine == null && specialSkillCoroutine == null)
-            OnSkillEnd?.Invoke();
 
         secondarySkillCoroutine = StartCoroutine(skillCoolTimeSecondary());
     }
@@ -128,27 +126,51 @@ public class PlayerSkillAttacker : MonoBehaviour
         isSkillingSpecial = false;
         isPlayingSkillAnim = false;
 
-        if (primarySkillCoroutine == null && secondarySkillCoroutine == null)
-            OnSkillEnd?.Invoke();
-
         specialSkillCoroutine = StartCoroutine(skillCoolTimeSpecial());
     }
 
     IEnumerator skillCoolTimePrimary()
     {
-        yield return new WaitForSeconds(skill.coolTime);
+        coolTimeP = 1;
+        while (skill.coolTime >= coolTimeP)
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log($"Primary : {skill.skillName}의 쿨타임 대기 {coolTimeP} / {skill.coolTime}");
+            coolTimeP += 1;
+        }
+
+        //while문 삭제 후 아래 문장 주석 취소할 것
+        //yield return new WaitForSeconds(skill.coolTime);
         canSkillPrimary = true;
     }
 
     IEnumerator skillCoolTimeSecondary()
     {
-        yield return new WaitForSeconds(skill.coolTime);
+        coolTimeS = 1;
+        while (skill.coolTime >= coolTimeS)
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log($"Secondary : {skill.skillName}의 쿨타임 대기 {coolTimeS} / {skill.coolTime}");
+            coolTimeS += 1;
+        }
+
+        //while문 삭제 후 아래 문장 주석 취소할 것
+        //yield return new WaitForSeconds(skill.coolTime);
         canSkillSecondary = true;
     }
 
     IEnumerator skillCoolTimeSpecial()
     {
-        yield return new WaitForSeconds(skill.coolTime);
+        coolTimeSP = 1;
+        while (skill.coolTime >= coolTimeSP)
+        {
+            yield return new WaitForSeconds(1f);
+            Debug.Log($"Special : {skill.skillName}의 쿨타임 대기 {coolTimeSP} / {skill.coolTime}");
+            coolTimeSP += 1;
+        }
+
+        //while문 삭제 후 아래 문장 주석 취소할 것
+        //yield return new WaitForSeconds(skill.coolTime);
         canSkillSpecial = true;
     }
 
