@@ -222,7 +222,6 @@ GameObject:
   - component: {fileID: 4974935840343098104}
   - component: {fileID: 1468191483792696600}
   - component: {fileID: 4974935840343098105}
-  - component: {fileID: 1468191483792696603}
   - component: {fileID: 1468191483792696602}
   - component: {fileID: 1162768311179859993}
   - component: {fileID: 1162768311179859994}
@@ -235,6 +234,7 @@ GameObject:
   - component: {fileID: 3828135067303129212}
   - component: {fileID: 6102010482443653027}
   - component: {fileID: 3842014903800777819}
+  - component: {fileID: 6672377798487455669}
   m_Layer: 6
   m_Name: Mario
   m_TagString: Player
@@ -319,21 +319,6 @@ CapsuleCollider:
   m_Height: 1.99
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &1468191483792696603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774833532629090872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c98e327bfafd6342a130f4f55be7048, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movespeed: 30
-  playerat: {fileID: 3842014903800777819}
-  playerdir: {x: 0, y: 0}
 --- !u!114 &1468191483792696602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,6 +607,21 @@ MonoBehaviour:
   mousepos: {x: 0, y: 0, z: 0}
   puck: {fileID: 0}
   attackdir: {x: 0, y: 0, z: 0}
+--- !u!114 &6672377798487455669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774833532629090872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c98e327bfafd6342a130f4f55be7048, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movespeed: 30
+  playerat: {fileID: 3842014903800777819}
+  playerdir: {x: 0, y: 0}
 --- !u!1001 &609177193480076586
 PrefabInstance:
   m_ObjectHideFlags: 0

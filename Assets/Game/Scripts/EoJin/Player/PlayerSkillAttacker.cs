@@ -296,9 +296,10 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (collider.gameObject == this.gameObject)
                 continue;
 
-            if (collider.gameObject.layer == 7)
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
             {
-                //aim.Attack();
+                Debug.Log("범위내에 있음");
+                aim.Attack();
                 continue;
             }
 
