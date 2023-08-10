@@ -376,6 +376,10 @@ MonoBehaviour:
   redTeamsCountText: {fileID: 476276543603048821}
   gameTypeText: {fileID: 2666859358590443367}
   startButton: {fileID: 5916088861808141049}
+  ACaracterText: {fileID: 0}
+  BCaracterText: {fileID: 0}
+  CCaracterText: {fileID: 0}
+  DCaracterText: {fileID: 0}
 --- !u!1 &1670856568764299203
 GameObject:
   m_ObjectHideFlags: 0

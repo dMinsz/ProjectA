@@ -93,20 +93,20 @@ public class PlayerAttacker : MonoBehaviour
             if (collider.isTrigger == true)
                 continue;
 
-            /*
+            
             if (collider.gameObject.layer == 7)
             {
                 aim.Attack();
                 Debug.Log($"{collider.gameObject.name}¿¡°Ô PlayerAim.Attack");
                 return;
             }
-            */
+            
 
             //collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject);
         }
     }
 
-    private void OnDrawGizmosSelected()
+    /*private void OnDrawGizmosSelected()
     {
         if (!debug)
             return;
@@ -115,4 +115,5 @@ public class PlayerAttacker : MonoBehaviour
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, rangeAmount);
         Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, rangeAmount);
     }
+    */
 }
