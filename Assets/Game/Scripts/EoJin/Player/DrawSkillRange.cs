@@ -57,15 +57,15 @@ public class DrawSkillRange : MonoBehaviour
             SetActiveFalse();
     }
 
-    public void OnEnable()
-    {
-        attacker.OnSkillStart += SetIsDrawingTrue;
-    }
+    //public void OnEnable()
+    //{
+    //    attacker.OnSkillStart += SetIsDrawingTrue;
+    //}
 
-    public void OnDisable()
-    {
-        attacker.OnSkillStart -= SetIsDrawingTrue;
-    }
+    //public void OnDisable()
+    //{
+    //    attacker.OnSkillStart -= SetIsDrawingTrue;
+    //}
 
     public void Draw()
     {
@@ -165,8 +165,8 @@ public class DrawSkillRange : MonoBehaviour
     public void SetIsDrawingTrue()
     {
         isDrawing = true;
-        StopAllCoroutines();
-        DrawLineCoroutine = StartCoroutine(DrawLineRoutine());
+        //StopAllCoroutines();
+        //DrawLineCoroutine = StartCoroutine(DrawLineRoutine());
     }
 
     IEnumerator DrawLineRoutine()
@@ -197,4 +197,8 @@ public class DrawSkillRange : MonoBehaviour
         cube2.SetActive(false);
     }
 
+    public bool GetIsDraw() 
+    {
+        return isDrawing;
+    }
 }

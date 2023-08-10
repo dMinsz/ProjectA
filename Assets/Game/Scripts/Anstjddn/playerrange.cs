@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class playerrange : MonoBehaviour
 {
-    [SerializeField] PlayerAim player;
+    [SerializeField] PlayerAimTest player;
 
     private float size;
     private void Awake()

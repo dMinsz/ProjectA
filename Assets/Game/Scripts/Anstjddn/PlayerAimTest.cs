@@ -23,6 +23,9 @@ public class PlayerAimTest : MonoBehaviour
 
     public Vector3 attackdir;
 
+
+
+
     [SerializeField] private GameObject effectprefabs;
 
     [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
