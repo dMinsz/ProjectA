@@ -88,7 +88,6 @@ public class RoomPanel : MonoBehaviour
             entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
 
         entry.SetPlayer(newPlayer);
-        entry.SelectCharacter(newPlayer.GetCharacterName());
         playerDictionary.Add(newPlayer.ActorNumber, entry);
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
@@ -219,7 +218,6 @@ public class RoomPanel : MonoBehaviour
             }
 
             entry.SetPlayer(player);
-            entry.SelectCharacter(player.GetCharacterName());
             playerDictionary.Add(player.ActorNumber, entry);
         }
 

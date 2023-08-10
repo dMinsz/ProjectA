@@ -116,7 +116,8 @@ public static class CustomProperty
         if (property.ContainsKey(CHARACTERNAME))
             return (string)property[CHARACTERNAME];
         else
-            throw new KeyNotFoundException("Character name not found in custom properties.");
+            return "None";
+            //throw new KeyNotFoundException("Character name not found in custom properties.");
     }
 
     public static void SetCharacterName(this Player player, string characterName)

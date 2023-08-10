@@ -20,6 +20,7 @@ public class PlayerEntry : MonoBehaviour
     private Player player;
 
     public enum TeamColor { Blue, Red }
+   // public enum CharacterName { None, AChar, BChar, CChar, DChar }
 
     private void OnEnable()
     {
@@ -32,10 +33,7 @@ public class PlayerEntry : MonoBehaviour
         playerName.text = player.NickName;
         playerReady.text = player.GetReady() ? "Ready" : "";
         //Team(player.GetTeamColor());
-        //SelectCharacter(player.GetCharacterName());
-        //Debug.Log(player.GetCharacterName() + " GetCharacterName from PlayerEnry");
-        //player.SetCharacterName(dataManager.CurCharacter.name);
-        //SelectCharacter(player.GetCharacterName());
+        SelectCharacter(player.GetCharacterName());
         playerReadyButton.gameObject.SetActive(PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber);
     }
 
