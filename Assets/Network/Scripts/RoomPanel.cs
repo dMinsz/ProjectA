@@ -17,10 +17,13 @@ public class RoomPanel : MonoBehaviour
     //[SerializeField] TMP_Text redTeamsCountText;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
+    [SerializeField] Button readyButton;
     [SerializeField] TMP_Text ACaracterText;
     [SerializeField] TMP_Text BCaracterText;
     [SerializeField] TMP_Text CCaracterText;
     [SerializeField] TMP_Text DCaracterText;
+    [SerializeField] TMP_Text ECaracterText;
+    [SerializeField] TMP_Text FCaracterText;
 
     private int blueTeamsCount;
     private int redTeamsCount;

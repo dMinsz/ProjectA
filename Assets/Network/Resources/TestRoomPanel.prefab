@@ -642,6 +642,8 @@ MonoBehaviour:
   redTeamPlayerContent: {fileID: 4915946899261248747}
   playerEntryPrefab: {fileID: 3731023699572381743, guid: e0c1dc03971a59b498170865691445f0,
     type: 3}
+  blueTeamsCountText: {fileID: 0}
+  redTeamsCountText: {fileID: 0}
   gameTypeText: {fileID: 3485066447989009196}
   startButton: {fileID: 5135735753607337650}
   ACaracterText: {fileID: 8110503489820693287}

@@ -14,7 +14,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] SignUpPanel signUpPanel;
     [SerializeField] MenuPanel menuPanel;
     [SerializeField] RoomPanel roomPanel;
-    [SerializeField] GameObject inRoomObject;
     [SerializeField] LobbyPanel lobbyPanel;
 
     public void SetActivePanel(Panel panel)
@@ -22,7 +21,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         loginPanel.gameObject?.SetActive(panel == Panel.Login);
         menuPanel.gameObject?.SetActive(panel == Panel.Menu);
         roomPanel.gameObject?.SetActive(panel == Panel.Room);
-        inRoomObject.gameObject?.SetActive(panel == Panel.Room);
         lobbyPanel.gameObject?.SetActive(panel == Panel.Lobby);
         signUpPanel.gameObject?.SetActive(panel == Panel.SignUp);
     }
