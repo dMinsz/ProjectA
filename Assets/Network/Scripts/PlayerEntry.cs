@@ -1,8 +1,5 @@
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
-using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,25 +13,17 @@ public class PlayerEntry : MonoBehaviour
     [SerializeField] TMP_Text characterName;
     [SerializeField] Image characterImage;
     [SerializeField] Button playerReadyButton;
-    [SerializeField] Character NoneChar;
-    [SerializeField] Character AChar;
-    [SerializeField] Character BChar;
-    [SerializeField] Character CChar;
-    [SerializeField] Character DChar;
-
     [SerializeField] Character curCharacter;
-    private List<Character> charactersList = new List<Character>();
+    [SerializeField] DataManager dataManager;
+    [SerializeField]
+    [Range(0, 3)] int test;
     private Player player;
 
     public enum TeamColor { Blue, Red }
 
     private void OnEnable()
     {
-        charactersList.Add(NoneChar);
-        charactersList.Add(AChar);
-        charactersList.Add(BChar);
-        charactersList.Add(CChar);
-        charactersList.Add(DChar);
+        dataManager = FindObjectOfType<DataManager>();
     }
 
     public void SetPlayer(Player player)
@@ -42,49 +31,50 @@ public class PlayerEntry : MonoBehaviour
         this.player = player;
         playerName.text = player.NickName;
         playerReady.text = player.GetReady() ? "Ready" : "";
-        Team(player.GetTeamColor());
-        //ChangeCharacter(player.GetCharacter());
+        //Team(player.GetTeamColor());
+        //SelectCharacter(player.GetCharacterName());
+        //Debug.Log(player.GetCharacterName() + " GetCharacterName from PlayerEnry");
+        //player.SetCharacterName(dataManager.CurCharacter.name);
+        //SelectCharacter(player.GetCharacterName());
         playerReadyButton.gameObject.SetActive(PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber);
     }
 
     public void Ready()
     {
+        if (player.GetCharacterName() == "None")
+            return;
+
         bool ready = player.GetReady();
         ready = !ready;
         player.SetReady(ready);
     }
 
-    public void Team(int team)
+    //public void Team(int team)
+    //{
+    //    if (team == (int)TeamColor.Blue)
+    //    {
+    //        playerTeam.text = "Blue";
+    //    }
+    //    else
+    //    {
+    //        playerTeam.text = "Red";
+    //    }
+    //}
+
+    public void SelectCharacter(string selectCharacterName)
     {
-        if (team == (int)TeamColor.Blue)
-        {
-            playerTeam.text = "Blue";
-        }
-        else
-        {
-            playerTeam.text = "Red";
-        }
+        dataManager.ChangeCharacter(selectCharacterName);
+
+        if (player == PhotonNetwork.LocalPlayer)
+            curCharacter = dataManager.CurCharacter;
+
+        characterName.text = dataManager.CurCharacter.name;
+        characterImage.sprite = dataManager.CurCharacter.Image;
     }
 
-    public void ChangeCharacter(string selectCharacterName)
+    public void DebugCharacter()
     {
-        foreach (Character character in charactersList)
-        {
-            if (selectCharacterName == character.name)
-            {
-                curCharacter = character;
-                break;
-            }
-            else
-            {
-                Debug.Log("NotFoundCharacterName");
-                characterName.text = curCharacter.name;
-                characterImage.sprite = curCharacter.Image;
-            }
-        }
-
-        characterName.text = curCharacter.name;
-        characterImage.sprite = curCharacter.Image;
+        Debug.Log(player.GetCharacterName());
     }
 
     public void ChangeCustomProperty(PhotonHashtable property)
@@ -99,16 +89,18 @@ public class PlayerEntry : MonoBehaviour
             playerReady.text = "";
         }
 
-        if (property.TryGetValue(CustomProperty.TEAM, out object teamValue))
-        {
-            int team = (int)teamValue;
-            Team(team); 
-        }
-
-        //if (property.TryGetValue(CustomProperty.CHARACTERNAME, out object characterValue))
+        //if (property.TryGetValue(CustomProperty.TEAM, out object teamValue))
         //{
-        //    string character = (string)characterValue;
-        //    ChangeCharacter(character);
+        //    int team = (int)teamValue;
+        //    Team(team); 
         //}
+
+        if (property.TryGetValue(CustomProperty.CHARACTERNAME, out object characterValue))
+        {
+            string character = (string)characterValue;
+            SelectCharacter(character);
+        }
+        else
+            Debug.Log("UpdateProperty Error");
     }
 }

@@ -1,5 +1,6 @@
 using Photon.Realtime;
 using System;
+using System.Collections.Generic;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 public static class CustomProperty
 {
@@ -109,16 +110,16 @@ public static class CustomProperty
         room.SetCustomProperties(property);
     }
 
-    public static string GetCharacter(this Player player)
+    public static string GetCharacterName(this Player player)
     {
         PhotonHashtable property = player.CustomProperties;
         if (property.ContainsKey(CHARACTERNAME))
             return (string)property[CHARACTERNAME];
         else
-            return "-";
+            throw new KeyNotFoundException("Character name not found in custom properties.");
     }
 
-    public static void SetCharacter(this Player player, string characterName)
+    public static void SetCharacterName(this Player player, string characterName)
     {
         PhotonHashtable property = new PhotonHashtable();
         property[CHARACTERNAME] = characterName;
