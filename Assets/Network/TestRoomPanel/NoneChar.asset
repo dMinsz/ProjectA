@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d249f4c711ad50644aa604f98ed96924, type: 3}
+  m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
   m_Name: NoneChar
   m_EditorClassIdentifier: 
   characterName: None
-  Image: {fileID: -874347939, guid: 02069ee6aa5be494f8b522c1b8e85737, type: 3}
+  Image: {fileID: 816361449, guid: 903367dd24d612b40b2852ebd3877246, type: 3}
+  avatar: {fileID: 0}
+  animator: {fileID: 0}
+  stat: {fileID: 0}
+  primarySkill: {fileID: 0}
+  secondarySkill: {fileID: 0}
+  specialSkill: {fileID: 0}

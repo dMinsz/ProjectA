@@ -13,8 +13,8 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] RectTransform blueTeamPlayerContent;
     [SerializeField] RectTransform redTeamPlayerContent;
     [SerializeField] PlayerEntry playerEntryPrefab;
-    [SerializeField] TMP_Text blueTeamsCountText;
-    [SerializeField] TMP_Text redTeamsCountText;
+    //[SerializeField] TMP_Text blueTeamsCountText;
+    //[SerializeField] TMP_Text redTeamsCountText;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
     [SerializeField] TMP_Text ACaracterText;
@@ -112,8 +112,8 @@ public class RoomPanel : MonoBehaviour
             playerDictionary[targetPlayer.ActorNumber].SelectCharacter(targetPlayer.GetCharacterName());
 
         AllPlayerReadyCheck();
-        blueTeamsCountText.text = $"{blueTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
-        redTeamsCountText.text = $"{redTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
+        //blueTeamsCountText.text = $"{blueTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
+        //redTeamsCountText.text = $"{redTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
     }
 
     public void MasterClientSwitched(Player newMasterClient)
