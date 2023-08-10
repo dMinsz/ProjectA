@@ -18,7 +18,7 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] Color color;
     [SerializeField] int segments;
     PlayerSkillAttacker attacker;
-    anstjddn.PlayerAim aim;
+    PlayerAimTEST aim;
     bool isDrawing;
     Vector3 oldRotation;
     [SerializeField] List<Vector3> arcPoints;
@@ -27,7 +27,7 @@ public class DrawSkillRange : MonoBehaviour
     public void Awake()
     {
         attacker = gameObject.GetComponent<PlayerSkillAttacker>();
-        aim = gameObject.GetComponent<anstjddn.PlayerAim>();
+        aim = gameObject.GetComponent<PlayerAimTEST>();
 
         sphereInCube = cube.transform.GetChild(0).gameObject;
         sphereInCube2 = cube2.transform.GetChild(0).gameObject;

@@ -7,13 +7,13 @@ public class DrawSkillRangeWithCube : MonoBehaviour
     [SerializeField] GameObject cube;
     [SerializeField] GameObject cube2;
     PlayerSkillAttacker attacker;
-    PlayerAim aim;
+    PlayerAimTEST aim;
     bool isDrawing;
 
     public void Awake()
     {
         attacker = gameObject.GetComponent<PlayerSkillAttacker>();
-        aim = gameObject.GetComponent<PlayerAim>();
+        aim = gameObject.GetComponent<PlayerAimTEST>();
         cube.SetActive(false);
         cube2.SetActive(false);
     }
@@ -29,13 +29,11 @@ public class DrawSkillRangeWithCube : MonoBehaviour
     public void OnEnable()
     {
         attacker.OnSkillStart += SetIsDrawingTrue;
-        attacker.OnSkillEnd += SetIsDrawingFalse;
     }
 
     public void OnDisable()
     {
         attacker.OnSkillStart -= SetIsDrawingTrue;
-        attacker.OnSkillEnd -= SetIsDrawingFalse;
     }
 
     public void DrawSkillRange()
@@ -53,8 +51,8 @@ public class DrawSkillRangeWithCube : MonoBehaviour
         Vector3 rightDir = AngleToDir(transform.eulerAngles.y + attacker.angle * 0.5f);
         Vector3 leftDir = AngleToDir(transform.eulerAngles.y - attacker.angle * 0.5f);
 
-        cube.transform.localScale = new Vector3(cube.transform.localScale.x, cube.transform.localScale.y, attacker.skill.rangeAmount * 2);
-        cube2.transform.localScale = new Vector3(cube.transform.localScale.x, cube.transform.localScale.y, attacker.skill.rangeAmount * 2);
+        cube.transform.localScale = new Vector3(cube.transform.localScale.x, cube.transform.localScale.y, attacker.skill.range * 2);
+        cube2.transform.localScale = new Vector3(cube.transform.localScale.x, cube.transform.localScale.y, attacker.skill.range * 2);
 
         Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
 

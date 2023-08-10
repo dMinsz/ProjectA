@@ -28,7 +28,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnPlaySkillAnim;
     public UnityAction OnSkillStart;
     public UnityAction<GameObject, float> OnPlayerAttack;
-    [SerializeField] anstjddn.PlayerAim aim;
+    [SerializeField] PlayerAimTEST aim;
     [SerializeField] public GameObject mousePosObj;
     [SerializeField] public GameObject cubeForLookAt;
     Quaternion lookAtMouse;
@@ -40,7 +40,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
-        aim = gameObject.GetComponent<anstjddn.PlayerAim>();
+        aim = gameObject.GetComponent<PlayerAimTEST>();
     }
 
     public void Update()
@@ -234,7 +234,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.gameObject.layer == 7)
             {
-                aim.Attack();
+                //aim.Attack();
                 continue;
             }
 

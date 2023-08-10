@@ -20,13 +20,13 @@ public class PlayerAttacker : MonoBehaviour
     bool isAttack = false;
     public UnityAction OnPlaySkillAnim;
     public UnityAction<GameObject> OnPlayerAttack;
-    [SerializeField] PlayerAim aim;
+    [SerializeField] PlayerAimTEST aim;
     [SerializeField] public GameObject mousePosObj;
 
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
-        aim = gameObject.GetComponent<PlayerAim>();
+        aim = gameObject.GetComponent<PlayerAimTEST>();
     }
 
     public void Update()
@@ -72,17 +72,11 @@ public class PlayerAttacker : MonoBehaviour
             return;
 
 
-        if (skill.range == Skill.Range.Circle)
-            angle = 180;
-        else if (skill.range == Skill.Range.OneDirection)
-            angle = 15;
-        else
-            angle = 60;
-
-        rangeAmount = skill.rangeAmount;
+    
+        rangeAmount = skill.range;
 
         
-        Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.rangeAmount);
+        Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
 
         foreach (Collider collider in colliders)
         {
@@ -108,7 +102,7 @@ public class PlayerAttacker : MonoBehaviour
             }
             */
 
-            collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject);
+            //collider.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject);
         }
     }
 
