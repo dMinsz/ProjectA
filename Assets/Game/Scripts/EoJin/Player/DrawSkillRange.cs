@@ -18,7 +18,7 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] Color color;
     [SerializeField] int segments;
     PlayerSkillAttacker attacker;
-    PlayerAimTest aim;
+    PlayerAim aim;
     bool isDrawing;
     Vector3 oldRotation;
     [SerializeField] List<Vector3> arcPoints;
@@ -27,7 +27,7 @@ public class DrawSkillRange : MonoBehaviour
     public void Awake()
     {
         attacker = gameObject.GetComponent<PlayerSkillAttacker>();
-        aim = gameObject.GetComponent<PlayerAimTest>();
+        aim = gameObject.GetComponent<PlayerAim>();
 
         sphereInCube = cube.transform.GetChild(0).gameObject;
         sphereInCube2 = cube2.transform.GetChild(0).gameObject;
@@ -39,9 +39,12 @@ public class DrawSkillRange : MonoBehaviour
         cube.SetActive(false);
         cube2.SetActive(false);
 
-        line.transform.position = transform.position;
-        cube.transform.position = transform.position;
-        cube2.transform.position = transform.position;
+
+        Vector3 newPos = new Vector3(transform.position.x, 1f, transform.position.z);
+
+        line.transform.position = newPos;
+        cube.transform.position = newPos;
+        cube2.transform.position = newPos;
 
         cube.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
         cube2.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
@@ -92,8 +95,6 @@ public class DrawSkillRange : MonoBehaviour
         line.GetComponent<LineRenderer>().endWidth = thickness;
         line.GetComponent<LineRenderer>().materials[0].SetColor("_EmissionColor", color);
 
-        
-
         line.transform.position = Vector3.zero;
     }
 
@@ -124,7 +125,10 @@ public class DrawSkillRange : MonoBehaviour
             cube2.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
             //localScale.z가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-            Vector3 dir = (aim.mousepos - transform.position).normalized;
+
+            Vector3 newPos = new Vector3(transform.position.x, 1f, transform.position.z);
+
+            Vector3 dir = (aim.mousepos - newPos).normalized;
             Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
             Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
 
@@ -146,7 +150,7 @@ public class DrawSkillRange : MonoBehaviour
         {
             float x = Mathf.Sin(Mathf.Deg2Rad * startAngle) * attacker.skill.range;
             float z = Mathf.Cos(Mathf.Deg2Rad * startAngle) * attacker.skill.range;
-            arcPoints.Add(new Vector3(x, 0f, z));
+            arcPoints.Add(new Vector3(x, 0.2f, z));
 
             startAngle += (arcLength / segments);
         }
@@ -156,7 +160,8 @@ public class DrawSkillRange : MonoBehaviour
             line.GetComponent<LineRenderer>().SetPosition(i, arcPoints[i]);
         }
 
-        line.transform.position = transform.position;
+        Vector3 newPos = new Vector3(transform.position.x, 1f, transform.position.z);
+        line.transform.position = newPos;
         line.transform.LookAt(aim.mousepos);
     }
 

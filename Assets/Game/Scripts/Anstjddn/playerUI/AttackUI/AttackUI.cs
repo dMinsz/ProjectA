@@ -1,8 +1,5 @@
-using anstjddn;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +7,7 @@ public class AttackUI : BaseUI
 {
 
 
-    [SerializeField] PlayerAimTest player;          //플레이어 attacktime받을려고 적음
+    [SerializeField] PlayerAim player;          //플레이어 attacktime받을려고 적음
     public TMP_Text playerAttackCoolTime;       // attacktime
     [SerializeField] GameObject mouseattackcolltimeUI;
     protected override void Awake()
@@ -23,7 +20,7 @@ public class AttackUI : BaseUI
 
         mouseattackcolltimeUI.SetActive(false);             //쿨타임돌때 어둡고 시간돌아가는 게임오브젝트
 
-       mouseattackcolltimeUI.GetComponent<Image>().fillAmount = player.attacktime;        //플레이어 공속 돌아가는거 시각화;
+        mouseattackcolltimeUI.GetComponent<Image>().fillAmount = player.attackCoolTime;        //플레이어 공속 돌아가는거 시각화;
     }
 
  
@@ -37,7 +34,7 @@ public class AttackUI : BaseUI
     }
     private void startcooltime()
     {
-            StartCoroutine(cooltime(player.attacktime));
+            StartCoroutine(cooltime(player.attackCoolTime));
     }
 
     IEnumerator cooltime(float time)
@@ -55,7 +52,7 @@ public class AttackUI : BaseUI
         yield return new WaitForSeconds(time);
         if (mouseattackcolltimeUI.GetComponent<Image>().fillAmount <= 0)
         {
-            mouseattackcolltimeUI.GetComponent<Image>().fillAmount = player.attacktime;
+            mouseattackcolltimeUI.GetComponent<Image>().fillAmount = player.attackCoolTime;
             mouseattackcolltimeUI.SetActive(false);
         }
 

@@ -26,7 +26,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnPlaySkillAnim;
     public UnityAction OnSkillStart;
     public UnityAction<GameObject, float> OnPlayerAttack;
-    [SerializeField] PlayerAimTest aim;
+    [SerializeField] PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
     [SerializeField] public GameObject cubeForLookAt;
     Quaternion lookAtMouse;
@@ -43,16 +43,16 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
-        aim = gameObject.GetComponent<PlayerAimTest>();
+        aim = gameObject.GetComponent<PlayerAim>();
         anim = GetComponent<Animator>();
     }
 
     public void Update()
     {
-        cubeForLookAt.transform.LookAt(aim.mousepos);
-        lookAtMouse = cubeForLookAt.transform.rotation;
+        //cubeForLookAt.transform.LookAt(aim.mousepos);
+        //lookAtMouse = cubeForLookAt.transform.rotation;
 
-        mousePosObj.transform.position = aim.mousepos;
+        //mousePosObj.transform.position = aim.mousepos;
     }
 
     Coroutine primarySkillCoroutine;
@@ -124,18 +124,6 @@ public class PlayerSkillAttacker : MonoBehaviour
             }
 
         }
-
-  /*      if (canSkillSecondary)
-        {
-            canSkillSecondary = false;
-            skill = data.CurCharacter.secondarySkill;
-            aim.attacksize = skill.range;
-
-            ApplyDamage();
-            isSkillingSecondary = true;
-            secondarySkillCoroutine = StartCoroutine(skillDurationSecondary());
-        }
-  */
     }
 
     public void OnSpecailSkill(InputValue value)
@@ -168,18 +156,6 @@ public class PlayerSkillAttacker : MonoBehaviour
 
         }
 
-
-
-        /* if (canSkillSpecial)
-         {
-             canSkillSpecial = false;
-             skill = data.CurCharacter.specialSkill;
-             aim.attacksize = skill.range;
-
-             ApplyDamage();
-             isSkillingSpecial = true;
-             specialSkillCoroutine = StartCoroutine(skillDurationSpecial());
-         }*/
     }
 
     IEnumerator skillDurationPrimary()

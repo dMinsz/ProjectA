@@ -22,18 +22,19 @@ public class PlayerState : MonoBehaviour
         anim = GetComponent<Animator>();
         isdie = false;
     }
-  private void Update()
+    private void Update()
     {
-       if (!isdie&&playercurhp <= 0)
+        if (!isdie && playercurhp <= 0)
         {
-            Destroy(gameObject,2f);
-             isdie=true;
-               if (isdie)
-               {
-                   ondied?.Invoke();
-               }
- 
+            Destroy(gameObject, 2f);
+            isdie = true;
+            if (isdie)
+            {
+                ondied?.Invoke();
+            }
+
         }
+        //test
         if (Input.GetKey(KeyCode.Z))
         {
             playercurhp -= 10;
@@ -42,9 +43,9 @@ public class PlayerState : MonoBehaviour
     }
     public void playerdie()
     {
-       anim.SetTrigger("die");
+        anim.SetTrigger("die");
     }
 
- 
+
 
 }
