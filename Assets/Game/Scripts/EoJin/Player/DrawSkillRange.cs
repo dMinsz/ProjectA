@@ -114,8 +114,16 @@ public class DrawSkillRange : MonoBehaviour
             cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
             cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
 
-            cube.transform.LookAt(aim.mousepos);
-            cube2.transform.LookAt(aim.mousepos);
+
+
+            //스킬 범위가 y=0이하로 내려가지못하게 스킬범위고정
+            Vector3 aimdir = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
+
+            // cube.transform.LookAt(aim.mousepos);  원본
+            //  cube2.transform.LookAt(aim.mousepos);  원본
+            cube.transform.LookAt(aimdir);
+           cube2.transform.LookAt(aimdir);
+
         }
 
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
@@ -128,8 +136,13 @@ public class DrawSkillRange : MonoBehaviour
             Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
             Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
 
-            cube.transform.rotation = Quaternion.LookRotation(leftDir);
-            cube2.transform.rotation = Quaternion.LookRotation(rightDir);
+            //    cube.transform.rotation = Quaternion.LookRotation(leftDir);    원본
+            //  cube2.transform.rotation = Quaternion.LookRotation(rightDir);  원본
+
+
+            //rotation 말고 forward로 해도 따라가서 사용
+            cube.transform.forward = new Vector3(leftDir.x, 0, leftDir.z);
+            cube2.transform.forward = new Vector3(rightDir.x, 0, rightDir.z);
         }
 
     }
@@ -156,8 +169,14 @@ public class DrawSkillRange : MonoBehaviour
             line.GetComponent<LineRenderer>().SetPosition(i, arcPoints[i]);
         }
 
+      //  line.transform.position = transform.position;  원본
+       // line.transform.LookAt(aim.mousepos);       원본
+
+
+        //이게 부채꼴 스킬범위할때 호를 나타내는거 같긴함
+        Vector3 linerotation = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
         line.transform.position = transform.position;
-        line.transform.LookAt(aim.mousepos);
+        line.transform.LookAt(linerotation);
     }
 
     Coroutine DrawLineCoroutine;
