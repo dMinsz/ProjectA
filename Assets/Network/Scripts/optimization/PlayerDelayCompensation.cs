@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class PositionOptimize : MonoBehaviourPun, IPunObservable
+public class PlayerDelayCompensation : MonoBehaviourPun, IPunObservable
 {
     //Values that will be synced over network
     Vector3 latestPos;
@@ -13,6 +13,14 @@ public class PositionOptimize : MonoBehaviourPun, IPunObservable
     Vector3 positionAtLastPacket = Vector3.zero;
     Quaternion rotationAtLastPacket = Quaternion.identity;
 
+    public bool isSyncronize = true;
+    private bool isSyncronizeLastPacket = true;
+
+    public void SetSyncronize(bool setSyncro)
+    {
+        isSyncronize = setSyncro;
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -20,6 +28,7 @@ public class PositionOptimize : MonoBehaviourPun, IPunObservable
             //We own this player: send the others our data
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
+            stream.SendNext(isSyncronize);
         }
         else
         {
@@ -33,21 +42,24 @@ public class PositionOptimize : MonoBehaviourPun, IPunObservable
             currentPacketTime = info.SentServerTime;
             positionAtLastPacket = transform.position;
             rotationAtLastPacket = transform.rotation;
+            isSyncronizeLastPacket = isSyncronize;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!photonView.IsMine)
+        if (!photonView.IsMine)//Update remote player
         {
-            //Lag compensation
-            double timeToReachGoal = currentPacketTime - lastPacketTime;
-            currentTime += Time.deltaTime;
+            if (isSyncronizeLastPacket)
+            {
+                double timeToReachGoal = currentPacketTime - lastPacketTime;
+                currentTime += Time.deltaTime;
 
-            //Update remote player
-            transform.position = Vector3.Lerp(positionAtLastPacket, latestPos, (float)(currentTime / timeToReachGoal));
-            transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot, (float)(currentTime / timeToReachGoal));
+                transform.position = Vector3.Lerp(positionAtLastPacket, latestPos, (float)(currentTime / timeToReachGoal));
+                transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot, (float)(currentTime / timeToReachGoal));
+                //Lag compensation
+            }
         }
     }
 }

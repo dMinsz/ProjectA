@@ -53,9 +53,6 @@ namespace anstjddn
 
         private void OnAttack(InputValue Value)
         {
-            //photonView.RPC("RequestAttack", RpcTarget.MasterClient, SetMousePos(), transform.position , puck.transform.position);
-
-            //StartCoroutine(AttackTimeing(SetMousePos(), transform.position, puck.transform.position));
             photonView.RPC("ResultAttack", RpcTarget.AllViaServer, SetMousePos(), transform.position, puck.transform.position);
         }
 
@@ -72,19 +69,6 @@ namespace anstjddn
         }
 
 
-        //[PunRPC]
-        //private void RequestAttack(Vector3 mousePos , Vector3 playerPos, Vector3 puckPos) 
-        //{
-
-        //    photonView.RPC("ResultAttack", RpcTarget.AllViaServer, mousePos , playerPos, puckPos);
-        //}
-
-        //[PunRPC]
-        //private void ResultAttack(Vector3 mousePos,Vector3 playerPos, Vector3 puckPos, PhotonMessageInfo info)
-        //{
-        //    StartCoroutine(AttackTimeing(mousePos, playerPos , puckPos,  info));
-        //}
-
 
         // 어택 범위 설정
         private void OnDrawGizmos()
@@ -97,7 +81,7 @@ namespace anstjddn
         [PunRPC]
         IEnumerator AttackTimeing(Vector3 mousePos, Vector3 playerPos, Vector3 puckPos)//, PhotonMessageInfo info)
         {
-
+      
             if (circleReuslt >= Mathf.Pow(playerPos.x - puckPos.x, 2) + Mathf.Pow(playerPos.z - puckPos.z, 2)) // 원의 범위안에 좌표가있는지 확인 
             {
 

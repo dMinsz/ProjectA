@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Puck : MonoBehaviourPun
@@ -20,12 +21,12 @@ public class Puck : MonoBehaviourPun
     {
         rb = GetComponent<Rigidbody>();
         ren = GetComponent<MeshRenderer>();
-
         velocityMaxSpeed = new Vector3(maxSpeed, 0, maxSpeed);
     }
 
     private void OnEnable()
     {
+    
         if (PhotonNetwork.IsConnected)
         {
             if (PhotonNetwork.IsMasterClient)
@@ -40,6 +41,7 @@ public class Puck : MonoBehaviourPun
 
     private void OnDisable()
     {
+
         if (PhotonNetwork.IsConnected)
         {
             if (PhotonNetwork.IsMasterClient)
