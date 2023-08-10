@@ -18,17 +18,16 @@ namespace anstjddn
         [SerializeField] public float movespeed;
 
         private Animator anim;
-
-
-
-
         [SerializeField] PlayerAimTest playerat;
 
+
+        public Vector2 playerdir;
         private void Awake()
         {
             playerrb = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
-  
+
+
         }
 
         private void Update()                          
@@ -40,7 +39,7 @@ namespace anstjddn
             }
             else                                       
             {
-                transform.LookAt(playerat.attackdir);
+               transform.LookAt(playerat.attackdir);
                 Move();
             }
 
@@ -56,8 +55,6 @@ namespace anstjddn
             {
                 return;
             }
-          
-        
         }
         private void Move()
         {

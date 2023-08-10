@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1995179ff9869fb43800b0eed863fc25, type: 3}
   m_Name: JulietteStat
   m_EditorClassIdentifier: 
-  stagger: 1125
+  hp: 1100
   power: 100
   speed: 450
