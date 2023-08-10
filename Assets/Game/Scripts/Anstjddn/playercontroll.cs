@@ -39,7 +39,9 @@ namespace anstjddn
             }
             else                                       
             {
-               transform.LookAt(playerat.attackdir);
+                //플레이어 어택할때마다 숙이는거 수정
+                Vector3 aimpos = new Vector3(playerat.attackdir.x, transform.position.y, playerat.attackdir.z);
+               transform.LookAt(aimpos);
                 Move();
             }
 
