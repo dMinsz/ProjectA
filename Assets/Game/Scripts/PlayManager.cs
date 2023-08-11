@@ -61,7 +61,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 if (blueTeamChecker[i] == true)
                 {
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-                    var player = PhotonNetwork.Instantiate("Mario", blueSpwans[i].position, blueSpwans[i].rotation, 0, puckData);
+                    var player = PhotonNetwork.Instantiate("Players", blueSpwans[i].position, blueSpwans[i].rotation, 0, puckData);
 
                     player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
@@ -70,7 +70,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
                     pPlayerList.Add(player);
 
                     object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
-                    photonView.RPC("Mario", RpcTarget.OthersBuffered, playerData);
+                    photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
 
                     blueTeamChecker[i] = false;
                     break;
@@ -84,14 +84,14 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 if (redTeamChecker[i] == true)
                 {
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-                    var player = PhotonNetwork.Instantiate("Mario", redSpwans[i].position, redSpwans[i].rotation, 0, puckData);
+                    var player = PhotonNetwork.Instantiate("Players", redSpwans[i].position, redSpwans[i].rotation, 0, puckData);
 
                     player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
                     player.GetComponent<PlayerSetup>().SentServerColor();
 
                     object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
-                    photonView.RPC("Mario", RpcTarget.OthersBuffered, playerData);
+                    photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
 
                     pPlayerList.Add(player);
 
@@ -110,7 +110,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 0)
         {
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-            var player = PhotonNetwork.Instantiate("Mario", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
+            var player = PhotonNetwork.Instantiate("Players", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
             
             pPlayerList.Add(player);
 
@@ -122,7 +122,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         else
         {
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-            var player = PhotonNetwork.Instantiate("Mario", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
+            var player = PhotonNetwork.Instantiate("Players", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
  
             pPlayerList.Add(player);
 

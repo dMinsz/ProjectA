@@ -25,16 +25,16 @@ public class LinkSkillUI : BaseUI
     protected override void Awake()
     {
         base.Awake();
-        qskilCoolTime = texts["QskillCoolTime"];
+        //qskilCoolTime = texts["QskillCoolTime"];
         qskilCoolTime.text = (qskilcolltimeUI.GetComponent<Image>().fillAmount * character.primarySkill.coolTime).ToString("F1");
         //fillamount 최대값이 1.0이라서 쿨타임 곱함
         qskilcolltimeUI.SetActive(false);
 
-        eskilCoolTime = texts["EskillCoolTime"];
+        //eskilCoolTime = texts["EskillCoolTime"];
         eskilCoolTime.text = (eskilcolltimeUI.GetComponent<Image>().fillAmount * character.secondarySkill.coolTime).ToString("F1");
         eskilcolltimeUI.SetActive(false);
 
-        rskilCoolTime = texts["RskillCoolTime"];
+        //rskilCoolTime = texts["RskillCoolTime"];
         rskilCoolTime.text = (rskilcolltimeUI.GetComponent<Image>().fillAmount * character.specialSkill.coolTime).ToString("F1");
         rskilcolltimeUI.SetActive(false);
 

@@ -268,6 +268,9 @@ public class PlayerSkillAttacker : MonoBehaviour
         //additionalRange에 float를 곱해주며 스킬범위 민감도 설정가능
         Vector3 boxSize = new Vector3(additionalRange * 0.5f, 0.1f, range);
 
+
+
+
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, lookAtMouse);
         DetectObjectsCollider(colliders);
     }
