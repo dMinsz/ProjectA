@@ -97,7 +97,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void OnSecondarySkill(InputValue value)
     {
 
-     /*   if (canSkillSecondary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
+        if (canSkillSecondary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
 
             skill = data.CurCharacter.secondarySkill;
