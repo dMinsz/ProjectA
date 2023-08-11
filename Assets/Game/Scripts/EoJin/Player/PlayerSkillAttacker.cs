@@ -26,7 +26,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnPlaySkillAnim;
     public UnityAction OnSkillStart;
     public UnityAction<GameObject, float> OnPlayerAttack;
-    [SerializeField] PlayerAimTest aim;
+    [SerializeField] PlayerAim aim;
     [SerializeField] public GameObject mousePosObj;
     [SerializeField] public GameObject cubeForLookAt;
     Quaternion lookAtMouse;
@@ -35,68 +35,127 @@ public class PlayerSkillAttacker : MonoBehaviour
     float coolTimeS;
     float coolTimeSP;
 
+    private bool draw;
+
+    [SerializeField] DrawSkillRange DrawRange;
+    private Animator anim;
+
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
-        aim = gameObject.GetComponent<PlayerAimTest>();
+        aim = gameObject.GetComponent<PlayerAim>();
+        anim = GetComponent<Animator>();
     }
 
     public void Update()
     {
-        cubeForLookAt.transform.LookAt(aim.mousepos);
-        lookAtMouse = cubeForLookAt.transform.rotation;
+        //cubeForLookAt.transform.LookAt(aim.mousepos);
+        //lookAtMouse = cubeForLookAt.transform.rotation;
 
-        mousePosObj.transform.position = aim.mousepos;
-
-        
+        //mousePosObj.transform.position = aim.mousepos;
     }
 
     Coroutine primarySkillCoroutine;
     Coroutine secondarySkillCoroutine;
     Coroutine specialSkillCoroutine;
 
+
+    bool isDubleClick = false;
+
     public void OnPrimarySkill(InputValue value)
     {
+
         if (canSkillPrimary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
-            canSkillPrimary = false;
+
             skill = data.CurCharacter.primarySkill;
             aim.attacksize = skill.range;
 
-            ApplyDamage();
-            isSkillingPrimary = true;
-            primarySkillCoroutine = StartCoroutine(skillDurationPrimary());
+
+            DrawRange.SetIsDrawingTrue();
+
+            if (isDubleClick)
+            {
+                anim.SetTrigger("Primary");
+                canSkillPrimary = false;
+                isSkillingPrimary = true;
+                ApplyDamage();
+
+                isDubleClick = false;
+                DrawRange.SetIsDrawingFalse();
+                primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
+            }
+            else 
+            {
+                isDubleClick = true;
+            }
+
         }
 
     }
 
     public void OnSecondarySkill(InputValue value)
     {
-        if (canSkillSecondary)
+
+        if (canSkillSecondary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
-            canSkillSecondary = false;
+
             skill = data.CurCharacter.secondarySkill;
             aim.attacksize = skill.range;
 
-            ApplyDamage();
-            isSkillingSecondary = true;
-            secondarySkillCoroutine = StartCoroutine(skillDurationSecondary());
-        }
 
+            DrawRange.SetIsDrawingTrue();
+
+            if (isDubleClick)
+            {
+                anim.SetTrigger("Secondary");
+                canSkillSecondary = false;
+                isSkillingSecondary = true;
+                ApplyDamage();
+
+                isDubleClick = false;
+
+                DrawRange.SetIsDrawingFalse();
+                secondarySkillCoroutine = StartCoroutine(skillCoolTimeSecondary());
+            }
+            else
+            {
+                isDubleClick = true;
+            }
+
+        }
     }
 
     public void OnSpecailSkill(InputValue value)
     {
-        if (canSkillSpecial)
+        if (canSkillSpecial) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
-            canSkillSpecial = false;
+
             skill = data.CurCharacter.specialSkill;
             aim.attacksize = skill.range;
 
-            ApplyDamage();
-            isSkillingSpecial = true;
-            specialSkillCoroutine = StartCoroutine(skillDurationSpecial());
+
+            DrawRange.SetIsDrawingTrue();
+
+            if (isDubleClick)
+            {
+
+                anim.SetTrigger("Special");
+                canSkillSpecial = false;
+                isSkillingSpecial = true;
+                ApplyDamage();
+                isDubleClick = false;
+
+                DrawRange.SetIsDrawingFalse();
+                specialSkillCoroutine = StartCoroutine(skillCoolTimeSpecial());
+            }
+            else
+            {
+                isDubleClick = true;
+            }
+
         }
+
     }
 
     IEnumerator skillDurationPrimary()
@@ -129,46 +188,53 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     IEnumerator skillCoolTimePrimary()
     {
-        coolTimeP = 1;
-        while (skill.coolTime >= coolTimeP)
-        {
-            yield return new WaitForSeconds(1f);
-            Debug.Log($"Primary : {skill.skillName}의 쿨타임 대기 {coolTimeP} / {skill.coolTime}");
-            coolTimeP += 1;
-        }
+        /*   coolTimeP = 1;
+           while (skill.coolTime >= coolTimeP)
+           {
+               yield return new WaitForSeconds(1f);
+               Debug.Log($"Primary : {skill.skillName}의 쿨타임 대기 {coolTimeP} / {skill.coolTime}");
+               coolTimeP += 1;
+           }*/
+        yield return new WaitForSeconds(skill.coolTime);
 
         //while문 삭제 후 아래 문장 주석 취소할 것
         //yield return new WaitForSeconds(skill.coolTime);
+        isSkillingPrimary = false;
         canSkillPrimary = true;
     }
 
     IEnumerator skillCoolTimeSecondary()
     {
-        coolTimeS = 1;
-        while (skill.coolTime >= coolTimeS)
-        {
-            yield return new WaitForSeconds(1f);
-            Debug.Log($"Secondary : {skill.skillName}의 쿨타임 대기 {coolTimeS} / {skill.coolTime}");
-            coolTimeS += 1;
-        }
+        /*  coolTimeS = 1;
+          while (skill.coolTime >= coolTimeS)
+          {
+              yield return new WaitForSeconds(1f);
+              Debug.Log($"Secondary : {skill.skillName}의 쿨타임 대기 {coolTimeS} / {skill.coolTime}");
+              coolTimeS += 1;
+          }
+        */
 
+        yield return new WaitForSeconds(skill.coolTime);
         //while문 삭제 후 아래 문장 주석 취소할 것
         //yield return new WaitForSeconds(skill.coolTime);
+        isSkillingSecondary =false;
         canSkillSecondary = true;
     }
 
     IEnumerator skillCoolTimeSpecial()
     {
-        coolTimeSP = 1;
-        while (skill.coolTime >= coolTimeSP)
-        {
-            yield return new WaitForSeconds(1f);
-            Debug.Log($"Special : {skill.skillName}의 쿨타임 대기 {coolTimeSP} / {skill.coolTime}");
-            coolTimeSP += 1;
-        }
+        /* coolTimeSP = 1;
+         while (skill.coolTime >= coolTimeSP)
+         {
+             yield return new WaitForSeconds(1f);
+             Debug.Log($"Special : {skill.skillName}의 쿨타임 대기 {coolTimeSP} / {skill.coolTime}");
+             coolTimeSP += 1;
+         }*/
+        yield return new WaitForSeconds(skill.coolTime);
 
         //while문 삭제 후 아래 문장 주석 취소할 것
         //yield return new WaitForSeconds(skill.coolTime);
+        isSkillingSpecial =false;
         canSkillSpecial = true;
     }
 
@@ -206,6 +272,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         DetectObjectsCollider(colliders);
     }
 
+
     private void MakeSkillRangeSectorForm()
     {
         Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
@@ -230,9 +297,10 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (collider.gameObject == this.gameObject)
                 continue;
 
-            if (collider.gameObject.layer == 7)
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
             {
-                //aim.Attack();
+                Debug.Log("범위내에 있음");
+                aim.Attack();
                 continue;
             }
 

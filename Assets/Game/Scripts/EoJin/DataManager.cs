@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,4 +37,25 @@ public class DataManager : MonoBehaviour
             }
         }
     }
+
+
+    //플레이어 선택 시 데이터 넣어야함
+
+    public void InitCharacter(Vector3 pos, Quaternion rot) 
+    {
+        //이름은 모두 같고 
+        PhotonNetwork.Instantiate("Mario", pos, rot);
+
+
+
+
+    }
+
+
+    public void ChooseCharacter(string name) 
+    {
+
+    }
+
+
 }
