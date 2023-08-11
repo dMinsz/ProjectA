@@ -8,12 +8,14 @@ public class cameraHpbar : BaseUI
 {
     [SerializeField] public Slider hpbar;
     [SerializeField] public PlayerState playerState;
+    [SerializeField] public Image hpbarcolor;
+    [SerializeField] public Color teamcolor;
 
     protected override void Awake()
     {
         base.Awake();
         hpbar = sliders["HpSlider"];
-
+        hpbarcolor.color = Color.blue;
     }
     private void Start()
     {
