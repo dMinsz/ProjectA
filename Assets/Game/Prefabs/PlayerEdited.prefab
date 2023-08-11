@@ -2173,7 +2173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 30
-  playerat: {fileID: 4891213647388153733}
+  playerat: {fileID: 0}
+  playerdir: {x: 0, y: 0}
 --- !u!114 &4891213647388153759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2252,6 +2253,7 @@ MonoBehaviour:
   aim: {fileID: 0}
   mousePosObj: {fileID: 5162250091476411072}
   cubeForLookAt: {fileID: 5162250091540525105}
+  DrawRange: {fileID: 0}
 --- !u!114 &5162250092133903007
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -817,6 +817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movespeed: 30
   playerat: {fileID: 0}
+  playerdir: {x: 0, y: 0}
 --- !u!114 &307067200992876014
 MonoBehaviour:
   m_ObjectHideFlags: 0
