@@ -67,6 +67,8 @@ public class PlayerSetup : MonoBehaviourPun
         originPos = transform.position;
         originRot = transform.rotation;
     }
+
+
 }
 
 

@@ -162,8 +162,6 @@ MonoBehaviour:
   canSkillSecondary: 1
   canSkillSpecial: 1
   aim: {fileID: 0}
-  mousePosObj: {fileID: 0}
-  cubeForLookAt: {fileID: 0}
   DrawRange: {fileID: 4333708700515693149}
 --- !u!114 &4333708700515693146
 MonoBehaviour:
@@ -230,6 +228,7 @@ MonoBehaviour:
   color: {r: 0.54494524, g: 1, b: 0, a: 0}
   segments: 50
   arcPoints: []
+  RotatedPos: {fileID: 0}
 --- !u!114 &8901243723686962404
 MonoBehaviour:
   m_ObjectHideFlags: 0
