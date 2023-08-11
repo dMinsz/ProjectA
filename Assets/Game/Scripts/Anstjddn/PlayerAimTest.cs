@@ -22,11 +22,9 @@ public class PlayerAimTest : MonoBehaviour
 
 
     public Vector3 attackdir;
+    [SerializeField] GameObject aimobj;
 
-
-
-
-    [SerializeField] private GameObject effectprefabs;
+        [SerializeField] private GameObject effectprefabs;
 
     [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
@@ -50,7 +48,7 @@ public class PlayerAimTest : MonoBehaviour
             mousepos = hit.point;
             mousepos.y = 0;
         }
-
+        aimobj.transform.position = mousepos;
 
     }
     private void OnAttack(InputValue Value)
