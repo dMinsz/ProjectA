@@ -228,7 +228,6 @@ MonoBehaviour:
   color: {r: 0.54494524, g: 1, b: 0, a: 0}
   segments: 50
   arcPoints: []
-  RotatedPos: {fileID: 0}
 --- !u!114 &8901243723686962404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1225,8 +1224,7 @@ PrefabInstance:
         type: 3}
       propertyPath: aim
       value: 
-      objectReference: {fileID: 3842014903800777819, guid: b5e3fa5735e73054baa6d4f8d0936b4d,
-        type: 3}
+      objectReference: {fileID: 1825931157103470107}
     - target: {fileID: 4947304238773791422, guid: bb7374b3d3d628c44a0ec8ab4d94cdca,
         type: 3}
       propertyPath: player

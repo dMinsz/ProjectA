@@ -28,9 +28,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnSkillStart;
     public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] PlayerAim aim;
-    //[SerializeField] public GameObject mousePosObj;
-    //[SerializeField] public GameObject cubeForLookAt;
-    //Quaternion lookAtMouse;
+
     float time;
     float coolTimeP;
     float coolTimeS;
@@ -89,6 +87,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 isDubleClick = false;
                 DrawRange.SetIsDrawingFalse();
                 primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
+                //primarySkillCoroutine = StartCoroutine(skillDurationPrimary());
             }
             else 
             {
@@ -122,6 +121,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
                 DrawRange.SetIsDrawingFalse();
                 secondarySkillCoroutine = StartCoroutine(skillCoolTimeSecondary());
+                //primarySkillCoroutine = StartCoroutine(skillDurationSecondary());
             }
             else
             {
@@ -340,10 +340,11 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.gameObject.tag == "Player")
             {
-                if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
-                {
-                    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
-                }
+                Debug.Log("player Detect");
+                //if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
+                //{
+                //    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
+                //}
             }
         }
         

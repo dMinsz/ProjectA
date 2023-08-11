@@ -20,6 +20,11 @@ public class PlayerSetup : MonoBehaviourPun
     [HideInInspector] public Vector3 originPos;
     [HideInInspector] public Quaternion originRot;
 
+    //string NickName;
+    //public cameraname name;
+    // PlayerState.character
+    // animator 설정 , avatar도
+    // skillui 에 있다 LinkSkilUI 에 character
 
     private PlayerInput input;
 
