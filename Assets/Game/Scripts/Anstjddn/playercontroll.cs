@@ -9,7 +9,7 @@ public class playercontroll : MonoBehaviour
     [SerializeField] public float movespeed;
 
     private Animator anim;
-    [SerializeField] PlayerAim playerat;
+    [SerializeField] PlayerAimTest playerat;
 
 
     [HideInInspector]public Vector2 playerdir;

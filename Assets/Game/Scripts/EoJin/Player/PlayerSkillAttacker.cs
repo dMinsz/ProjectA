@@ -26,7 +26,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnPlaySkillAnim;
     public UnityAction OnSkillStart;
     public UnityAction<GameObject, float> OnPlayerAttack;
-    [SerializeField] PlayerAim aim;
+    [SerializeField] PlayerAimTest aim;
     [SerializeField] public GameObject mousePosObj;
     [SerializeField] public GameObject cubeForLookAt;
     Quaternion lookAtMouse;
@@ -43,16 +43,16 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
-        aim = gameObject.GetComponent<PlayerAim>();
+        aim = gameObject.GetComponent<PlayerAimTest>();
         anim = GetComponent<Animator>();
     }
 
     public void Update()
     {
-        //cubeForLookAt.transform.LookAt(aim.mousepos);
-        //lookAtMouse = cubeForLookAt.transform.rotation;
+        cubeForLookAt.transform.LookAt(aim.mousepos);
+        lookAtMouse = cubeForLookAt.transform.rotation;
 
-        //mousePosObj.transform.position = aim.mousepos;
+        mousePosObj.transform.position = aim.mousepos;
     }
 
     Coroutine primarySkillCoroutine;
@@ -277,8 +277,19 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 boxSize = new Vector3(additionalRange * 0.5f, 0.1f, range);
-        Gizmos.DrawCube(gameObject.transform.position, boxSize);
+        //Style Square의 Gizmos의 경우 플레이어의 뒷부분까지 그려지나 실제 Skill 범위는 Gizmos의 반에 플레이어 앞쪽을 향함
+
+        if (skill == null || !debug || skill.rangeStyle != Skill.RangeStyle.Square || skill.rangeStyle != Skill.RangeStyle.Square)
+            return;
+
+        Gizmos.color = Color.cyan;
+
+        Vector3 boxSize = new Vector3(additionalRange, 0.1f, range * 2);
+
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, cubeForLookAt.transform.rotation, new Vector3(1f, 1f, 1f));
+        Gizmos.matrix = rotationMatrix;
+
+        Gizmos.DrawCube(new Vector3(0f, 0f, 0f), boxSize);
     }
 
     private void MakeSkillRangeSectorForm()

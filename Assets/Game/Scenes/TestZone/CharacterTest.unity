@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3902
+  m_Name: pb_Mesh-121594
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -293,7 +293,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3926
+  m_Name: pb_Mesh-121618
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -451,6 +451,30 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1424675112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4301584610009395846, guid: b5499f4134fcab5478cbbbff0e23ce00,
+    type: 3}
+  m_PrefabInstance: {fileID: 4301584608000393019}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a358bb65c8e20340b06887926e6e939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1424675117 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4607366686195503003, guid: b5499f4134fcab5478cbbbff0e23ce00,
+    type: 3}
+  m_PrefabInstance: {fileID: 4301584608000393019}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c773f5f9cc763743898b96f52e80e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1970743906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,6 +1149,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2415976755006891689, guid: b5499f4134fcab5478cbbbff0e23ce00,
+        type: 3}
+      propertyPath: aim
+      value: 
+      objectReference: {fileID: 1424675117}
     - target: {fileID: 3688956373910841507, guid: b5499f4134fcab5478cbbbff0e23ce00,
         type: 3}
       propertyPath: m_Name
@@ -1185,6 +1214,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4301584610009395840, guid: b5499f4134fcab5478cbbbff0e23ce00,
+        type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 11400000, guid: f9eb0fdb16ef5964d8a0c3f823f84e2d,
+        type: 2}
+    - target: {fileID: 4301584610009395840, guid: b5499f4134fcab5478cbbbff0e23ce00,
+        type: 3}
+      propertyPath: animatorController
+      value: 
+      objectReference: {fileID: 9100000, guid: 7059a0a09fbcb1e438cc5aca812c3c15, type: 2}
+    - target: {fileID: 4301584610009395842, guid: b5499f4134fcab5478cbbbff0e23ce00,
+        type: 3}
+      propertyPath: aim
+      value: 
+      objectReference: {fileID: 1424675117}
+    - target: {fileID: 4301584610009395842, guid: b5499f4134fcab5478cbbbff0e23ce00,
+        type: 3}
+      propertyPath: DrawRange
+      value: 
+      objectReference: {fileID: 1424675112}
     - target: {fileID: 8042285726501047290, guid: b5499f4134fcab5478cbbbff0e23ce00,
         type: 3}
       propertyPath: m_Mesh
@@ -1203,7 +1253,7 @@ PrefabInstance:
     - target: {fileID: 8042285726501047294, guid: b5499f4134fcab5478cbbbff0e23ce00,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2181
+      value: 2187
       objectReference: {fileID: 0}
     - target: {fileID: 8042285726608037648, guid: b5499f4134fcab5478cbbbff0e23ce00,
         type: 3}
@@ -1213,7 +1263,7 @@ PrefabInstance:
     - target: {fileID: 8042285726608037648, guid: b5499f4134fcab5478cbbbff0e23ce00,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2181
+      value: 2187
       objectReference: {fileID: 0}
     - target: {fileID: 8042285726608037651, guid: b5499f4134fcab5478cbbbff0e23ce00,
         type: 3}

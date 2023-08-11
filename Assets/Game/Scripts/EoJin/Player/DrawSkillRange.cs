@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.UIElements;
+using static UnityEngine.LightAnchor;
+using static UnityEngine.Rendering.HableCurve;
 
 public class DrawSkillRange : MonoBehaviour
 {
@@ -14,18 +18,19 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] Color color;
     [SerializeField] int segments;
     PlayerSkillAttacker attacker;
-    PlayerAim aim;
+    PlayerAimTest aim;
     bool isDrawing;
     Vector3 oldRotation;
     [SerializeField] List<Vector3> arcPoints;
     float time;
+    [SerializeField] public GameObject cubeForLookAt;
+    [SerializeField] public GameObject mousePosObj;
 
-    private Transform RoatatedPos; 
 
     public void Awake()
     {
         attacker = gameObject.GetComponent<PlayerSkillAttacker>();
-        aim = gameObject.GetComponent<PlayerAim>();
+        aim = gameObject.GetComponent<PlayerAimTest>();
 
         sphereInCube = cube.transform.GetChild(0).gameObject;
         sphereInCube2 = cube2.transform.GetChild(0).gameObject;
@@ -37,27 +42,17 @@ public class DrawSkillRange : MonoBehaviour
         cube.SetActive(false);
         cube2.SetActive(false);
 
-
-        Vector3 newPos = new Vector3(transform.position.x, 1f, transform.position.z);
-
-        line.transform.position = newPos;
-        cube.transform.position = newPos;
-        cube2.transform.position = newPos;
+        line.transform.position = transform.position;
+        cube.transform.position = transform.position;
+        cube2.transform.position = transform.position;
 
         cube.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
         cube2.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
-
-
-
-
-
-        RoatatedPos = new GameObject("RoatateObject").transform;
     }
 
     public void Update()
     {
-
-        RoatatedPos.LookAt(aim.mousepos);
+        cubeForLookAt.transform.LookAt(mousePosObj.transform);
 
         if (isDrawing)
         {
@@ -67,15 +62,15 @@ public class DrawSkillRange : MonoBehaviour
             SetActiveFalse();
     }
 
-    //public void OnEnable()
-    //{
-    //    attacker.OnSkillStart += SetIsDrawingTrue;
-    //}
+    public void OnEnable()
+    {
+        attacker.OnSkillStart += SetIsDrawingTrue;
+    }
 
-    //public void OnDisable()
-    //{
-    //    attacker.OnSkillStart -= SetIsDrawingTrue;
-    //}
+    public void OnDisable()
+    {
+        attacker.OnSkillStart -= SetIsDrawingTrue;
+    }
 
     public void Draw()
     {
@@ -102,6 +97,8 @@ public class DrawSkillRange : MonoBehaviour
         line.GetComponent<LineRenderer>().endWidth = thickness;
         line.GetComponent<LineRenderer>().materials[0].SetColor("_EmissionColor", color);
 
+
+
         line.transform.position = Vector3.zero;
     }
 
@@ -122,18 +119,8 @@ public class DrawSkillRange : MonoBehaviour
             cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
             cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
 
-
-            //스킬 범위가 y=0이하로 내려가지못하게 스킬범위고정
-            Vector3 aimdir = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
-
-            // cube.transform.LookAt(aim.mousepos);  원본
-            //  cube2.transform.LookAt(aim.mousepos);  원본
-            //cube.transform.LookAt(aimdir);
-            //cube2.transform.LookAt(aimdir);
-
-            cube.transform.rotation = RoatatedPos.transform.rotation;
-            cube2.transform.rotation = RoatatedPos.transform.rotation;
-
+            cube.transform.rotation = cubeForLookAt.transform.rotation;
+            cube2.transform.rotation = cubeForLookAt.transform.rotation;
         }
 
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
@@ -142,20 +129,12 @@ public class DrawSkillRange : MonoBehaviour
             cube2.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
             //localScale.z가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-
-            Vector3 newPos = new Vector3(transform.position.x, 1f, transform.position.z);
-
-            Vector3 dir = (aim.mousepos - newPos).normalized;
+            Vector3 dir = (aim.mousepos - transform.position).normalized;
             Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
             Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
 
-            //    cube.transform.rotation = Quaternion.LookRotation(leftDir);    원본
-            //  cube2.transform.rotation = Quaternion.LookRotation(rightDir);  원본
-
-
-            //rotation 말고 forward로 해도 따라가서 사용
-            cube.transform.forward = new Vector3(leftDir.x, 0, leftDir.z);
-            cube2.transform.forward = new Vector3(rightDir.x, 0, rightDir.z);
+            cube.transform.rotation = Quaternion.LookRotation(leftDir);
+            cube2.transform.rotation = Quaternion.LookRotation(rightDir);
         }
 
     }
@@ -172,7 +151,7 @@ public class DrawSkillRange : MonoBehaviour
         {
             float x = Mathf.Sin(Mathf.Deg2Rad * startAngle) * attacker.skill.range;
             float z = Mathf.Cos(Mathf.Deg2Rad * startAngle) * attacker.skill.range;
-            arcPoints.Add(new Vector3(x, 0.2f, z));
+            arcPoints.Add(new Vector3(x, 0f, z));
 
             startAngle += (arcLength / segments);
         }
@@ -181,14 +160,9 @@ public class DrawSkillRange : MonoBehaviour
         {
             line.GetComponent<LineRenderer>().SetPosition(i, arcPoints[i]);
         }
-        //  line.transform.position = transform.position;  원본
-        // line.transform.LookAt(aim.mousepos);       원본
 
-
-        //이게 부채꼴 스킬범위할때 호를 나타내는거 같긴함
-        Vector3 linerotation = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
         line.transform.position = transform.position;
-        line.transform.LookAt(linerotation);
+        line.transform.LookAt(aim.mousepos);
     }
 
     Coroutine DrawLineCoroutine;
@@ -196,21 +170,23 @@ public class DrawSkillRange : MonoBehaviour
     public void SetIsDrawingTrue()
     {
         isDrawing = true;
-        //StopAllCoroutines();
-        //DrawLineCoroutine = StartCoroutine(DrawLineRoutine());
+        StopAllCoroutines();
+        DrawLineCoroutine = StartCoroutine(DrawLineRoutine());
     }
 
     IEnumerator DrawLineRoutine()
     {
         time = 1;
+        /*
         while (attacker.skill.duration >= time)
         {
             yield return new WaitForSeconds(1f);
             Debug.Log($"{attacker.skill.skillName}이 {time}초동안 실행되는 중");
             time += 1;
         }
+        */
 
-        //yield return new WaitForSeconds(attacker.skill.duration);
+        yield return new WaitForSeconds(attacker.skill.duration);
         //while문 지우고 위 문장 주석 해지할 것
         SetIsDrawingFalse();
     }
@@ -228,8 +204,4 @@ public class DrawSkillRange : MonoBehaviour
         cube2.SetActive(false);
     }
 
-    public bool GetIsDraw()
-    {
-        return isDrawing;
-    }
 }
