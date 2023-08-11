@@ -27,9 +27,9 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnSkillStart;
     public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] PlayerAim aim;
-    [SerializeField] public GameObject mousePosObj;
-    [SerializeField] public GameObject cubeForLookAt;
-    Quaternion lookAtMouse;
+    //[SerializeField] public GameObject mousePosObj;
+    //[SerializeField] public GameObject cubeForLookAt;
+    //Quaternion lookAtMouse;
     float time;
     float coolTimeP;
     float coolTimeS;
@@ -39,16 +39,20 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     [SerializeField] DrawSkillRange DrawRange;
     private Animator anim;
+    private Transform RotatedPos;
 
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
         aim = gameObject.GetComponent<PlayerAim>();
         anim = GetComponent<Animator>();
+
+        RotatedPos = new GameObject("RoatateObjectforAttacker").transform;
     }
 
     public void Update()
     {
+        RotatedPos.LookAt(aim.mousepos);
         //cubeForLookAt.transform.LookAt(aim.mousepos);
         //lookAtMouse = cubeForLookAt.transform.rotation;
 
@@ -270,16 +274,28 @@ public class PlayerSkillAttacker : MonoBehaviour
 
 
 
-
-        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, lookAtMouse);
+        //var newCenter = (transform.position * (aim.attackdir.normalized))
+        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, RotatedPos.rotation);
         DetectObjectsCollider(colliders);
     }
 
     private void OnDrawGizmos()
     {
-        Vector3 boxSize = new Vector3(additionalRange * 0.5f, 0.1f, range);
-        Gizmos.DrawCube(gameObject.transform.position, boxSize);
+        //Style Square의 Gizmos의 경우 플레이어의 뒷부분까지 그려지나 실제 Skill 범위는 Gizmos의 반에 플레이어 앞쪽을 향함
+
+        if (skill == null || !debug || skill.rangeStyle != Skill.RangeStyle.Square || skill.rangeStyle != Skill.RangeStyle.Square)
+            return;
+
+        Gizmos.color = Color.cyan;
+
+        Vector3 boxSize = new Vector3(additionalRange, 0.1f, range * 2);
+
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, RotatedPos.transform.rotation, new Vector3(1f, 1f, 1f));
+        Gizmos.matrix = rotationMatrix;
+
+        Gizmos.DrawCube(new Vector3(0f, 0f, 0f), boxSize);
     }
+
 
     private void MakeSkillRangeSectorForm()
     {

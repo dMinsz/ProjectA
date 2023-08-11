@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 0}
-  debug: 0
+  debug: 1
   control: 0
   angle: 0
   isSkillingPrimary: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   cube: {fileID: 4584774498176047829}
   cube2: {fileID: 431824653371787671}
   linePoints: 2
-  thickness: 0.5
+  thickness: 0.2
   color: {r: 0.54494524, g: 1, b: 0, a: 0}
   segments: 50
   arcPoints: []

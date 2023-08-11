@@ -20,7 +20,7 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] List<Vector3> arcPoints;
     float time;
 
-    private Transform RoatatedPos; 
+    [HideInInspector]public Transform RotatedPos; 
 
     public void Awake()
     {
@@ -51,13 +51,13 @@ public class DrawSkillRange : MonoBehaviour
 
 
 
-        RoatatedPos = new GameObject("RoatateObject").transform;
+        RotatedPos = new GameObject("RoatateObject").transform;
     }
 
     public void Update()
     {
 
-        RoatatedPos.LookAt(aim.mousepos);
+        RotatedPos.LookAt(aim.mousepos);
 
         if (isDrawing)
         {
@@ -131,8 +131,8 @@ public class DrawSkillRange : MonoBehaviour
             //cube.transform.LookAt(aimdir);
             //cube2.transform.LookAt(aimdir);
 
-            cube.transform.rotation = RoatatedPos.transform.rotation;
-            cube2.transform.rotation = RoatatedPos.transform.rotation;
+            cube.transform.rotation = RotatedPos.transform.rotation;
+            cube2.transform.rotation = RotatedPos.transform.rotation;
 
         }
 
@@ -185,7 +185,6 @@ public class DrawSkillRange : MonoBehaviour
         // line.transform.LookAt(aim.mousepos);       원본
 
 
-        //이게 부채꼴 스킬범위할때 호를 나타내는거 같긴함
         Vector3 linerotation = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
         line.transform.position = transform.position;
         line.transform.LookAt(linerotation);
