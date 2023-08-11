@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: AChar
+  m_Name: CityMan
   m_EditorClassIdentifier: 
-  characterName: AChar
-  Image: {fileID: 20535933, guid: 8e41f658eba1b6a41a54de40df6725fa, type: 3}
+  characterName: CityMan
+  Image: {fileID: 453642891, guid: d7ac720ebe166734486928a6462f653d, type: 3}
   avatar: {fileID: 0}
   animator: {fileID: 0}
+  model: {fileID: 2363307657413207293, guid: 41ff223d52cc4d442b192e765bf946c5, type: 3}
   stat: {fileID: 0}
   primarySkill: {fileID: 0}
   secondarySkill: {fileID: 0}

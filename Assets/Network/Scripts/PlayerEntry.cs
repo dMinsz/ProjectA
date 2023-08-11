@@ -14,7 +14,7 @@ public class PlayerEntry : MonoBehaviour
     [SerializeField] Image characterImage;
     //[SerializeField] Button playerReadyButton;
     [SerializeField] Character curCharacter;
-    [SerializeField] DataManager dataManager;
+    [SerializeField] public DataManager dataManager;
     private Player player;
 
     public enum TeamColor { Blue, Red }

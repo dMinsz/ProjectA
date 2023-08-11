@@ -5,36 +5,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomPanel : MonoBehaviour
 {
     [SerializeField] RectTransform blueTeamPlayerContent;
     [SerializeField] RectTransform redTeamPlayerContent;
+    [SerializeField] GameObject[] blueTeamCharacterSpot;
+    [SerializeField] GameObject[] redTeamCharacterSpot;
     [SerializeField] PlayerEntry playerEntryPrefab;
     //[SerializeField] TMP_Text blueTeamsCountText;
     //[SerializeField] TMP_Text redTeamsCountText;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
     [SerializeField] Button readyButton;
-    [SerializeField] TMP_Text ACaracterText;
-    [SerializeField] TMP_Text BCaracterText;
-    [SerializeField] TMP_Text CCaracterText;
-    [SerializeField] TMP_Text DCaracterText;
-    [SerializeField] TMP_Text ECaracterText;
-    [SerializeField] TMP_Text FCaracterText;
+    //[SerializeField] TMP_Text[] CharacterName;
 
+    private DataManager dataManager;
     private int blueTeamsCount;
     private int redTeamsCount;
     private int maxBlueTeamsCount;
     private int maxRedTeamsCount;
 
     private Dictionary<int, PlayerEntry> playerDictionary;
+    private Dictionary<int, GameObject> playerCharacterModeling;
 
     private void Awake()
     {
+        dataManager = FindObjectOfType<DataManager>();
         playerDictionary = new Dictionary<int, PlayerEntry>();
+        playerCharacterModeling = new Dictionary<int, GameObject>();    // playerDictionary랑 합치는게 좋을듯
     }
 
     private void OnEnable()
@@ -44,9 +44,15 @@ public class RoomPanel : MonoBehaviour
             PlayerEntry entry;
 
             if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+            {
                 entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
+                //modeling = Instantiate(dataManager.CurCharacter.modeling, )
+            }
             else
+            {
                 entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
+
+            }
 
             entry.SetPlayer(player);
             playerDictionary.Add(player.ActorNumber, entry);
@@ -199,7 +205,7 @@ public class RoomPanel : MonoBehaviour
         blueTeamsCount = 0;
         redTeamsCount = 0;
 
-        foreach (PlayerEntry playerEntry in playerDictionary.Values)    // PlayerEntry 초기화
+        foreach (PlayerEntry playerEntry in playerDictionary.Values)    // PlayerEntry 초기화 후 재생성
         {
             Destroy(playerEntry.gameObject);
         }
@@ -227,6 +233,37 @@ public class RoomPanel : MonoBehaviour
 
         PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
         PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
+    }
+
+    private void SetCharactorAtSpot()   // 보수 필요
+    {
+        int compliteBlueCount = 0;
+        int compliteRedCount = 0;
+
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+           if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+            {
+               switch (blueTeamsCount)
+               {
+                   case 1:
+
+                       break;
+                   case 2:
+                       break;
+                   case 3:
+                       break;
+                   default:
+                       break;
+               }
+
+            }
+
+        }
+
+
+        //GameObject modeling = Instantiate(dataManager.CurCharacter.modeling)
     }
 
     private void SwitchLocalPlayerBlueTeam()

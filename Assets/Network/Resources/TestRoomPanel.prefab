@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CChar
+  m_text: Bowser
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -542,7 +542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7604255576805014038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -640,16 +640,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueTeamPlayerContent: {fileID: 1540203640511804788}
   redTeamPlayerContent: {fileID: 4915946899261248747}
+  blueTeamCharacterSpot: []
+  redTeamCharacterSpot: []
   playerEntryPrefab: {fileID: 3731023699572381743, guid: e0c1dc03971a59b498170865691445f0,
     type: 3}
-  blueTeamsCountText: {fileID: 0}
-  redTeamsCountText: {fileID: 0}
   gameTypeText: {fileID: 3485066447989009196}
   startButton: {fileID: 5135735753607337650}
+  readyButton: {fileID: 0}
   ACaracterText: {fileID: 8110503489820693287}
   BCaracterText: {fileID: 1379109064563969540}
   CCaracterText: {fileID: 5827667160327975006}
   DCaracterText: {fileID: 2578388083677170546}
+  ECaracterText: {fileID: 0}
+  FCaracterText: {fileID: 0}
 --- !u!1 &2048379338563333235
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,7 +666,7 @@ GameObject:
   - component: {fileID: 2734864735827013808}
   - component: {fileID: 416155108639791201}
   m_Layer: 5
-  m_Name: SelectCCharacterButton
+  m_Name: SelectBowserButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1066,7 +1069,7 @@ GameObject:
   - component: {fileID: 7517211991952752502}
   - component: {fileID: 2705308416754261599}
   m_Layer: 5
-  m_Name: SelectACharacterButton
+  m_Name: SelectMarioButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1639,7 +1642,7 @@ GameObject:
   - component: {fileID: 8209471583720337707}
   - component: {fileID: 8430689335858472850}
   m_Layer: 5
-  m_Name: SelectDCharacterButton
+  m_Name: SelectCityManButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1913,7 +1916,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: AChar
+  m_text: Mario
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2635,7 +2638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BChar
+  m_text: Luigi
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2873,7 +2876,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DChar
+  m_text: CityMan
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3090,7 +3093,7 @@ GameObject:
   - component: {fileID: 3712942166613522107}
   - component: {fileID: 8355340856490769631}
   m_Layer: 5
-  m_Name: SelectBCharacterButton
+  m_Name: SelectLuigiButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
