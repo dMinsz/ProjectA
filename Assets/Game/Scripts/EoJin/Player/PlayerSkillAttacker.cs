@@ -62,7 +62,9 @@ public class PlayerSkillAttacker : MonoBehaviour
     Coroutine specialSkillCoroutine;
 
 
-    bool isDubleClick = false;
+  [SerializeField]  bool isQDubleClick = false;
+    [SerializeField] bool isEDubleClick = false;
+    [SerializeField] bool isRDubleClick = false;
 
     public void OnPrimarySkill(InputValue value)
     {
@@ -76,20 +78,23 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             DrawRange.SetIsDrawingTrue();
 
-            if (isDubleClick)
+            isEDubleClick = false;
+            isRDubleClick = false;
+
+            if (isQDubleClick)
             {
                 anim.SetTrigger("Primary");
                 canSkillPrimary = false;
                 isSkillingPrimary = true;
                 ApplyDamage();
 
-                isDubleClick = false;
+                isQDubleClick = false;
                 DrawRange.SetIsDrawingFalse();
                 primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
             }
             else 
             {
-                isDubleClick = true;
+                isQDubleClick = true;
             }
 
         }
@@ -99,7 +104,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     public void OnSecondarySkill(InputValue value)
     {
 
-     /*   if (canSkillSecondary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
+       if (canSkillSecondary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
 
             skill = data.CurCharacter.secondarySkill;
@@ -108,35 +113,30 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             DrawRange.SetIsDrawingTrue();
 
-            if (isDubleClick)
+
+            isQDubleClick = false;
+            isRDubleClick = false;
+
+            if (isEDubleClick)
             {
                 anim.SetTrigger("Secondary");
                 canSkillSecondary = false;
                 isSkillingSecondary = true;
                 ApplyDamage();
 
-                isDubleClick = false;
+                isEDubleClick = false;
 
                 DrawRange.SetIsDrawingFalse();
                 secondarySkillCoroutine = StartCoroutine(skillCoolTimeSecondary());
             }
             else
             {
-                isDubleClick = true;
+                isEDubleClick = true;
             }
 
-        }*/
-
-        if (canSkillSecondary)
-        {
-            canSkillSecondary = false;
-            skill = data.CurCharacter.secondarySkill;
-            aim.attacksize = skill.range;
-
-            ApplyDamage();
-            isSkillingSecondary = true;
-            secondarySkillCoroutine = StartCoroutine(skillDurationSecondary());
         }
+
+     
   
     }
 
@@ -151,21 +151,24 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             DrawRange.SetIsDrawingTrue();
 
-            if (isDubleClick)
+            isQDubleClick = false;
+            isEDubleClick = false;
+
+            if (isRDubleClick)
             {
 
                 anim.SetTrigger("Special");
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
                 ApplyDamage();
-                isDubleClick = false;
+                isRDubleClick = false;
 
                 DrawRange.SetIsDrawingFalse();
                 specialSkillCoroutine = StartCoroutine(skillCoolTimeSpecial());
             }
             else
             {
-                isDubleClick = true;
+                isRDubleClick = true;
             }
 
         }
