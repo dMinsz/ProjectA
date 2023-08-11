@@ -20,8 +20,7 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] List<Vector3> arcPoints;
     float time;
 
-
-    //
+    private Transform RoatatedPos; 
 
     public void Awake()
     {
@@ -47,10 +46,19 @@ public class DrawSkillRange : MonoBehaviour
 
         cube.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
         cube2.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
+
+
+
+
+
+        RoatatedPos = new GameObject("RoatateObject").transform;
     }
 
     public void Update()
     {
+
+        RoatatedPos.LookAt(aim.mousepos);
+
         if (isDrawing)
         {
             Draw();
@@ -120,8 +128,11 @@ public class DrawSkillRange : MonoBehaviour
 
             // cube.transform.LookAt(aim.mousepos);  원본
             //  cube2.transform.LookAt(aim.mousepos);  원본
-            cube.transform.LookAt(aimdir);
-            cube2.transform.LookAt(aimdir);
+            //cube.transform.LookAt(aimdir);
+            //cube2.transform.LookAt(aimdir);
+
+            cube.transform.rotation = RoatatedPos.transform.rotation;
+            cube2.transform.rotation = RoatatedPos.transform.rotation;
 
         }
 

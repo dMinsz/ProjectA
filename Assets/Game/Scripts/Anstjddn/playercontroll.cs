@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerControll : MonoBehaviour
+public class playercontroll : MonoBehaviour
 {
     //플레이어 무브 관련
     private Rigidbody playerrb;
