@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
+using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.InputSystem;
 namespace anstjddn
@@ -39,7 +40,8 @@ namespace anstjddn
             }
             else                                       
             {
-                transform.LookAt(new Vector3(0f, playerat.attackdir.y, 0f));
+                transform.LookAt(playerat.attackdir);
+                transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 0f);
                 Move();
             }
 
@@ -70,7 +72,7 @@ namespace anstjddn
                 return;
             Vector3 viewVector = new Vector3(movedir.z, 0, -movedir.x);
             Quaternion lookrotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(viewVector), 0.1f);
-            transform.rotation = Quaternion.Euler(new Vector3(0f, lookrotation.y, 0f));
+            transform.rotation = lookrotation;
         }
 
         private void OnMove(InputValue Value)
