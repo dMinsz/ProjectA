@@ -367,14 +367,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.018629164, g: 0.9811321, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8483127d5508a8e41824d4bed30c974b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1094,10 +1094,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ada6c451dde19145949fd60203e0f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 062ac108c16a94e45882780a23524907, type: 2}
+  character: {fileID: 11400000, guid: c40ce3929c422774cb877e8e4f558589, type: 2}
   qskilCoolTime: {fileID: 0}
   qskilcolltimeUI: {fileID: 118922311336593137}
-  curtime: 0
   playerskill: {fileID: 0}
   eskilCoolTime: {fileID: 0}
   eskilcolltimeUI: {fileID: 118922311759085508}

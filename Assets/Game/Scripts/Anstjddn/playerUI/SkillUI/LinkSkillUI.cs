@@ -10,8 +10,9 @@ public class LinkSkillUI : BaseUI
     [SerializeField] public Character character;
     public TMP_Text qskilCoolTime;       // qcooltime
     [SerializeField] public GameObject qskilcolltimeUI;   //q스킬
-    [SerializeField] float curtime;
-    [SerializeField] public PlayerSkillAttacker playerskill;
+
+
+    [SerializeField] public PlayerSkillAttacker playerskill;    //isskilling 받을려고 사용
 
     public TMP_Text eskilCoolTime;       // ecooltime
     [SerializeField] public GameObject eskilcolltimeUI;   //e스킬
@@ -24,16 +25,16 @@ public class LinkSkillUI : BaseUI
     protected override void Awake()
     {
         base.Awake();
-        qskilCoolTime = texts["QskillCoolTime"];
-        qskilCoolTime.text = (qskilcolltimeUI.GetComponent<Image>().fillAmount*character.primarySkill.coolTime).ToString("F1");
+        //qskilCoolTime = texts["QskillCoolTime"];
+        qskilCoolTime.text = (qskilcolltimeUI.GetComponent<Image>().fillAmount * character.primarySkill.coolTime).ToString("F1");
         //fillamount 최대값이 1.0이라서 쿨타임 곱함
         qskilcolltimeUI.SetActive(false);
 
-        eskilCoolTime = texts["EskillCoolTime"];
+        //eskilCoolTime = texts["EskillCoolTime"];
         eskilCoolTime.text = (eskilcolltimeUI.GetComponent<Image>().fillAmount * character.secondarySkill.coolTime).ToString("F1");
         eskilcolltimeUI.SetActive(false);
 
-        rskilCoolTime = texts["RskillCoolTime"];
+        //rskilCoolTime = texts["RskillCoolTime"];
         rskilCoolTime.text = (rskilcolltimeUI.GetComponent<Image>().fillAmount * character.specialSkill.coolTime).ToString("F1");
         rskilcolltimeUI.SetActive(false);
 
@@ -65,7 +66,7 @@ public class LinkSkillUI : BaseUI
 
     private void rskillcool()
     {
-        StartCoroutine(rSkillCoolTime(character.secondarySkill.coolTime));
+        StartCoroutine(rSkillCoolTime(character.specialSkill.coolTime));
     }
 
     IEnumerator qSkillCoolTime(float cooltime)
@@ -82,9 +83,8 @@ public class LinkSkillUI : BaseUI
         yield return new WaitForSeconds(cooltime);
         if (qskilcolltimeUI.GetComponent<Image>().fillAmount <= 0)
         {
-            qskilcolltimeUI.GetComponent<Image>().fillAmount = 1f;
             qskilcolltimeUI.SetActive(false);
-     
+            qskilcolltimeUI.GetComponent<Image>().fillAmount = 1f;
         }    
     }
 
@@ -99,6 +99,7 @@ public class LinkSkillUI : BaseUI
         }
 
         yield return new WaitForSeconds(cooltime);
+
         if (eskilcolltimeUI.GetComponent<Image>().fillAmount <= 0)
         {
             eskilcolltimeUI.GetComponent<Image>().fillAmount = 1f;
@@ -117,10 +118,11 @@ public class LinkSkillUI : BaseUI
         }
 
         yield return new WaitForSeconds(cooltime);
+
         if (rskilcolltimeUI.GetComponent<Image>().fillAmount <= 0)
         {
-            rskilcolltimeUI.GetComponent<Image>().fillAmount = 1f;
             rskilcolltimeUI.SetActive(false);
+            rskilcolltimeUI.GetComponent<Image>().fillAmount = 1f;
 
         }
     }

@@ -7,9 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
-using anstjddn;
-using UnityEngine.InputSystem;
-using System.Linq;
 
 public class PlayManager : MonoBehaviourPunCallbacks
 {
@@ -64,7 +61,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 if (blueTeamChecker[i] == true)
                 {
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-                    var player = PhotonNetwork.Instantiate("Player", blueSpwans[i].position, blueSpwans[i].rotation, 0, puckData);
+                    var player = PhotonNetwork.Instantiate("Players", blueSpwans[i].position, blueSpwans[i].rotation, 0, puckData);
 
                     player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
@@ -87,7 +84,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 if (redTeamChecker[i] == true)
                 {
                     object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-                    var player = PhotonNetwork.Instantiate("Player", redSpwans[i].position, redSpwans[i].rotation, 0, puckData);
+                    var player = PhotonNetwork.Instantiate("Players", redSpwans[i].position, redSpwans[i].rotation, 0, puckData);
 
                     player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
@@ -113,7 +110,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 0)
         {
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-            var player = PhotonNetwork.Instantiate("Player", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
+            var player = PhotonNetwork.Instantiate("Players", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
             
             pPlayerList.Add(player);
 
@@ -125,7 +122,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         else
         {
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
-            var player = PhotonNetwork.Instantiate("Player", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
+            var player = PhotonNetwork.Instantiate("Players", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
  
             pPlayerList.Add(player);
 

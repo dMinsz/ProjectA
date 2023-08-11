@@ -1,12 +1,8 @@
-using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
+
 
 public class PlayerAimTest : MonoBehaviour
 {
@@ -22,8 +18,9 @@ public class PlayerAimTest : MonoBehaviour
 
 
     public Vector3 attackdir;
+    [SerializeField] GameObject aimobj;
 
-    [SerializeField] private GameObject effectprefabs;
+        [SerializeField] private GameObject effectprefabs;
 
     [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
@@ -47,7 +44,7 @@ public class PlayerAimTest : MonoBehaviour
             mousepos = hit.point;
             mousepos.y = 0;
         }
-
+        aimobj.transform.position = mousepos;
 
     }
     private void OnAttack(InputValue Value)

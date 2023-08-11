@@ -1790,7 +1790,7 @@ GameObject:
   - component: {fileID: 5162250091476411074}
   - component: {fileID: 5162250091476411075}
   m_Layer: 6
-  m_Name: SphereForLookAt
+  m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1887,7 +1887,7 @@ GameObject:
   - component: {fileID: 5162250091540525107}
   - component: {fileID: 5162250091540525104}
   m_Layer: 6
-  m_Name: CubeForLookAt
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2173,7 +2173,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 30
-  playerat: {fileID: 4891213647388153733}
+  playerat: {fileID: 0}
+  playerdir: {x: 0, y: 0}
 --- !u!114 &4891213647388153759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2252,7 +2253,7 @@ MonoBehaviour:
   aim: {fileID: 0}
   mousePosObj: {fileID: 5162250091476411072}
   cubeForLookAt: {fileID: 5162250091540525105}
-  makeColliderDetect: 0
+  DrawRange: {fileID: 0}
 --- !u!114 &5162250092133903007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,8 +2319,6 @@ MonoBehaviour:
   color: {r: 0.54494524, g: 1, b: 0, a: 0}
   segments: 50
   arcPoints: []
-  cubeForLookAt: {fileID: 0}
-  mousePosObj: {fileID: 0}
 --- !u!136 &1336303878679310460
 CapsuleCollider:
   m_ObjectHideFlags: 0
