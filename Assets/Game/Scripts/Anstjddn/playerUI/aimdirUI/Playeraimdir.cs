@@ -1,16 +1,19 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Playeraimdir : MonoBehaviour
 {
-    [SerializeField] public PlayerAimTest playeraim;
-    
+    [SerializeField] public PlayerAimTest playeraim;   //쓰고있으신 playeraim 으로 바꾸시면 됩니다 
+
     private void Update()
     {
-        Vector3 dirui = (playeraim.mousepos - transform.position).normalized;
+        float dirx = (playeraim.mousepos.x - transform.position.x);
+        float dirz = (playeraim.mousepos.z - transform.position.z);
+
+        Vector3 dirui = new Vector3(dirx,0,dirz);
         transform.right = dirui;
-    //    Vector3 aimpos = new Vector3(dirui.x, transform.position.y, dirui.z);
-      //  transform.LookAt(aimpos);
+        
     }
 }
