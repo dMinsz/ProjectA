@@ -23,6 +23,9 @@ public class DrawSkillRange : MonoBehaviour
     Vector3 oldRotation;
     [SerializeField] List<Vector3> arcPoints;
     float time;
+    [SerializeField] public GameObject cubeForLookAt;
+    [SerializeField] public GameObject mousePosObj;
+
 
     public void Awake()
     {
@@ -49,6 +52,8 @@ public class DrawSkillRange : MonoBehaviour
 
     public void Update()
     {
+        cubeForLookAt.transform.LookAt(mousePosObj.transform);
+
         if (isDrawing)
         {
             Draw();
@@ -92,7 +97,7 @@ public class DrawSkillRange : MonoBehaviour
         line.GetComponent<LineRenderer>().endWidth = thickness;
         line.GetComponent<LineRenderer>().materials[0].SetColor("_EmissionColor", color);
 
-        
+
 
         line.transform.position = Vector3.zero;
     }
@@ -114,8 +119,8 @@ public class DrawSkillRange : MonoBehaviour
             cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
             cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
 
-            cube.transform.LookAt(aim.mousepos);
-            cube2.transform.LookAt(aim.mousepos);
+            cube.transform.rotation = cubeForLookAt.transform.rotation;
+            cube2.transform.rotation = cubeForLookAt.transform.rotation;
         }
 
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
@@ -124,12 +129,8 @@ public class DrawSkillRange : MonoBehaviour
             cube2.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
             //localScale.z가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-            Vector3 dir = (aim.mousepos - transform.position).normalized;
-            Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
-            Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
-
-            cube.transform.rotation = Quaternion.LookRotation(leftDir);
-            cube2.transform.rotation = Quaternion.LookRotation(rightDir);
+            cube.transform.rotation = cubeForLookAt.transform.rotation;
+            cube2.transform.rotation = cubeForLookAt.transform.rotation;
         }
 
     }
@@ -172,14 +173,16 @@ public class DrawSkillRange : MonoBehaviour
     IEnumerator DrawLineRoutine()
     {
         time = 1;
-        while(attacker.skill.duration >= time)
+        /*
+        while (attacker.skill.duration >= time)
         {
             yield return new WaitForSeconds(1f);
             Debug.Log($"{attacker.skill.skillName}이 {time}초동안 실행되는 중");
             time += 1;
         }
-        
-        //yield return new WaitForSeconds(attacker.skill.duration);
+        */
+
+        yield return new WaitForSeconds(attacker.skill.duration);
         //while문 지우고 위 문장 주석 해지할 것
         SetIsDrawingFalse();
     }

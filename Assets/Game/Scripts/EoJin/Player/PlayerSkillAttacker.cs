@@ -1,7 +1,11 @@
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerSkillAttacker : MonoBehaviour
 {
@@ -29,11 +33,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     [SerializeField] PlayerAimTest aim;
     [SerializeField] public GameObject mousePosObj;
     [SerializeField] public GameObject cubeForLookAt;
-    Quaternion lookAtMouse;
-    float time;
-    float coolTimeP;
-    float coolTimeS;
-    float coolTimeSP;
+    public bool makeColliderDetect;
 
     public void Awake()
     {
@@ -43,12 +43,8 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     public void Update()
     {
-        cubeForLookAt.transform.LookAt(aim.mousepos);
-        lookAtMouse = cubeForLookAt.transform.rotation;
-
+        cubeForLookAt.transform.LookAt(mousePosObj.transform);
         mousePosObj.transform.position = aim.mousepos;
-
-        
     }
 
     Coroutine primarySkillCoroutine;
@@ -101,7 +97,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     IEnumerator skillDurationPrimary()
     {
-        
+
         yield return new WaitForSeconds(skill.duration);
         isSkillingPrimary = false;
         isPlayingSkillAnim = false;
@@ -129,46 +125,55 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     IEnumerator skillCoolTimePrimary()
     {
+        /*
         coolTimeP = 1;
+        
         while (skill.coolTime >= coolTimeP)
         {
             yield return new WaitForSeconds(1f);
             Debug.Log($"Primary : {skill.skillName}의 쿨타임 대기 {coolTimeP} / {skill.coolTime}");
             coolTimeP += 1;
         }
+        */
 
         //while문 삭제 후 아래 문장 주석 취소할 것
-        //yield return new WaitForSeconds(skill.coolTime);
+        yield return new WaitForSeconds(skill.coolTime);
         canSkillPrimary = true;
     }
 
     IEnumerator skillCoolTimeSecondary()
     {
+        /*
         coolTimeS = 1;
+        
         while (skill.coolTime >= coolTimeS)
         {
             yield return new WaitForSeconds(1f);
             Debug.Log($"Secondary : {skill.skillName}의 쿨타임 대기 {coolTimeS} / {skill.coolTime}");
             coolTimeS += 1;
         }
+        */
 
         //while문 삭제 후 아래 문장 주석 취소할 것
-        //yield return new WaitForSeconds(skill.coolTime);
+        yield return new WaitForSeconds(skill.coolTime);
         canSkillSecondary = true;
     }
 
     IEnumerator skillCoolTimeSpecial()
     {
+        /*
         coolTimeSP = 1;
+        
         while (skill.coolTime >= coolTimeSP)
         {
             yield return new WaitForSeconds(1f);
             Debug.Log($"Special : {skill.skillName}의 쿨타임 대기 {coolTimeSP} / {skill.coolTime}");
             coolTimeSP += 1;
         }
+        */
 
         //while문 삭제 후 아래 문장 주석 취소할 것
-        //yield return new WaitForSeconds(skill.coolTime);
+        yield return new WaitForSeconds(skill.coolTime);
         canSkillSpecial = true;
     }
 
@@ -198,54 +203,105 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     private void MakeSkillRangeSquareForm()
     {
-        float angle = Vector3.Angle(transform.position, aim.mousepos);
-        //additionalRange에 float를 곱해주며 스킬범위 민감도 설정가능
         Vector3 boxSize = new Vector3(additionalRange * 0.5f, 0.1f, range);
+        //OverlapBox에서 half boxSize를 원하기 때문에 반씩 줄임 원본)additionalRange, 0.1f, range * 2
 
-        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, lookAtMouse);
+        Collider[] colliders = Physics.OverlapBox(transform.position, boxSize, cubeForLookAt.transform.rotation);
+        makeColliderDetect = true;
+        StopAllCoroutines();
+        makeColliderRoutine = StartCoroutine(MakeColliderCoroutine());
         DetectObjectsCollider(colliders);
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Style Square의 Gizmos의 경우 플레이어의 뒷부분까지 그려지나 실제 Skill 범위는 Gizmos의 반에 플레이어 앞쪽을 향함
+
+        if (skill == null || !debug || skill.rangeStyle != Skill.RangeStyle.Square || skill.rangeStyle != Skill.RangeStyle.Square)
+            return;
+
+        Gizmos.color = Color.cyan;
+
+        Vector3 boxSize = new Vector3(additionalRange, 0.1f, range * 2);
+
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, cubeForLookAt.transform.rotation, new Vector3(1f, 1f, 1f));
+        Gizmos.matrix = rotationMatrix;
+
+        Gizmos.DrawCube(new Vector3(0f, 0f, 0f), boxSize);
     }
 
     private void MakeSkillRangeSectorForm()
     {
         Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
+        makeColliderDetect = true;
+        StopAllCoroutines();
+        makeColliderRoutine = StartCoroutine(MakeColliderCoroutine());
         DetectObjectsCollider(colliders);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (skill == null || !debug || skill.rangeStyle == Skill.RangeStyle.Square)
+            return;
+
+        Handles.color = Color.cyan;
+
+        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, range);
+        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, range);
+
+    }
+
+    Coroutine makeColliderRoutine;
+    IEnumerator MakeColliderCoroutine()
+    {
+        yield return new WaitForSeconds(skill.duration);
+        Debug.Log("Collider Detect off");
+        makeColliderDetect = false;
     }
 
     private void DetectObjectsCollider(Collider[] colliders)
     {
-        
-        foreach (Collider collider in colliders)
+        if (makeColliderDetect)
         {
-            Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
-            Vector3 colliderPosButYIsZero = new Vector3(collider.transform.position.x, 0f, collider.transform.position.z);
-            Vector3 playerNTarget = (colliderPosButYIsZero - transform.position).normalized;
-
-            if (skill.rangeStyle == Skill.RangeStyle.Square)
-                angle = 90f;
-
-            if (Vector3.Dot(playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
-                continue;
-
-            if (collider.gameObject == this.gameObject)
-                continue;
-
-            if (collider.gameObject.layer == 7)
+            foreach (Collider collider in colliders)
             {
-                //aim.Attack();
-                continue;
-            }
+                Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
+                Vector3 colliderPosButYIsZero = new Vector3(collider.transform.position.x, 0f, collider.transform.position.z);
+                Vector3 playerNTarget = (colliderPosButYIsZero - transform.position).normalized;
 
-            if (collider.gameObject.tag == "Player")
-            {
-                if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
+                if (collider.gameObject.layer == 7)
                 {
-                    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
+                    Debug.Log("퍽이 콜라이더 범위 내에 있음");
+                    continue;
+                }
+
+                if (skill.rangeStyle == Skill.RangeStyle.Square)
+                    angle = 90f;
+
+                if (Vector3.Dot(playerNMouse, playerNTarget) < Mathf.Cos(angle * Mathf.Deg2Rad))
+                    continue;
+
+                if (collider.gameObject == this.gameObject)
+                    continue;
+
+                if (collider.gameObject.layer == 7)
+                {
+                    aim.Attack();
+                    continue;
+                }
+
+                if (collider.gameObject.tag == "Player")
+                {
+                    if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
+                    {
+                        collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
+                    }
                 }
             }
         }
-        
+
 
     }
+
 
 }
