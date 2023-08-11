@@ -272,6 +272,12 @@ public class PlayerSkillAttacker : MonoBehaviour
         DetectObjectsCollider(colliders);
     }
 
+    private void OnDrawGizmos()
+    {
+        Vector3 boxSize = new Vector3(additionalRange * 0.5f, 0.1f, range);
+        Gizmos.DrawCube(gameObject.transform.position, boxSize);
+    }
+
     private void MakeSkillRangeSectorForm()
     {
         Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
