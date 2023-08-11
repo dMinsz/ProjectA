@@ -7,13 +7,15 @@ public static class CustomProperty
     public const string READY = "Ready";
     public const string LOAD = "Load";
     public const string NUMBER = "Number";
+    public const string CHARACTERNAME = "CharacterName";
     public const string TEAM = "Team";
     public const string BLUETEAMSCOUNT = "BlueTeamsCount";
     public const string REDTEAMSCOUNT = "RedTeamsCount";
-    public const string CHARACTERNAME = "CharacterName";
+    public const string BLUETEAMSPLAYERLIST = "BlueTeamsPlayerList";
+    public const string REDTEAMSPLAYERLIST = "RedTeamsPlayerList";
 
     public const string LOADTIME = "LoadTime";
-
+    
     public static bool GetReady(this Player player)
     {
         PhotonHashtable property = player.CustomProperties;
@@ -87,6 +89,13 @@ public static class CustomProperty
             return -1;
     }
 
+    public static void SetBlueTeamsCount(this Room room, int blueTeamsCount)
+    {
+        PhotonHashtable property = new PhotonHashtable();
+        property[BLUETEAMSCOUNT] = blueTeamsCount;
+        room.SetCustomProperties(property);
+    }
+
     public static int GetRedTeamsCount(this Room room)
     {
         PhotonHashtable property = room.CustomProperties;
@@ -96,19 +105,28 @@ public static class CustomProperty
             return -1;
     }
 
-    public static void SetBlueTeamsCount(this Room room, int blueTeamsCount)
-    {
-        PhotonHashtable property = new PhotonHashtable();
-        property[BLUETEAMSCOUNT] = blueTeamsCount;
-        room.SetCustomProperties(property);
-    }
-
     public static void SetRedTeamsCount(this Room room, int redTeamsCount)
     {
         PhotonHashtable property = new PhotonHashtable();
         property[REDTEAMSCOUNT] = redTeamsCount;
         room.SetCustomProperties(property);
     }
+
+    //public static Array GetBlueTeamPlayerList(this Room room)
+    //{
+    //    PhotonHashtable property = room.CustomProperties;
+    //    if (property.ContainsKey(BLUETEAMSPLAYERLIST))
+    //        return (Array)property[BLUETEAMSPLAYERLIST];
+    //    else
+    //        throw new KeyNotFoundException("CharacterList not found in custom properties.");
+    //}
+
+    //public static void SetBlueTeamPlayerList(this Room room, List<string> blueTeamsPlayerList)
+    //{
+    //    PhotonHashtable property = new PhotonHashtable();
+    //    property[BLUETEAMSPLAYERLIST] = blueTeamsPlayerList.ToArray();
+    //    room.SetCustomProperties(property);
+    //}
 
     public static string GetCharacterName(this Player player)
     {

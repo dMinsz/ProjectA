@@ -1,7 +1,10 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 public class DataManager : MonoBehaviour
 {
@@ -19,7 +22,40 @@ public class DataManager : MonoBehaviour
         set { curCharacter = value; } 
     }
 
-    [SerializeField] public Character[] characters;
+    [SerializeField] private Character[] characters;
+    public Character GetCharacter(string charactorName)
+    {
+        foreach (Character character in characters)
+        {
+            if (character.characterName == charactorName)
+                return character;
+        }
+        return characters[0] ;   // None Charactor
+    }
+
+    [SerializeField] public Dictionary<Player, Character> blueTeamsPlayer;
+    public Dictionary<Player, Character> BlueTeamsPlayer
+    {
+        get {return blueTeamsPlayer; }
+        set {blueTeamsPlayer = value; }
+    }
+
+    [SerializeField] public Dictionary<Player, Character> redTeamsPlayer;
+    public Dictionary<Player, Character> RedTeamsPlayer
+    {
+        get { return redTeamsPlayer; }
+        set { redTeamsPlayer = value;
+            //foreach (Player player in RedTeamsPlayer.Keys)
+            //{
+            //    redPlayersForRoom.Add(player);
+            //};
+        }
+    }
+
+    //private List<Player> bluePlayersForRoom;
+
+    //private List<Player> redPlayersForRoom;   RoomProperty
+
     //[SerializeField] public Avatar[] avatars;
     //[SerializeField] public AnimatorController[] animators;
     public UnityAction OnChangeCharacter;
