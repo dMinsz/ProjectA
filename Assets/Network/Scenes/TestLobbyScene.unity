@@ -795,6 +795,7 @@ MonoBehaviour:
   m_CameraType: 0
   m_Cameras:
   - {fileID: 62718345}
+  - {fileID: 668819007}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -1626,7 +1627,7 @@ PrefabInstance:
         type: 3}
       propertyPath: redTeamCharacterSpot.Array.data[0]
       value: 
-      objectReference: {fileID: 90928703030115065}
+      objectReference: {fileID: 90928702187982342}
     - target: {fileID: 5454343046678678283, guid: aa9d17700908b5447a6fa3a3caddfd0b,
         type: 3}
       propertyPath: redTeamCharacterSpot.Array.data[1]
@@ -1636,12 +1637,12 @@ PrefabInstance:
         type: 3}
       propertyPath: redTeamCharacterSpot.Array.data[2]
       value: 
-      objectReference: {fileID: 90928702187982342}
+      objectReference: {fileID: 90928703030115065}
     - target: {fileID: 5454343046678678283, guid: aa9d17700908b5447a6fa3a3caddfd0b,
         type: 3}
       propertyPath: blueTeamCharacterSpot.Array.data[0]
       value: 
-      objectReference: {fileID: 90928703020678995}
+      objectReference: {fileID: 90928701267816460}
     - target: {fileID: 5454343046678678283, guid: aa9d17700908b5447a6fa3a3caddfd0b,
         type: 3}
       propertyPath: blueTeamCharacterSpot.Array.data[1]
@@ -1651,7 +1652,7 @@ PrefabInstance:
         type: 3}
       propertyPath: blueTeamCharacterSpot.Array.data[2]
       value: 
-      objectReference: {fileID: 90928701267816460}
+      objectReference: {fileID: 90928703020678995}
     - target: {fileID: 5454343046896995256, guid: aa9d17700908b5447a6fa3a3caddfd0b,
         type: 3}
       propertyPath: m_AnchorMax.y

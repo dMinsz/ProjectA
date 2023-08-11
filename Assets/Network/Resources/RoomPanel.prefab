@@ -349,7 +349,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 3
   m_StartCorner: 1
   m_StartAxis: 0
   m_CellSize: {x: 200, y: 750}
@@ -2096,19 +2096,6 @@ MonoBehaviour:
   gameTypeText: {fileID: 7976770418309211869}
   startButton: {fileID: 1849734128114047811}
   readyButton: {fileID: 5454343046331419146}
-  CharacterName:
-  - {fileID: 3341693898924383958}
-  - {fileID: 5606360817453040629}
-  - {fileID: 1012843111021329839}
-  - {fileID: 9017923185064265347}
-  - {fileID: 5454343047285820753}
-  - {fileID: 5454343045551250798}
-  marioText: {fileID: 0}
-  luigiText: {fileID: 5606360817453040629}
-  bowserText: {fileID: 1012843111021329839}
-  cityManText: {fileID: 9017923185064265347}
-  PaulineText: {fileID: 5454343047285820753}
-  PeachText: {fileID: 5454343045551250798}
 --- !u!1 &5454343045551250796
 GameObject:
   m_ObjectHideFlags: 0
@@ -3929,7 +3916,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 5
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 200, y: 750}

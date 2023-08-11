@@ -30,14 +30,16 @@ public class RoomPanel : MonoBehaviour
     private Dictionary<int, PlayerEntry> playerDictionary;
     private Dictionary<Player, Character> blueTeamPlayerDic;
     private Dictionary<Player, Character> redTeamPlayerDic;
+    private List<GameObject> compliteSpotCharacterList;
 
     private void Awake()
     {
         dataManager = FindObjectOfType<DataManager>();
         playerDictionary = new Dictionary<int, PlayerEntry>();
         //playerCharacterModeling = new Dictionary<int, GameObject>();      // playerDictionary랑 합치는게 좋을듯
-        blueTeamPlayerDic = new Dictionary<Player, Character>();                      // TeamManager 쓰면 안만들고 TeamManager의 함수 쓰면 됨
+        blueTeamPlayerDic = new Dictionary<Player, Character>();            // TeamManager 쓰면 안만들고 TeamManager의 함수 쓰면 됨
         redTeamPlayerDic = new Dictionary<Player, Character>();
+        compliteSpotCharacterList = new List<GameObject>();
     }
 
     private void OnEnable()
@@ -66,6 +68,7 @@ public class RoomPanel : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetReady(false);
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
+        RenewalPlayerEntry();
         maxBlueTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
         maxRedTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
         GameTypeText();
@@ -85,6 +88,11 @@ public class RoomPanel : MonoBehaviour
         playerDictionary.Clear();
         blueTeamPlayerDic.Clear();
         redTeamPlayerDic.Clear();
+        foreach (GameObject characterModeling in compliteSpotCharacterList)
+        {
+            Destroy(characterModeling.gameObject);
+        }
+        compliteSpotCharacterList.Clear();
         PhotonNetwork.AutomaticallySyncScene = false;
     }
 
@@ -112,6 +120,7 @@ public class RoomPanel : MonoBehaviour
         playerDictionary.Add(newPlayer.ActorNumber, entry);
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
+        SetCharactorAtSpot();
     }
 
     public void PlayerLeftRoom(Player otherPlayer)
@@ -125,6 +134,7 @@ public class RoomPanel : MonoBehaviour
         playerDictionary.Remove(otherPlayer.ActorNumber);
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
+        SetCharactorAtSpot();
     }
 
     public void PlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
@@ -142,6 +152,8 @@ public class RoomPanel : MonoBehaviour
                 blueTeamPlayerDic[targetPlayer] = dataManager.GetCharacter(targetPlayer.GetCharacterName());
             else
                 redTeamPlayerDic[targetPlayer] = dataManager.GetCharacter(targetPlayer.GetCharacterName());
+
+            SetCharactorAtSpot();
         }
 
         //if (changedProps.ContainsKey(CustomProperty.BLUETEAMSPLAYERLIST))
@@ -235,6 +247,8 @@ public class RoomPanel : MonoBehaviour
 
         dataManager.BlueTeamsPlayer = blueTeamPlayerDic;
         dataManager.RedTeamsPlayer = redTeamPlayerDic;
+
+        SetCharactorAtSpot();
     }
 
     private void RenewalPlayerEntry()      // PlayerEntry 갱신
@@ -276,35 +290,37 @@ public class RoomPanel : MonoBehaviour
         PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
     }
 
-    //private void SetCharactorAtSpot()   // 보수 필요, 제작중
-    //{
-    //    int compliteBlueCount = 0;
-    //    int compliteRedCount = 0;
-
-    //    foreach (Player player in PhotonNetwork.PlayerList)
-    //    {
-    //       if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-    //        {
-    //           switch (blueTeamsCount)
-    //           {
-    //               case 1:
-
-    //                   break;
-    //               case 2:
-    //                   break;
-    //               case 3:
-    //                   break;
-    //               default:
-    //                   break;
-    //           }
-
-    //        }
-
-    //    }
+    private void SetCharactorAtSpot()   // 보수 필요, 제작중
+    {
+        int compliteSpotCount = 0;
 
 
-    //    //GameObject modeling = Instantiate(dataManager.CurCharacter.modeling)
-    //}
+        //foreach (GameObject CharactorModeling in compliteSpotCharacterList)
+        //{
+        //    if (dataManager.GetCharacter("None").characterName == CharactorModeling.name)
+        //        break;
+
+        //    Destroy(CharactorModeling.gameObject);
+        //}
+
+        compliteSpotCharacterList.Clear();
+
+        foreach (KeyValuePair<Player, Character> player in blueTeamPlayerDic)
+        {
+            //if (compliteSpotCount <= blueTeamPlayerDic.Count || dataManager.GetCharacter("None").characterName == player.Key.GetCharacterName())
+            //    return;       
+
+            compliteSpotCharacterList.Add(Instantiate(player.Value.modeling, blueTeamCharacterSpot[compliteSpotCount++].transform));
+        }
+
+        foreach (KeyValuePair<Player, Character> player in redTeamPlayerDic)
+        {
+            //if (compliteSpotCount  <= redTeamPlayerDic.Count)
+            //    return;
+
+            compliteSpotCharacterList.Add(Instantiate(player.Value.modeling, redTeamCharacterSpot[compliteSpotCount++].transform));
+        }
+    }
 
     private void SwitchLocalPlayerBlueTeam(Player player)
     {
