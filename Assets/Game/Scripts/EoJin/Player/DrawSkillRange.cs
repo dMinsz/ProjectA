@@ -20,7 +20,7 @@ public class DrawSkillRange : MonoBehaviour
     [SerializeField] List<Vector3> arcPoints;
     float time;
 
-    [HideInInspector]public Transform RotatedPos; 
+    //[HideInInspector]public Transform RotatedPos; 
 
     public void Awake()
     {
@@ -47,17 +47,11 @@ public class DrawSkillRange : MonoBehaviour
         cube.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
         cube2.GetComponent<MeshRenderer>().materials[0].SetColor("_EmissionColor", color);
 
-
-
-
-
-        RotatedPos = new GameObject("RoatateObject").transform;
     }
 
     public void Update()
     {
 
-        RotatedPos.LookAt(aim.mousepos);
 
         if (isDrawing)
         {
@@ -122,17 +116,15 @@ public class DrawSkillRange : MonoBehaviour
             cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
             cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
 
+            //cube.transform.rotation = RotatedPos.transform.rotation;
+            //cube2.transform.rotation = RotatedPos.transform.rotation;
 
-            //스킬 범위가 y=0이하로 내려가지못하게 스킬범위고정
-            Vector3 aimdir = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
 
-            // cube.transform.LookAt(aim.mousepos);  원본
-            //  cube2.transform.LookAt(aim.mousepos);  원본
-            //cube.transform.LookAt(aimdir);
-            //cube2.transform.LookAt(aimdir);
+            Vector3 newPos = new Vector3(transform.position.x, 1.5f, transform.position.z);
+            Vector3 dir = (aim.mousepos - newPos).normalized;
 
-            cube.transform.rotation = RotatedPos.transform.rotation;
-            cube2.transform.rotation = RotatedPos.transform.rotation;
+            cube.transform.forward = new Vector3(dir.x, 0, dir.z);
+            cube2.transform.forward = new Vector3(dir.x, 0, dir.z);
 
         }
 
@@ -148,10 +140,6 @@ public class DrawSkillRange : MonoBehaviour
             Vector3 dir = (aim.mousepos - newPos).normalized;
             Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
             Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
-
-            //    cube.transform.rotation = Quaternion.LookRotation(leftDir);    원본
-            //  cube2.transform.rotation = Quaternion.LookRotation(rightDir);  원본
-
 
             //rotation 말고 forward로 해도 따라가서 사용
             cube.transform.forward = new Vector3(leftDir.x, 0, leftDir.z);

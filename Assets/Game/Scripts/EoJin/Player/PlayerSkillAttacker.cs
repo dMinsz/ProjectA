@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.ProBuilder.Shapes;
 
 public class PlayerSkillAttacker : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     public void Update()
     {
-        RotatedPos.LookAt(aim.mousepos);
+       // RotatedPos.LookAt(aim.mousepos);
         //cubeForLookAt.transform.LookAt(aim.mousepos);
         //lookAtMouse = cubeForLookAt.transform.rotation;
 
@@ -273,8 +274,10 @@ public class PlayerSkillAttacker : MonoBehaviour
         Vector3 boxSize = new Vector3(additionalRange * 0.5f, 0.1f, range);
 
 
+        Vector3 newPos = new Vector3(transform.position.x, 1.5f, transform.position.z);
+        Vector3 dir = (aim.mousepos - newPos).normalized;
 
-        //var newCenter = (transform.position * (aim.attackdir.normalized))
+        RotatedPos.forward = new Vector3(dir.x, 0, dir.z);
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, RotatedPos.rotation);
         DetectObjectsCollider(colliders);
     }
@@ -289,6 +292,14 @@ public class PlayerSkillAttacker : MonoBehaviour
         Gizmos.color = Color.cyan;
 
         Vector3 boxSize = new Vector3(additionalRange, 0.1f, range * 2);
+
+
+
+        Vector3 newPos = new Vector3(transform.position.x, 1.5f, transform.position.z);
+        Vector3 dir = (aim.mousepos - newPos).normalized;
+
+        RotatedPos.forward = new Vector3(dir.x, 0, dir.z);
+
 
         Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, RotatedPos.transform.rotation, new Vector3(1f, 1f, 1f));
         Gizmos.matrix = rotationMatrix;
@@ -323,7 +334,6 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
             {
-                Debug.Log("범위내에 있음");
                 aim.Attack();
                 continue;
             }

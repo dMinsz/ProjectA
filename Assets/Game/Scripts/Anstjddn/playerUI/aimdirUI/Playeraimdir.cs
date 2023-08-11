@@ -1,19 +1,17 @@
-
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class Playeraimdir : MonoBehaviour
 {
-    [SerializeField] public PlayerAimTest playeraim;   //쓰고있으신 playeraim 으로 바꾸시면 됩니다 
+    //[SerializeField] private GameObject playerPos;
+    [SerializeField] public PlayerAim aim;   //쓰고있으신 playeraim 으로 바꾸시면 됩니다 
 
     private void Update()
     {
-        float dirx = (playeraim.mousepos.x - transform.position.x);
-        float dirz = (playeraim.mousepos.z - transform.position.z);
 
-        Vector3 dirui = new Vector3(dirx,0,dirz);
-        transform.right = dirui;
-        
+        Vector3 newPos = new Vector3(transform.position.x, 1f, transform.position.z);
+        Vector3 dir = (aim.mousepos - newPos).normalized;
+
+        transform.forward = new Vector3(dir.x, 0, dir.z);
     }
 }
