@@ -129,8 +129,12 @@ public class DrawSkillRange : MonoBehaviour
             cube2.transform.localScale = new Vector3(thickness, 0.1f, -attacker.skill.range * 0.8f);
             //localScale.z가 -인 이유는 mesh를 거꾸로 입혀서 cube를 뒤집어줘야 하기 때문
 
-            cube.transform.rotation = cubeForLookAt.transform.rotation;
-            cube2.transform.rotation = cubeForLookAt.transform.rotation;
+            Vector3 dir = (aim.mousepos - transform.position).normalized;
+            Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
+            Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
+
+            cube.transform.rotation = Quaternion.LookRotation(leftDir);
+            cube2.transform.rotation = Quaternion.LookRotation(rightDir);
         }
 
     }
