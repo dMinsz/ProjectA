@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Fiery Fist
   image: {fileID: 0}
-  effectPrefab: {fileID: 3856053376400819636, guid: 3e3354b40464a2a45a2df41015ebe20c,
+  effectPrefab: {fileID: 8711735227204697444, guid: 3bb7aa54f5bd16a488fcef36f9efba8a,
     type: 3}
-  isProjectileEffect: 1
   description: 
   key: 0
   rangeStyle: 0
@@ -26,5 +25,4 @@ MonoBehaviour:
   isDash: 0
   duration: 3
   coolTime: 2
-  playerKnockback: 1310
-  coreKnockback: 165
+  damage: 0

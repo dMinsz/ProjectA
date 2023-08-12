@@ -26,7 +26,7 @@ public class DrawSkillEffect : MonoBehaviour
             Vector3 playerNInst = startPos - effects[5].transform.position;
             Vector3 instVecButYIsZero = new Vector3(playerNInst.x, 0f, playerNInst.z);
             
-            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z))
+            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + 0.2f || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + 0.2f)
                 DestroyAllEffects();
         }
     }
