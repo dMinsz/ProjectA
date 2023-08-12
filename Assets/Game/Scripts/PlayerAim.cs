@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
-    [SerializeField] GameObject mouse;
 
     //어택범위,충돌할 레이어, 공을 미는힘
     [SerializeField] public float attacksize;
@@ -53,7 +52,7 @@ public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
 
         return mousepos;
     }
-
+    /*
     public void Attack() 
     {
         photonView.RPC("PuckAttack", RpcTarget.AllViaServer);
@@ -68,7 +67,7 @@ public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
         puck.GetComponent<Puck>().SetPos(newVelocity, puck.transform.position);
     }
 
-
+    
     private void OnAttack(InputValue Value)
     {
         photonView.RPC("ResultAttack", RpcTarget.AllViaServer, SetMousePos(), transform.position, puck.transform.position);
@@ -85,7 +84,7 @@ public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
     {
         StartCoroutine(AttackTimeing(mousePos, playerPos, puckPos));
     }
-
+    */
 
 
     // 어택 범위 설정

@@ -23,9 +23,6 @@ public class DrawSkillRange : MonoBehaviour
     Vector3 oldRotation;
     [SerializeField] List<Vector3> arcPoints;
     float time;
-    [SerializeField] public GameObject cubeForLookAt;
-    [SerializeField] public GameObject mousePosObj;
-
 
     public void Awake()
     {
@@ -52,8 +49,6 @@ public class DrawSkillRange : MonoBehaviour
 
     public void Update()
     {
-        cubeForLookAt.transform.LookAt(mousePosObj.transform);
-
         if (isDrawing)
         {
             Draw();
@@ -62,15 +57,15 @@ public class DrawSkillRange : MonoBehaviour
             SetActiveFalse();
     }
 
-    public void OnEnable()
-    {
-        attacker.OnSkillStart += SetIsDrawingTrue;
-    }
+    //public void OnEnable()
+    //{
+    //    attacker.OnSkillStart += SetIsDrawingTrue;
+    //}
 
-    public void OnDisable()
-    {
-        attacker.OnSkillStart -= SetIsDrawingTrue;
-    }
+    //public void OnDisable()
+    //{
+    //    attacker.OnSkillStart -= SetIsDrawingTrue;
+    //}
 
     public void Draw()
     {
@@ -119,8 +114,16 @@ public class DrawSkillRange : MonoBehaviour
             cube.transform.localScale = new Vector3(attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
             cube2.transform.localScale = new Vector3(-attacker.skill.additionalRange * 0.5f, 0.1f, -attacker.skill.range * 0.8f);
 
-            cube.transform.rotation = cubeForLookAt.transform.rotation;
-            cube2.transform.rotation = cubeForLookAt.transform.rotation;
+
+
+            //스킬 범위가 y=0이하로 내려가지못하게 스킬범위고정
+            Vector3 aimdir = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
+
+            // cube.transform.LookAt(aim.mousepos);  원본
+            //  cube2.transform.LookAt(aim.mousepos);  원본
+            cube.transform.LookAt(aimdir);
+            cube2.transform.LookAt(aimdir);
+
         }
 
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
@@ -133,8 +136,13 @@ public class DrawSkillRange : MonoBehaviour
             Vector3 leftDir = Quaternion.Euler(0f, attacker.skill.angle, 0f) * dir;
             Vector3 rightDir = Quaternion.Euler(0f, -attacker.skill.angle, 0f) * dir;
 
-            cube.transform.rotation = Quaternion.LookRotation(leftDir);
-            cube2.transform.rotation = Quaternion.LookRotation(rightDir);
+            //    cube.transform.rotation = Quaternion.LookRotation(leftDir);    원본
+            //  cube2.transform.rotation = Quaternion.LookRotation(rightDir);  원본
+
+
+            //rotation 말고 forward로 해도 따라가서 사용
+            cube.transform.forward = new Vector3(leftDir.x, 0, leftDir.z);
+            cube2.transform.forward = new Vector3(rightDir.x, 0, rightDir.z);
         }
 
     }
@@ -161,8 +169,14 @@ public class DrawSkillRange : MonoBehaviour
             line.GetComponent<LineRenderer>().SetPosition(i, arcPoints[i]);
         }
 
+        //  line.transform.position = transform.position;  원본
+        // line.transform.LookAt(aim.mousepos);       원본
+
+
+        //이게 부채꼴 스킬범위할때 호를 나타내는거 같긴함
+        Vector3 linerotation = new Vector3(aim.mousepos.x, transform.position.y, aim.mousepos.z);
         line.transform.position = transform.position;
-        line.transform.LookAt(aim.mousepos);
+        line.transform.LookAt(linerotation);
     }
 
     Coroutine DrawLineCoroutine;
@@ -170,23 +184,21 @@ public class DrawSkillRange : MonoBehaviour
     public void SetIsDrawingTrue()
     {
         isDrawing = true;
-        StopAllCoroutines();
-        DrawLineCoroutine = StartCoroutine(DrawLineRoutine());
+        //StopAllCoroutines();
+        //DrawLineCoroutine = StartCoroutine(DrawLineRoutine());
     }
 
     IEnumerator DrawLineRoutine()
     {
         time = 1;
-        /*
         while (attacker.skill.duration >= time)
         {
             yield return new WaitForSeconds(1f);
             Debug.Log($"{attacker.skill.skillName}이 {time}초동안 실행되는 중");
             time += 1;
         }
-        */
 
-        yield return new WaitForSeconds(attacker.skill.duration);
+        //yield return new WaitForSeconds(attacker.skill.duration);
         //while문 지우고 위 문장 주석 해지할 것
         SetIsDrawingFalse();
     }
@@ -204,4 +216,8 @@ public class DrawSkillRange : MonoBehaviour
         cube2.SetActive(false);
     }
 
+    public bool GetIsDraw()
+    {
+        return isDrawing;
+    }
 }

@@ -22,6 +22,8 @@ public class Skill : ScriptableObject
 
     [SerializeField] public string skillName;
     [SerializeField] public Sprite image;
+    [SerializeField] public GameObject effectPrefab;
+    [SerializeField] public bool isProjectileEffect; //발사체 이펙트인 지
     [SerializeField] public string description;
 
     [SerializeField] public Key key;

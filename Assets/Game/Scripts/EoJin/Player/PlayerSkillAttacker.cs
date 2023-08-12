@@ -27,9 +27,9 @@ public class PlayerSkillAttacker : MonoBehaviour
     public UnityAction OnSkillStart;
     public UnityAction<GameObject, float> OnPlayerAttack;
     [SerializeField] PlayerAimTest aim;
-    [SerializeField] public GameObject mousePosObj;
-    [SerializeField] public GameObject cubeForLookAt;
-    Quaternion lookAtMouse;
+    //[SerializeField] public GameObject mousePosObj;
+    //[SerializeField] public GameObject cubeForLookAt;
+    //Quaternion lookAtMouse;
     float time;
     float coolTimeP;
     float coolTimeS;
@@ -39,20 +39,24 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     [SerializeField] DrawSkillRange DrawRange;
     private Animator anim;
+    private Transform RotatedPos;
 
     public void Awake()
     {
         data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
         aim = gameObject.GetComponent<PlayerAimTest>();
         anim = GetComponent<Animator>();
+
+        RotatedPos = new GameObject("RoatateObjectforAttacker").transform;
     }
 
     public void Update()
     {
-        cubeForLookAt.transform.LookAt(aim.mousepos);
-        lookAtMouse = cubeForLookAt.transform.rotation;
+        RotatedPos.LookAt(aim.mousepos);
+        //cubeForLookAt.transform.LookAt(aim.mousepos);
+        //lookAtMouse = cubeForLookAt.transform.rotation;
 
-        mousePosObj.transform.position = aim.mousepos;
+        //mousePosObj.transform.position = aim.mousepos;
     }
 
     Coroutine primarySkillCoroutine;
@@ -85,7 +89,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 DrawRange.SetIsDrawingFalse();
                 primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
             }
-            else 
+            else
             {
                 isDubleClick = true;
             }
@@ -160,7 +164,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     IEnumerator skillDurationPrimary()
     {
-        
+
         yield return new WaitForSeconds(skill.duration);
         isSkillingPrimary = false;
         isPlayingSkillAnim = false;
@@ -217,7 +221,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         yield return new WaitForSeconds(skill.coolTime);
         //while문 삭제 후 아래 문장 주석 취소할 것
         //yield return new WaitForSeconds(skill.coolTime);
-        isSkillingSecondary =false;
+        isSkillingSecondary = false;
         canSkillSecondary = true;
     }
 
@@ -234,7 +238,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
         //while문 삭제 후 아래 문장 주석 취소할 것
         //yield return new WaitForSeconds(skill.coolTime);
-        isSkillingSpecial =false;
+        isSkillingSpecial = false;
         canSkillSpecial = true;
     }
 
@@ -270,8 +274,8 @@ public class PlayerSkillAttacker : MonoBehaviour
 
 
 
-
-        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, lookAtMouse);
+        //var newCenter = (transform.position * (aim.attackdir.normalized))
+        Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, RotatedPos.rotation);
         DetectObjectsCollider(colliders);
     }
 
@@ -286,11 +290,12 @@ public class PlayerSkillAttacker : MonoBehaviour
 
         Vector3 boxSize = new Vector3(additionalRange, 0.1f, range * 2);
 
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, cubeForLookAt.transform.rotation, new Vector3(1f, 1f, 1f));
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, RotatedPos.transform.rotation, new Vector3(1f, 1f, 1f));
         Gizmos.matrix = rotationMatrix;
 
         Gizmos.DrawCube(new Vector3(0f, 0f, 0f), boxSize);
     }
+
 
     private void MakeSkillRangeSectorForm()
     {
@@ -300,7 +305,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     private void DetectObjectsCollider(Collider[] colliders)
     {
-        
+
         foreach (Collider collider in colliders)
         {
             Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
@@ -331,7 +336,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 }
             }
         }
-        
+
 
     }
 
