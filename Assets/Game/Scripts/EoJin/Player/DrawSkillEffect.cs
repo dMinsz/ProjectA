@@ -7,28 +7,13 @@ using UnityEngine.ProBuilder.Shapes;
 public class DrawSkillEffect : MonoBehaviour
 {
     PlayerSkillAttacker skillAttacker;
-    [SerializeField] List<Effect> effects = new List<Effect>();
+    [SerializeField] List<GameObject> effects = new List<GameObject>();
     [SerializeField] GameObject cubeForLookAt;
+    [SerializeField] int effectsNum; //두 배가 들어감
     Vector3 startPos;
     Vector3 destination;
-
-    class Effect
-    {
-        public GameObject instance;
-        public Vector3 destination;
-        public bool isProjectile; //발사체인지 만약 발사체라면 여러개를 발사해 부채꼴로 만듦
-
-        public Effect(GameObject go, bool b) 
-        {
-            this.instance = go;
-            this.isProjectile = b;
-        }
-    }
-
     PlayerAimTest aim;
 
-    Vector3 EffectStartPos;
-  
     private void Awake()
     {
         skillAttacker = GetComponent<PlayerSkillAttacker>();
@@ -37,9 +22,9 @@ public class DrawSkillEffect : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (effects.Count > 5)
+        if (effects.Count > 0)
         {
-            Vector3 playerNInst = startPos - effects[5].instance.transform.position;
+            Vector3 playerNInst = startPos - effects[effectsNum].transform.position;
             Vector3 instVecButYIsZero = new Vector3(playerNInst.x, 0f, playerNInst.z);
             
             if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z))
@@ -51,7 +36,7 @@ public class DrawSkillEffect : MonoBehaviour
     {
         for (int i = 0; i < effects.Count; i++)
         {
-            Destroy(effects[i].instance);
+            Destroy(effects[i]);
         }
         effects.Clear();
     }
@@ -76,13 +61,12 @@ public class DrawSkillEffect : MonoBehaviour
         Vector3 dir = (transform.position - aim.mousepos);
         cubeForLookAt.transform.rotation = Quaternion.LookRotation(transform.position - aim.mousepos);
 
-        for (int i = -5; i <= 5; i++)
+        for (int i = -effectsNum; i <= effectsNum; i++)
         {
             float angle = skillAttacker.skill.angle * (0.25f * i);
             GameObject instance = Instantiate(skillAttacker.skill.effectPrefab, transform.position, cubeForLookAt.transform.rotation * Quaternion.Euler(0f, angle, 0f));
             
-            Effect effect = new Effect(instance, skillAttacker.skill.isProjectileEffect);
-            effects.Add(effect);
+            effects.Add(instance);
         }
     }
 
