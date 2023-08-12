@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 208270323584642311}
   - component: {fileID: 6053893524770355069}
   m_Layer: 7
-  m_Name: PeachFarmer
+  m_Name: Peach
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2219,7 +2219,7 @@ GameObject:
   - component: {fileID: 5336848397366454280}
   - component: {fileID: 2085280443910730354}
   m_Layer: 7
-  m_Name: Pauline (Mayor)
+  m_Name: Pauline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

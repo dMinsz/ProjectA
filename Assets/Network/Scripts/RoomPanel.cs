@@ -288,35 +288,36 @@ public class RoomPanel : MonoBehaviour
 
         PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
         PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
+
+        SetCharactorAtSpot();
     }
 
-    private void SetCharactorAtSpot()   // 보수 필요, 제작중
-    {
+    private void SetCharactorAtSpot()   // TODO : 보수 필요, Instantiate와 Destroy를 사용하는게 아닌 PoolManager, SetActive 또는 다른 디자인 패턴을 사용하는게 좋을것같음
+    {                                   // 일단은 넘어가고 다른 기능들 먼저 구현하기
         int compliteSpotCount = 0;
 
+        foreach (GameObject CharactorModeling in compliteSpotCharacterList)
+        {
+            if (CharactorModeling.name == dataManager.GetCharacter("None").characterName)
+                continue;
 
-        //foreach (GameObject CharactorModeling in compliteSpotCharacterList)
-        //{
-        //    if (dataManager.GetCharacter("None").characterName == CharactorModeling.name)
-        //        break;
-
-        //    Destroy(CharactorModeling.gameObject);
-        //}
+            Destroy(CharactorModeling.gameObject);
+        }
 
         compliteSpotCharacterList.Clear();
 
         foreach (KeyValuePair<Player, Character> player in blueTeamPlayerDic)
         {
-            //if (compliteSpotCount <= blueTeamPlayerDic.Count || dataManager.GetCharacter("None").characterName == player.Key.GetCharacterName())
-            //    return;       
+            if (dataManager.GetCharacter("None").characterName == player.Key.GetCharacterName())
+                continue;
 
             compliteSpotCharacterList.Add(Instantiate(player.Value.modeling, blueTeamCharacterSpot[compliteSpotCount++].transform));
         }
 
         foreach (KeyValuePair<Player, Character> player in redTeamPlayerDic)
         {
-            //if (compliteSpotCount  <= redTeamPlayerDic.Count)
-            //    return;
+            if (dataManager.GetCharacter("None").characterName == player.Key.GetCharacterName())
+                continue;
 
             compliteSpotCharacterList.Add(Instantiate(player.Value.modeling, redTeamCharacterSpot[compliteSpotCount++].transform));
         }

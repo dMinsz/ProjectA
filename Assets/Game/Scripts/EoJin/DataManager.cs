@@ -36,8 +36,8 @@ public class DataManager : MonoBehaviour
     [SerializeField] private Dictionary<Player, Character> blueTeamsPlayer;
     public Dictionary<Player, Character> BlueTeamsPlayer
     {
-        get {return blueTeamsPlayer; }
-        set {blueTeamsPlayer = value; }
+        get { return blueTeamsPlayer; }
+        set { blueTeamsPlayer = value; }
     }
 
     [SerializeField] private Dictionary<Player, Character> redTeamsPlayer;
