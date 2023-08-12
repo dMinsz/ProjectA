@@ -44,26 +44,32 @@ public class DataManager : MonoBehaviour
     public Dictionary<Player, Character> RedTeamsPlayer
     {
         get { return redTeamsPlayer; }
-        set 
+        set { redTeamsPlayer = value; }
+    }
+    private void Update()
+    {
+        foreach (Player player in blueTeamsPlayer.Keys)
         {
-            redTeamsPlayer = value;
-            //redPlayersForRoom.Clear();
-            //foreach (Player player in redTeamsPlayer.Keys)
-            //{
-            //    redPlayersForRoom.Add(player);
-            //}
-            
+            Debug.Log($"BlueTemasPlayer.NickName : {player.NickName}");
+            Debug.Log($"BlueTemasPlayer.GetCharacterName : {player.GetCharacterName()}");
+        }
+
+        foreach (Character character in blueTeamsPlayer.Values)
+        {
+            Debug.Log($"BlueTemasPlayer.Values.CharacterName : {character.characterName}");
+        }
+
+        foreach (Player player in redTeamsPlayer.Keys)
+        {
+            Debug.Log($"redTemasPlayer.NickName : {player.NickName}");
+            Debug.Log($"redTemasPlayer.GetCharacterName : {player.GetCharacterName()}");
+        }
+
+        foreach (Character character in redTeamsPlayer.Values)
+        {
+            Debug.Log($"redTemasPlayer.Values.CharacterName : {character.characterName}");
         }
     }
-
-    //private void Update()
-    //{
-    //    Debug.Log(redPlayersForRoom.Count);
-    //}
-
-    //private List<Player> bluePlayersForRoom;
-
-    //private List<Player> redPlayersForRoom = new List<Player>();
 
     //[SerializeField] public Avatar[] avatars;
     //[SerializeField] public AnimatorController[] animators;

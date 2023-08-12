@@ -1,10 +1,13 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomPanel : MonoBehaviour
@@ -22,14 +25,16 @@ public class RoomPanel : MonoBehaviour
     //[SerializeField] TMP_Text[] CharacterName;
 
     private DataManager dataManager;
-    private int blueTeamsCount;
-    private int redTeamsCount;
-    private int maxBlueTeamsCount;
-    private int maxRedTeamsCount;
+    private int blueTeamCount;
+    private int redTeamCount;
+    private int maxBlueTeamCount;
+    private int maxRedTeamCount;
 
     private Dictionary<int, PlayerEntry> playerDictionary;
     private Dictionary<Player, Character> blueTeamPlayerDic;
     private Dictionary<Player, Character> redTeamPlayerDic;
+    private List<string> blueTeamPlayerNameList;
+    private List<string> redTeamPlayerNameList;
     private List<GameObject> compliteSpotCharacterList;
 
     private void Awake()
@@ -39,26 +44,53 @@ public class RoomPanel : MonoBehaviour
         //playerCharacterModeling = new Dictionary<int, GameObject>();      // playerDictionary랑 합치는게 좋을듯
         blueTeamPlayerDic = new Dictionary<Player, Character>();            // TeamManager 쓰면 안만들고 TeamManager의 함수 쓰면 됨
         redTeamPlayerDic = new Dictionary<Player, Character>();
+        blueTeamPlayerNameList = new List<string>();                        // CurrnetRoom 의 CustomProperty 와 동기화 할 때 쓰는 놈
+        redTeamPlayerNameList = new List<string>();
         compliteSpotCharacterList = new List<GameObject>();
     }
 
     private void OnEnable()
     {
-        foreach (Player player in PhotonNetwork.PlayerList)     // 팀별로 구분
+        blueTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList());
+        redTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetRedTeamPlayerList());
+
+        //foreach (Player player in PhotonNetwork.PlayerList)     // 팀별로 구분
+        //{
+        //    PlayerEntry entry;
+
+        //    if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+        //    {
+        //        entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
+        //        blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+        //        blueTeamPlayerNameList.Add(player.NickName);
+        //    }
+        //    else
+        //    {
+        //        entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
+        //        redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+        //        redTeamPlayerNameList.Add(player.NickName);
+        //    }
+
+        //    entry.SetPlayer(player);
+        //    playerDictionary.Add(player.ActorNumber, entry);
+        //}
+
+        foreach (string playerName in blueTeamPlayerNameList)
         {
+            Player player = PhotonNetwork.CurrentRoom.Players.Values.FirstOrDefault(player => player.NickName == playerName);
             PlayerEntry entry;
 
-            if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-            {
-                entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
-                blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-            }
-            else
-            {
-                entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
-                redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-            }
+            entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
+            entry.SetPlayer(player);
+            playerDictionary.Add(player.ActorNumber, entry);
+        }
 
+        foreach (string playerName in redTeamPlayerNameList)
+        {
+            Player player = PhotonNetwork.CurrentRoom.Players.Values.FirstOrDefault(player => player.NickName == playerName);
+            PlayerEntry entry;
+
+            entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
             entry.SetPlayer(player);
             playerDictionary.Add(player.ActorNumber, entry);
         }
@@ -69,11 +101,11 @@ public class RoomPanel : MonoBehaviour
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
         RenewalPlayerEntry();
-        maxBlueTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
-        maxRedTeamsCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
+        maxBlueTeamCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
+        maxRedTeamCount = PhotonNetwork.CurrentRoom.MaxPlayers / 2;
         GameTypeText();
-        PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
-        PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
+        PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamCount);
+        PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamCount);
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
@@ -87,7 +119,10 @@ public class RoomPanel : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetTeamColor(0);
         playerDictionary.Clear();
         blueTeamPlayerDic.Clear();
+        blueTeamPlayerNameList.Clear();
         redTeamPlayerDic.Clear();
+        redTeamPlayerNameList.Clear();
+
         foreach (GameObject characterModeling in compliteSpotCharacterList)
         {
             Destroy(characterModeling.gameObject);
@@ -108,7 +143,7 @@ public class RoomPanel : MonoBehaviour
         if (newPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
         {
             entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
-            //blueTeamPlayerDic.Add(newPlayer.NickName, dataManager.SetCharacter(newPlayer.GetCharacterName()));
+            //blueTeamPlayerDic.Add(newPlayer.NickName, dataManager.SetCharacter(newPlayer.GetCharacterName()));    // 아마도 none일거임, 확인필요
         }
         else
         {
@@ -120,21 +155,27 @@ public class RoomPanel : MonoBehaviour
         playerDictionary.Add(newPlayer.ActorNumber, entry);
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
-        SetCharactorAtSpot();
+        RenewalPlayerEntry();
     }
 
     public void PlayerLeftRoom(Player otherPlayer)
     {
         if (otherPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+        {
             blueTeamPlayerDic.Remove(otherPlayer);
+            blueTeamPlayerNameList.Remove(otherPlayer.NickName);
+        }
         else
+        {
             redTeamPlayerDic.Remove(otherPlayer);
+            redTeamPlayerNameList.Remove(otherPlayer.NickName);
+        }
 
         Destroy(playerDictionary[otherPlayer.ActorNumber].gameObject);
         playerDictionary.Remove(otherPlayer.ActorNumber);
         AllPlayerTeamCheck();
         AllPlayerReadyCheck();
-        SetCharactorAtSpot();
+        RenewalPlayerEntry();
     }
 
     public void PlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
@@ -142,7 +183,11 @@ public class RoomPanel : MonoBehaviour
         playerDictionary[targetPlayer.ActorNumber].ChangeCustomProperty(changedProps);
 
         if (changedProps.ContainsKey(CustomProperty.TEAM))
+        {
             RenewalPlayerEntry();
+            //PhotonNetwork.CurrentRoom.SetBlueTeamPlayerList(blueTeamPlayerNameList);
+            //PhotonNetwork.CurrentRoom.SetRedTeamPlayerList(redTeamPlayerNameList);
+        }
 
         if (changedProps.ContainsKey(CustomProperty.CHARACTERNAME))
         {
@@ -226,23 +271,43 @@ public class RoomPanel : MonoBehaviour
 
     private void AllPlayerTeamCheck()     // 팀별 Player 수
     {
-        blueTeamsCount = 0;
-        redTeamsCount = 0;
+        blueTeamCount = 0;
+        redTeamCount = 0;
         blueTeamPlayerDic.Clear();    // 싹 초기화하고 다시 만드는것보다는 TeamCheck 밖에서 각 항목을 삭제, 추가하는게 좋을것같음, 근데 어짜피 Renewal에서 기존 dic을 초기화 시켜주는데 걍 통일시키자
         redTeamPlayerDic.Clear();
+        blueTeamPlayerNameList.Clear();
+        redTeamPlayerNameList.Clear();
 
-        foreach (Player player in PhotonNetwork.PlayerList)
+        //foreach (Player player in PhotonNetwork.PlayerList)
+        //{
+        //    if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
+        //    {
+        //        ++blueTeamCount;
+        //        blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+        //        blueTeamPlayerNameList.Add(player.NickName);
+        //    }
+        //    else
+        //    {
+        //        ++redTeamCount;
+        //        redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+        //        redTeamPlayerNameList.Add(player.NickName);
+        //    }
+        //}
+
+        blueTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList());
+        foreach (string playerName in blueTeamPlayerNameList)
         {
-            if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-            {
-                ++blueTeamsCount;
-                blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-            }
-            else
-            {
-                ++redTeamsCount;
-                redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-            }
+            ++blueTeamCount;
+            Player player = PhotonNetwork.CurrentRoom.Players.Values.FirstOrDefault(player => player.NickName == playerName);
+            blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+        }
+
+        redTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetRedTeamPlayerList());
+        foreach (string playerName in redTeamPlayerNameList)
+        {
+            ++redTeamCount;
+            Player player = PhotonNetwork.CurrentRoom.Players.Values.FirstOrDefault(player => player.NickName == playerName);
+            redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
         }
 
         dataManager.BlueTeamsPlayer = blueTeamPlayerDic;
@@ -253,8 +318,8 @@ public class RoomPanel : MonoBehaviour
 
     private void RenewalPlayerEntry()      // PlayerEntry 갱신
     {
-        blueTeamsCount = 0;
-        redTeamsCount = 0;
+        blueTeamCount = 0;
+        redTeamCount = 0;
 
         foreach (PlayerEntry playerEntry in playerDictionary.Values)    // PlayerEntry 초기화 후 재생성
         {
@@ -264,6 +329,8 @@ public class RoomPanel : MonoBehaviour
         playerDictionary.Clear();
         blueTeamPlayerDic.Clear();
         redTeamPlayerDic.Clear();
+        blueTeamPlayerNameList.Clear();
+        redTeamPlayerNameList.Clear();
 
         foreach (Player player in PhotonNetwork.PlayerList)
         {
@@ -271,13 +338,13 @@ public class RoomPanel : MonoBehaviour
 
             if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
             {
-                ++blueTeamsCount;
+                ++blueTeamCount;
                 entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
                 blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
             }
             else
             {
-                ++redTeamsCount;
+                ++redTeamCount;
                 entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
                 redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
             }
@@ -286,8 +353,34 @@ public class RoomPanel : MonoBehaviour
             playerDictionary.Add(player.ActorNumber, entry);
         }
 
-        PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamsCount);
-        PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamsCount);
+        blueTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList());
+        foreach (string playerName in blueTeamPlayerNameList)
+        {
+            ++blueTeamCount;
+            Player player = PhotonNetwork.CurrentRoom.Players.Values.FirstOrDefault(player => player.NickName == playerName);
+            PlayerEntry entry;
+            entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
+            entry.SetPlayer(player);
+            blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+            playerDictionary.Add(player.ActorNumber, entry);
+        }
+
+        redTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetRedTeamPlayerList());
+        foreach (string playerName in redTeamPlayerNameList)
+        {
+            ++redTeamCount;
+            Player player = PhotonNetwork.CurrentRoom.Players.Values.FirstOrDefault(player => player.NickName == playerName);
+            PlayerEntry entry;
+            entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
+            entry.SetPlayer(player);
+            redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+            playerDictionary.Add(player.ActorNumber, entry);
+        }
+
+        PhotonNetwork.CurrentRoom.SetBlueTeamsCount(blueTeamCount);
+        PhotonNetwork.CurrentRoom.SetRedTeamsCount(redTeamCount);
+        PhotonNetwork.CurrentRoom.SetBlueTeamPlayerList(blueTeamPlayerNameList);
+        PhotonNetwork.CurrentRoom.SetRedTeamPlayerList(redTeamPlayerNameList);
 
         SetCharactorAtSpot();
     }
@@ -299,7 +392,9 @@ public class RoomPanel : MonoBehaviour
         foreach (GameObject CharactorModeling in compliteSpotCharacterList)
         {
             if (CharactorModeling.name == dataManager.GetCharacter("None").characterName)
+            {
                 continue;
+            }
 
             Destroy(CharactorModeling.gameObject);
         }
@@ -309,15 +404,23 @@ public class RoomPanel : MonoBehaviour
         foreach (KeyValuePair<Player, Character> player in blueTeamPlayerDic)
         {
             if (dataManager.GetCharacter("None").characterName == player.Key.GetCharacterName())
+            {
+                compliteSpotCount++;
                 continue;
+            }
 
             compliteSpotCharacterList.Add(Instantiate(player.Value.modeling, blueTeamCharacterSpot[compliteSpotCount++].transform));
         }
 
+        compliteSpotCount = 0;
+
         foreach (KeyValuePair<Player, Character> player in redTeamPlayerDic)
         {
             if (dataManager.GetCharacter("None").characterName == player.Key.GetCharacterName())
+            {
+                compliteSpotCount++;
                 continue;
+            }
 
             compliteSpotCharacterList.Add(Instantiate(player.Value.modeling, redTeamCharacterSpot[compliteSpotCount++].transform));
         }
@@ -325,7 +428,7 @@ public class RoomPanel : MonoBehaviour
 
     private void SwitchLocalPlayerBlueTeam(Player player)
     {
-        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue || player.GetReady() || blueTeamsCount >= maxBlueTeamsCount)
+        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue || player.GetReady() || blueTeamCount >= maxBlueTeamCount)
             return;
 
         player.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
@@ -335,7 +438,7 @@ public class RoomPanel : MonoBehaviour
 
     private void SwitchLocalPlayerRedTeam(Player player)
     {
-        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red || player.GetReady() || redTeamsCount >= maxRedTeamsCount)
+        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red || player.GetReady() || redTeamCount >= maxRedTeamCount)
             return;
 
         player.SetTeamColor((int)PlayerEntry.TeamColor.Red);
