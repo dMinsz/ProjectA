@@ -499,10 +499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe867d101352114d819d42e8e553f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectileEffectPrefab: {fileID: 3856053376400819636, guid: 3e3354b40464a2a45a2df41015ebe20c,
-    type: 3}
   effects: []
   cubeForLookAt: {fileID: 1007119312}
+  effectsNum: 5
 --- !u!1 &1970743906
 GameObject:
   m_ObjectHideFlags: 0
