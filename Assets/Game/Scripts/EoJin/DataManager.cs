@@ -48,27 +48,27 @@ public class DataManager : MonoBehaviour
     }
     private void Update()
     {
-        foreach (Player player in blueTeamsPlayer.Keys)
-        {
-            Debug.Log($"BlueTemasPlayer.NickName : {player.NickName}");
-            Debug.Log($"BlueTemasPlayer.GetCharacterName : {player.GetCharacterName()}");
-        }
+        //foreach (Player player in blueTeamsPlayer.Keys)
+        //{
+        //    Debug.Log($"BlueTemasPlayer.NickName : {player.NickName}");
+        //    Debug.Log($"BlueTemasPlayer.GetCharacterName : {player.GetCharacterName()}");
+        //}
 
-        foreach (Character character in blueTeamsPlayer.Values)
-        {
-            Debug.Log($"BlueTemasPlayer.Values.CharacterName : {character.characterName}");
-        }
+        //foreach (Character character in blueTeamsPlayer.Values)
+        //{
+        //    Debug.Log($"BlueTemasPlayer.Values.CharacterName : {character.characterName}");
+        //}
 
-        foreach (Player player in redTeamsPlayer.Keys)
-        {
-            Debug.Log($"redTemasPlayer.NickName : {player.NickName}");
-            Debug.Log($"redTemasPlayer.GetCharacterName : {player.GetCharacterName()}");
-        }
+        //foreach (Player player in redTeamsPlayer.Keys)
+        //{
+        //    Debug.Log($"redTemasPlayer.NickName : {player.NickName}");
+        //    Debug.Log($"redTemasPlayer.GetCharacterName : {player.GetCharacterName()}");
+        //}
 
-        foreach (Character character in redTeamsPlayer.Values)
-        {
-            Debug.Log($"redTemasPlayer.Values.CharacterName : {character.characterName}");
-        }
+        //foreach (Character character in redTeamsPlayer.Values)
+        //{
+        //    Debug.Log($"redTemasPlayer.Values.CharacterName : {character.characterName}");
+        //}
     }
 
     //[SerializeField] public Avatar[] avatars;
