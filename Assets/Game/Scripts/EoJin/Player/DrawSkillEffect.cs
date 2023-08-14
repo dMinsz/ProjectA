@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 
-public class DrawSkillEffect : MonoBehaviour
+public class DrawSkillEffect : MonoBehaviourPun
 {
     PlayerSkillAttacker skillAttacker;
     List<GameObject> effects = new List<GameObject>();
@@ -41,31 +42,54 @@ public class DrawSkillEffect : MonoBehaviour
         effects.Clear();
     }
 
-    public void OnEnable()
-    {
-        skillAttacker.OnSkillStart += EffectStart;
-    }
+    //public void OnEnable()
+    //{
+    //    skillAttacker.OnSkillStart += EffectStart;
+    //}
 
-    public void OnDisable()
-    {
-        skillAttacker.OnSkillStart -= EffectStart;
-    }
+    //public void OnDisable()
+    //{
+    //    skillAttacker.OnSkillStart -= EffectStart;
+    //}
 
     Coroutine destroyRoutine;
-    private void EffectStart()
+    public void EffectStart(int skillnum , Vector3 mousePos) // 0 == primary, 1 == secondory, 2 == special skill
     {
-        startPos = transform.position;
-        Vector3 playerNmouse = (startPos - aim.mousepos).normalized;
-        destination = playerNmouse * skillAttacker.skill.range;
+        //object[] skilldata = new object[] { skill.skillName };
+        photonView.RPC("RequestEffectStart", RpcTarget.AllViaServer, skillnum, mousePos);
+    }
 
-        Vector3 dir = (transform.position - aim.mousepos);
-        var effectRotation = Quaternion.LookRotation(transform.position - aim.mousepos);
+    [PunRPC]
+    private void RequestEffectStart(int skillnum, Vector3 mousePos) 
+    {
+        var skill = GameManager.Data.CurCharacter.primarySkill;
+        switch (skillnum)
+        {
+            case 0:
+                skill = GameManager.Data.CurCharacter.primarySkill;
+                break;
+            case 1:
+                skill = GameManager.Data.CurCharacter.secondarySkill;
+                break;
+            case 2:
+                skill = GameManager.Data.CurCharacter.specialSkill;
+                break;
+            default:
+                break;
+        }
+
+        startPos = transform.position;
+        Vector3 playerNmouse = (startPos - mousePos).normalized;
+        destination = playerNmouse * skill.range;
+
+        Vector3 dir = (transform.position - mousePos);
+        var effectRotation = Quaternion.LookRotation(transform.position - mousePos);
 
         for (int i = -10; i <= 10; i++)
         {
-            float angle = skillAttacker.skill.angle * (0.1f * i);
-            GameObject instance = Instantiate(skillAttacker.skill.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
-            
+            float angle = skill.angle * (0.1f * i);
+            GameObject instance = Instantiate(skill.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
+
             effects.Add(instance);
         }
     }

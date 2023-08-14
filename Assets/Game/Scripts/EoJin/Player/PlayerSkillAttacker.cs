@@ -100,7 +100,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 anim.SetTrigger("Primary");
                 canSkillPrimary = false;
                 isSkillingPrimary = true;
-                ApplyDamage(damage);
+                ApplyDamage(damage , 0 , aim.mousepos);
 
                 isQDubleClick = false;
                 DrawRange.SetIsDrawingFalse();
@@ -138,7 +138,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 anim.SetTrigger("Secondary");
                 canSkillSecondary = false;
                 isSkillingSecondary = true;
-                ApplyDamage(damage);
+                ApplyDamage(damage,1, aim.mousepos);
 
                 isEDubleClick = false;
 
@@ -175,7 +175,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 anim.SetTrigger("Special");
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
-                ApplyDamage(damage);
+                ApplyDamage(damage,2, aim.mousepos);
                 //½ÇÇè
                 playerdash.Dash();
                 isRDubleClick = false;
@@ -272,9 +272,12 @@ public class PlayerSkillAttacker : MonoBehaviour
         canSkillSpecial = true;
     }
 
-    public void ApplyDamage(int damage)
+    public void ApplyDamage(int damage , int skillnum , Vector3 mousepos)
     {
         OnSkillStart?.Invoke();
+
+
+        GetComponent<DrawSkillEffect>().EffectStart(skillnum,mousepos);
 
         if (skill == null)
             return;
@@ -363,7 +366,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
             {
-                aim.Attack();
+                aim.Attack(aim.attackdir);
                 continue;
             }
 

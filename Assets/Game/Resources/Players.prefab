@@ -18,13 +18,13 @@ GameObject:
   - component: {fileID: 4333708700515693147}
   - component: {fileID: 4333708700515693148}
   - component: {fileID: 4333708700515693149}
+  - component: {fileID: 772755358635208740}
   - component: {fileID: 8901243723686962404}
   - component: {fileID: 642174371665875607}
   - component: {fileID: 1812366848497588796}
   - component: {fileID: 8694239420522866147}
   - component: {fileID: 1825931157103470107}
   - component: {fileID: 8115375228466044405}
-  - component: {fileID: 772755358635208740}
   - component: {fileID: 4654266938500106729}
   m_Layer: 6
   m_Name: Players
@@ -69,7 +69,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2d08fb3d8744f324e905ffd826df01b3, type: 3}
   m_Controller: {fileID: 9100000, guid: 7059a0a09fbcb1e438cc5aca812c3c15, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -232,6 +232,18 @@ MonoBehaviour:
   color: {r: 0.54494524, g: 1, b: 0, a: 0}
   segments: 50
   arcPoints: []
+--- !u!114 &772755358635208740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3794264224922478712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbe867d101352114d819d42e8e553f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8901243723686962404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,18 +389,6 @@ MonoBehaviour:
   playerdashing: 0
   dashskill: {fileID: 4333708700515693145}
   dashdir: {x: 0, y: 0, z: 0}
---- !u!114 &772755358635208740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3794264224922478712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe867d101352114d819d42e8e553f01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4654266938500106729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: Blend
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: move
   - Type: 9
     SynchronizeType: 1

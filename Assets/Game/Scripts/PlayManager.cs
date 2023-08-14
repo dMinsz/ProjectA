@@ -120,6 +120,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
             player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", "Mario");
 
+            GameManager.Data.ChangeCharacter("Mario");
+
             pPlayerList.Add(player);
 
             object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
@@ -130,11 +132,9 @@ public class PlayManager : MonoBehaviourPunCallbacks
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
             var player = PhotonNetwork.Instantiate("Players", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
 
-            
-
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
             player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Debug2", "Mario");
-            
+            GameManager.Data.ChangeCharacter("Mario");
             pPlayerList.Add(player);
 
             object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };

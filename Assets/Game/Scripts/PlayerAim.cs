@@ -53,15 +53,15 @@ public class PlayerAim : MonoBehaviourPun //, IPunInstantiateMagicCallback
         return mousepos;
     }
 
-    public void Attack()
+    public void Attack(Vector3 attackDir)
     {
-        photonView.RPC("PuckAttack", RpcTarget.AllViaServer);
+        photonView.RPC("PuckAttack", RpcTarget.AllViaServer, attackDir);
     }
 
     [PunRPC]
-    private void PuckAttack()
+    private void PuckAttack(Vector3 _attackDir)
     {
-        Vector3 dir = attackdir.normalized;
+        Vector3 dir = _attackDir.normalized;
         Vector3 newVelocity = dir * attackpower;
 
         puck.GetComponent<Puck>().SetPos(newVelocity, puck.transform.position);
