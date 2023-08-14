@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.TextCore.Text;
 
 public class PlayerSkillAttacker : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class PlayerSkillAttacker : MonoBehaviour
      */
 
     public Skill skill;
-    DataManager data;
     [SerializeField] bool debug;
     [SerializeField] float control; //플레이어 위치에서 얼마나 떨어진 거리에서 어택 범위 발동할 지
      public float range;
@@ -42,15 +42,24 @@ public class PlayerSkillAttacker : MonoBehaviour
     //실험
     public playercontroll playerdash;
 
-
+    private Character curCharacter;
 
     public void Awake()
     {
-        data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
         aim = gameObject.GetComponent<PlayerAim>();
         anim = GetComponent<Animator>();
 
         RotatedPos = new GameObject("RoatateObjectforAttacker").transform;
+
+
+        if (GameManager.Data.CurCharacter == null)
+        {//for debug
+            curCharacter = GameManager.Data.characters[1];
+        }
+        else
+        {
+            curCharacter = GameManager.Data.CurCharacter;
+        }
     }
 
     public void Update()
@@ -77,7 +86,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (canSkillPrimary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
 
-            skill = data.CurCharacter.primarySkill;
+            skill = curCharacter.primarySkill;
             aim.attacksize = skill.range;
 
 
@@ -113,7 +122,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (canSkillSecondary) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
 
-            skill = data.CurCharacter.secondarySkill;
+            skill = curCharacter.secondarySkill;
             aim.attacksize = skill.range;
 
 
@@ -149,7 +158,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         if (canSkillSpecial) //한 skill이 발동되는 동안 다른 skill을 못 쓰게 막음
         {
 
-            skill = data.CurCharacter.specialSkill;
+            skill = curCharacter.specialSkill;
             aim.attacksize = skill.range;
 
             DrawRange.SetIsDrawingTrue();
