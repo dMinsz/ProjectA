@@ -20,39 +20,12 @@ public class PlayerCharacter : MonoBehaviour
         { // for debug mode
             ChangeCharacter("Mario");
         }
-        else 
+        else
         {
             ChangeCharacter(PhotonNetwork.LocalPlayer.GetCharacterName());
         }
 
     }
-
-    
-    //public void OnEnable()
-    //{
-    //    data.OnChangeCharacter += ChangePlayerableCharacter;
-    //}
-
-    //public void OnDisable()
-    //{
-    //    data.OnChangeCharacter -= ChangePlayerableCharacter;
-    //}
-
-    //public void ChangePlayerableCharacter()
-    //{
-    //    character = data.CurCharacter;
-
-    //    for (int i = 0; i < charactersObj.transform.childCount; i++)
-    //    {
-    //        if (charactersObj.transform.GetChild(i).name == data.CurCharacter.characterName)
-    //            charactersObj.transform.GetChild(i).gameObject.SetActive(true);
-    //        else
-    //            charactersObj.transform.GetChild(i).gameObject.SetActive(false);
-    //    }
-
-    //    anim.avatar = data.CurCharacter.avatar;
-    //    anim.runtimeAnimatorController = data.CurCharacter.animator;
-    //}
 
     public void ChangeCharacter(string name) 
     {

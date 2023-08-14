@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +8,7 @@ using UnityEngine.Events;
 
 public class PlayerState : MonoBehaviour
 {
-    [SerializeField] public Character character;
+    private Character character;
     public float playercurhp;
     public float playermaxhp;
     [SerializeField] private UnityEvent ondied;
@@ -17,6 +18,13 @@ public class PlayerState : MonoBehaviour
     public UnityAction die;
     private void Awake()
     {
+        character = GameManager.Data.CurCharacter;
+
+        if (character == null)
+        {
+            character = GameManager.Data.characters[1];//mario
+        }
+
         playermaxhp = character.stat.hp;
         playercurhp = playermaxhp;
         anim = GetComponent<Animator>();

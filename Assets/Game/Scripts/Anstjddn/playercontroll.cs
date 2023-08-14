@@ -20,16 +20,16 @@ public class playercontroll : MonoBehaviour
     [SerializeField] PlayerAim playerat;
 
 
-        public Vector2 playerdir;
+    public Vector2 playerdir;
 
-        public bool playerdashing = false;
+    public bool playerdashing = false;
 
 
 
     //대쉬 어택 할때 조건 받을려고넣어둠
     public PlayerSkillAttacker dashskill;
 
-        public Vector3 dashdir;
+    public Vector3 dashdir;
 
     private void Awake()
     {
@@ -39,8 +39,8 @@ public class playercontroll : MonoBehaviour
 
     }
 
-        private void Update()                          
-        {
+    private void Update()
+    {
         if (playerdashing)
         {
             return;
@@ -48,16 +48,16 @@ public class playercontroll : MonoBehaviour
 
         if (!playerat.isattack)
         {
-                 Move();
-                 Look();
+            Move();
+            Look();
         }
         else
         {
-                //플레이어 어택할때마다 숙이는거 수정
-                Vector3 aimpos = new Vector3(playerat.attackdir.x, transform.position.y, playerat.attackdir.z);
-               transform.LookAt(aimpos);
-                Move();
-            }
+            //플레이어 어택할때마다 숙이는거 수정
+            Vector3 aimpos = new Vector3(playerat.attackdir.x, transform.position.y, playerat.attackdir.z);
+            transform.LookAt(aimpos);
+            Move();
+        }
 
         if (playerrb.velocity == new Vector3(0, 0, 0))
         {
@@ -73,10 +73,10 @@ public class playercontroll : MonoBehaviour
         }
 
     }
-        private void Move()
-        {
-          
-            playerrb.velocity = new Vector3(movedir.z* movespeed, 0, -movedir.x * movespeed);
+    private void Move()
+    {
+
+        playerrb.velocity = new Vector3(movedir.z * movespeed, 0, -movedir.x * movespeed);
 
     }
     private void Look()                     //기존에 무비에 던 바라보는 방향 수정
@@ -95,33 +95,33 @@ public class playercontroll : MonoBehaviour
             movedir.x = Value.Get<Vector2>().x;
             movedir.z = Value.Get<Vector2>().y;
         }
-        
+
     }
-        public void Dash()
-        {
+    public void Dash()
+    {
         playerrb.velocity = Vector3.zero;
         dashdir = playerat.mousepos;
-           transform.LookAt(dashdir);
+        transform.LookAt(dashdir);
 
         Vector3 dashDistance = (playerat.mousepos - transform.position); //거리
         float dashDistanceSquare = dashDistance.sqrMagnitude; //거리제곱
 
-        if (dashDistanceSquare< dashskill.range* dashskill.range)    //스킬 범위 안에 있을때 움직이게
-        {                                                         
-            StartCoroutine(PlayerSkillRangeDash(playerat.mousepos,0.05f));
+        if (dashDistanceSquare < dashskill.range * dashskill.range)    //스킬 범위 안에 있을때 움직이게
+        {
+            StartCoroutine(PlayerSkillRangeDash(playerat.mousepos, 0.05f));
 
         }
         else                    //스킬범위 바깥일때
         {
 
-            float x =(playerat.mousepos.x - transform.position.x);
+            float x = (playerat.mousepos.x - transform.position.x);
             float z = (playerat.mousepos.z - transform.position.z);
-             Vector3 dir = new Vector3(x, 0, z).normalized;
+            Vector3 dir = new Vector3(x, 0, z).normalized;
             Vector3 destination = transform.position;
-            destination+= new Vector3(dir.x * dashskill.range, 0, dir.z * dashskill.range);
-            StartCoroutine(PlayerSkillRangeDash(destination,0.1f));
+            destination += new Vector3(dir.x * dashskill.range, 0, dir.z * dashskill.range);
+            StartCoroutine(PlayerSkillRangeDash(destination, 1f));
         }
-        }
+    }
 
     IEnumerator PlayerSkillRangeDash(Vector3 destination, float dashspeed)
     {
@@ -129,14 +129,19 @@ public class playercontroll : MonoBehaviour
         float distance = Mathf.Abs(Vector3.Distance(transform.position, destination));
         while (distance > 0.1f)
         {
-            distance = Mathf.Abs(Vector3.Distance(transform.position,destination));
+            distance = Mathf.Abs(Vector3.Distance(transform.position, destination));
             float xspeed = destination.x - transform.position.x;
             float zspeed = destination.z - transform.position.z;
             Vector3 dashdirspeed = new Vector3(xspeed, 0, zspeed).normalized * dashspeed;
             transform.position += dashdirspeed;
             yield return null;
         }
-        playerdashing = false;
+
+        if (distance < 0.1f)
+        {
+            playerdashing = false;
+        }
+
     }
 
- }
+}

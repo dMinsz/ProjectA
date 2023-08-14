@@ -88,7 +88,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             skill = curCharacter.primarySkill;
             aim.attacksize = skill.range;
-
+            var damage = curCharacter.secondarySkill.damage;
 
             DrawRange.SetIsDrawingTrue();
 
@@ -100,7 +100,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 anim.SetTrigger("Primary");
                 canSkillPrimary = false;
                 isSkillingPrimary = true;
-                ApplyDamage();
+                ApplyDamage(damage);
 
                 isQDubleClick = false;
                 DrawRange.SetIsDrawingFalse();
@@ -125,6 +125,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             skill = curCharacter.secondarySkill;
             aim.attacksize = skill.range;
 
+            var damage = curCharacter.secondarySkill.damage;
 
             DrawRange.SetIsDrawingTrue();
 
@@ -137,7 +138,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 anim.SetTrigger("Secondary");
                 canSkillSecondary = false;
                 isSkillingSecondary = true;
-                ApplyDamage();
+                ApplyDamage(damage);
 
                 isEDubleClick = false;
 
@@ -161,6 +162,8 @@ public class PlayerSkillAttacker : MonoBehaviour
             skill = curCharacter.specialSkill;
             aim.attacksize = skill.range;
 
+            var damage = curCharacter.specialSkill.damage;
+
             DrawRange.SetIsDrawingTrue();
 
             isQDubleClick = false;
@@ -172,7 +175,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 anim.SetTrigger("Special");
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
-                ApplyDamage();
+                ApplyDamage(damage);
                 //실험
                 playerdash.Dash();
                 isRDubleClick = false;
@@ -269,7 +272,7 @@ public class PlayerSkillAttacker : MonoBehaviour
         canSkillSpecial = true;
     }
 
-    public void ApplyDamage()
+    public void ApplyDamage(int damage)
     {
         OnSkillStart?.Invoke();
 
@@ -287,13 +290,13 @@ public class PlayerSkillAttacker : MonoBehaviour
         additionalRange = skill.additionalRange;
 
         if (skill.rangeStyle == Skill.RangeStyle.Square)
-            MakeSkillRangeSquareForm();
+            MakeSkillRangeSquareForm(damage);
         else
-            MakeSkillRangeSectorForm();
+            MakeSkillRangeSectorForm(damage);
 
     }
 
-    private void MakeSkillRangeSquareForm()
+    private void MakeSkillRangeSquareForm(int damage)
     {
         float angle = Vector3.Angle(transform.position, aim.mousepos);
         //additionalRange에 float를 곱해주며 스킬범위 민감도 설정가능
@@ -305,7 +308,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
         RotatedPos.forward = new Vector3(dir.x, 0, dir.z);
         Collider[] colliders = Physics.OverlapBox(gameObject.transform.position, boxSize, RotatedPos.rotation);
-        DetectObjectsCollider(colliders);
+        DetectObjectsCollider(colliders,damage);
     }
 
     private void OnDrawGizmos()
@@ -334,13 +337,13 @@ public class PlayerSkillAttacker : MonoBehaviour
     }
 
 
-    private void MakeSkillRangeSectorForm()
+    private void MakeSkillRangeSectorForm(int damage)
     {
         Collider[] colliders = Physics.OverlapSphere(gameObject.transform.position, skill.range);
-        DetectObjectsCollider(colliders);
+        DetectObjectsCollider(colliders,damage);
     }
 
-    private void DetectObjectsCollider(Collider[] colliders)
+    private void DetectObjectsCollider(Collider[] colliders , int damage)
     {
         
         foreach (Collider collider in colliders)
@@ -366,11 +369,10 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (collider.gameObject.tag == "Player")
             {
-                Debug.Log("player Detect");
-                //if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
-                //{
-                //    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration);
-                //}
+                if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
+                {
+                    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration , damage);
+                }
             }
         }
         

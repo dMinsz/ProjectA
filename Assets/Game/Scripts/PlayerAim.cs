@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
+public class PlayerAim : MonoBehaviourPun //, IPunInstantiateMagicCallback
 {
 
     //어택범위,충돌할 레이어, 공을 미는힘
@@ -114,16 +114,16 @@ public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
     }
 
 
-    public void OnPhotonInstantiate(PhotonMessageInfo info)
-    {
-        object[] instantiationData = info.photonView.InstantiationData;
-        int puckViewID = (int)instantiationData[0];
+    //public void OnPhotonInstantiate(PhotonMessageInfo info)
+    //{
+    //    object[] instantiationData = info.photonView.InstantiationData;
+    //    int puckViewID = (int)instantiationData[0];
 
-        var puckview = PhotonView.Find(puckViewID);
+    //    var puckview = PhotonView.Find(puckViewID);
 
-        puck = puckview.gameObject;
+    //    puck = puckview.gameObject;
 
-    }
+    //}
 
 
 }

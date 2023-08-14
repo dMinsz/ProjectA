@@ -1,14 +1,11 @@
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerSetup : MonoBehaviourPun
+public class PlayerSetup : MonoBehaviourPun, IPunInstantiateMagicCallback
 {
     public cameraHpbar hpSlider;
     [SerializeField] Transform floorMark;
@@ -17,16 +14,12 @@ public class PlayerSetup : MonoBehaviourPun
     //[SerializeField] Renderer surface;
     [SerializeField] Transform AttackRangeMark;
 
-    [HideInInspector]public int playerTeam;
+    [HideInInspector] public int playerTeam;
 
     [HideInInspector] public Vector3 originPos;
     [HideInInspector] public Quaternion originRot;
 
-    //string NickName;
-    //public cameraname name;
-    // PlayerState.character
-    // animator ¼³Á¤ , avatarµµ
-
+    private PlayerAim aim;
     private PlayerInput input;
 
     public cameraname cameraName;
@@ -34,6 +27,7 @@ public class PlayerSetup : MonoBehaviourPun
 
     private void Awake()
     {
+        aim = GetComponent<PlayerAim>();
         nickName = cameraName.playername;
         input = GetComponent<PlayerInput>();
 
@@ -45,62 +39,28 @@ public class PlayerSetup : MonoBehaviourPun
         }
     }
 
-    //[PunRPC]
-    //public void SentServerColor(PlayerEntry.TeamColor color) 
-    //{
-    //    photonView.RPC("RequestSetPlayerColor", RpcTarget.MasterClient, (int)color);
-    //}
-
-    //[PunRPC]
-    //private void RequestSetPlayerColor(int team)
-    //{
-    //    photonView.RPC("ResultSetPlayerColor", RpcTarget.AllViaServer, team);
-    //}
-
-    //[PunRPC]
-    //private void ResultSetPlayerColor(int team)
-    //{
-    //    SetPlayerColor(team);
-    //}
-
-
-    //[PunRPC]
-    //public void SetPlayerColor(int team)
-    //{
-
-    //    playerTeam = team;
-    //    floorMarkImg.color = playerColor[team];
-        
-    //    originPos = transform.position;
-    //    originRot = transform.rotation;
-
-    //    hpSlider.hpbarcolor.color = playerColor[team];
-    //}
-
-
-
 
     [PunRPC]
-    public void SentSetUp(PlayerEntry.TeamColor color, string nickName)
+    public void SentSetUp(PlayerEntry.TeamColor color, string nickName , string characterName)
     {
-        photonView.RPC("RequestSetUp", RpcTarget.MasterClient, (int)color ,nickName);
+        photonView.RPC("RequestSetUp", RpcTarget.MasterClient, (int)color, nickName, characterName);
     }
 
     [PunRPC]
-    private void RequestSetUp(int color ,string nickName)
+    private void RequestSetUp(int color, string nickName, string characterName)
     {
-        photonView.RPC("ResultSetup", RpcTarget.AllViaServer, color ,nickName);
+        photonView.RPC("ResultSetup", RpcTarget.AllViaServer, color, nickName, characterName);
     }
 
     [PunRPC]
-    private void ResultSetup(int color,string nickName)
+    private void ResultSetup(int color, string nickName, string characterName)
     {
-       SetUp(color,nickName);
+        SetUp(color, nickName, characterName);
     }
 
 
     [PunRPC]
-    public void SetUp(int color ,string _nickName)
+    public void SetUp(int color, string _nickName, string characterName)
     {
         playerTeam = color;
         floorMarkImg.color = playerColor[color];
@@ -112,8 +72,21 @@ public class PlayerSetup : MonoBehaviourPun
 
         nickName.text = _nickName;
         nickName.color = playerColor[color];
+
+        GetComponent<PlayerCharacter>().ChangeCharacter(characterName);
     }
 
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] instantiationData = info.photonView.InstantiationData;
+        int puckViewID = (int)instantiationData[0];
+
+        var puckview = PhotonView.Find(puckViewID);
+
+
+        aim.puck = puckview.gameObject;
+    }
 }
 
 

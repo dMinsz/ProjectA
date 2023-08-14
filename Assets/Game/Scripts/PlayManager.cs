@@ -67,13 +67,13 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.LocalPlayer.NickName == blueTeamPlayerNameList[num])
             {
-                object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
 
+                object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
                 var player = PhotonNetwork.Instantiate("Players", blueSpwans[num].position, blueSpwans[num].rotation, 0, puckData);
 
                 player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
                 //player.GetComponent<PlayerSetup>().SentServerColor(PlayerEntry.TeamColor.Blue);
-                player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, blueTeamPlayerNameList[num]);
+                player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, blueTeamPlayerNameList[num], PhotonNetwork.LocalPlayer.GetCharacterName());
 
 
                 pPlayerList.Add(player);
@@ -92,9 +92,11 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
                 var player = PhotonNetwork.Instantiate("Players", redSpwans[num].position, redSpwans[num].rotation, 0, puckData);
 
+
+
                 player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
                 //player.GetComponent<PlayerSetup>().SentServerColor(PlayerEntry.TeamColor.Red);
-                player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, redTeamPlayerNameList[num]);
+                player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, redTeamPlayerNameList[num], PhotonNetwork.LocalPlayer.GetCharacterName());
 
 
                 pPlayerList.Add(player);
@@ -116,7 +118,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
             var player = PhotonNetwork.Instantiate("Players", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
 
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
-            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Mario");
+            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", "Mario");
 
             pPlayerList.Add(player);
 
@@ -128,8 +130,10 @@ public class PlayManager : MonoBehaviourPunCallbacks
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
             var player = PhotonNetwork.Instantiate("Players", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
 
+            
+
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
-            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Mario");
+            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Debug2", "Mario");
             
             pPlayerList.Add(player);
 
