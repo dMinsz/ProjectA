@@ -46,7 +46,7 @@ public class PuckDelayCompensation : MonoBehaviourPun, IPunObservable
             positionAtLastPacket = transform.position;
             rotationAtLastPacket = transform.rotation;
             velocityAtLastPacket = rb.velocity;
-            isSyncronizeLastPacket = isSyncronize;
+            isSyncronizeLastPacket = (bool)stream.ReceiveNext();
         }
     }
 
@@ -65,7 +65,7 @@ public class PuckDelayCompensation : MonoBehaviourPun, IPunObservable
                 //Update remote player
                 transform.position = Vector3.Lerp(positionAtLastPacket, latestPos, (float)(currentTime / timeToReachGoal));
                 float t = Mathf.Clamp((float)(currentTime / timeToReachGoal), 0f, 0.99f);
-                transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot, (float)(currentTime / timeToReachGoal));
+                transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot, t);
                 rb.velocity = Vector3.Lerp(velocityAtLastPacket, latestVel, (float)(currentTime / timeToReachGoal));
             }
             else

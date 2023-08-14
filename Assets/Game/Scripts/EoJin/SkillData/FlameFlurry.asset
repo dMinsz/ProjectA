@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlameFlurry
   m_EditorClassIdentifier: 
   skillName: Flame Flurry
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 01e41639ca3e54743b17dac505978031, type: 3}
   effectPrefab: {fileID: 8711735227204697444, guid: 3bb7aa54f5bd16a488fcef36f9efba8a,
     type: 3}
   description: 

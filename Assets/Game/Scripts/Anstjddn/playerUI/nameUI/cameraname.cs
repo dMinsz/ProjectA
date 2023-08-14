@@ -16,6 +16,5 @@ public class cameraname : BaseUI
     private void LateUpdate()
     {
             transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
-
     }
 }

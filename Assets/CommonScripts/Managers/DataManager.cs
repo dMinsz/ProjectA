@@ -1,7 +1,9 @@
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -15,6 +17,16 @@ public class DataManager : MonoBehaviour
     private float Exp { get { return exp; } set { exp = value; } }
 
 
+    [SerializeField]  public List<string> RedTeamPlayerNameList = new List<string>();
+    [SerializeField]  public List<string> BlueTeamPlayerNameList = new List<string>();
+
+    private void Awake()
+    {
+        characters = GameManager.Resource.Load<Characters>("CharactersData").characters;
+
+        var test = characters;
+    }
+
     [SerializeField] private Character curCharacter;
     public Character CurCharacter 
     { 
@@ -22,7 +34,8 @@ public class DataManager : MonoBehaviour
         set { curCharacter = value; } 
     }
 
-    [SerializeField] private Character[] characters;
+    [SerializeField] public List<Character> characters;
+    
     public Character GetCharacter(string charactorName)
     {
         foreach (Character character in characters)
@@ -37,7 +50,8 @@ public class DataManager : MonoBehaviour
     public Dictionary<Player, Character> BlueTeamsPlayer
     {
         get { return blueTeamsPlayer; }
-        set { blueTeamsPlayer = value; }
+        set { blueTeamsPlayer = value;
+}
     }
 
     [SerializeField] private Dictionary<Player, Character> redTeamsPlayer;
@@ -69,15 +83,14 @@ public class DataManager : MonoBehaviour
         //{
         //    Debug.Log($"redTemasPlayer.Values.CharacterName : {character.characterName}");
         //}
+
     }
 
-    //[SerializeField] public Avatar[] avatars;
-    //[SerializeField] public AnimatorController[] animators;
     public UnityAction OnChangeCharacter;
 
     public void ChangeCharacter(string characterName)
     {
-        for (int i = 0; i < characters.Length; i++)
+        for (int i = 0; i < characters.Count; i++)
         {
             if (characterName == characters[i].characterName)
             {

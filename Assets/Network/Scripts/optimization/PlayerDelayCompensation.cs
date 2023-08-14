@@ -42,7 +42,7 @@ public class PlayerDelayCompensation : MonoBehaviourPun, IPunObservable
             currentPacketTime = info.SentServerTime;
             positionAtLastPacket = transform.position;
             rotationAtLastPacket = transform.rotation;
-            isSyncronizeLastPacket = isSyncronize;
+            isSyncronizeLastPacket = (bool)stream.ReceiveNext(); ;
         }
     }
 
@@ -57,7 +57,8 @@ public class PlayerDelayCompensation : MonoBehaviourPun, IPunObservable
                 currentTime += Time.deltaTime;
 
                 transform.position = Vector3.Lerp(positionAtLastPacket, latestPos, (float)(currentTime / timeToReachGoal));
-                transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot, (float)(currentTime / timeToReachGoal));
+                float t = Mathf.Clamp((float)(currentTime / timeToReachGoal), 0f, 0.99f);
+                transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot, (float)(currentTime / t));
                 //Lag compensation
             }
         }

@@ -39,7 +39,7 @@ public class RoomPanel : MonoBehaviour
 
     private void Awake()
     {
-        dataManager = FindObjectOfType<DataManager>();
+        dataManager = GameManager.Data;
         playerDictionary = new Dictionary<int, PlayerEntry>();
         //playerCharacterModeling = new Dictionary<int, GameObject>();      // playerDictionary랑 합치는게 좋을듯
         blueTeamPlayerDic = new Dictionary<Player, Character>();            // TeamManager 쓰면 안만들고 TeamManager의 함수 쓰면 됨
@@ -220,6 +220,8 @@ public class RoomPanel : MonoBehaviour
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
+        //GameManager.Data.BlueTeamPlayerList = PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList();
+        //GameManager.Data.RedTeamPlayerList = PhotonNetwork.CurrentRoom.GetRedTeamPlayerList();
         //goto Game
         PhotonNetwork.LoadLevel("GameScene");
     }
@@ -332,6 +334,9 @@ public class RoomPanel : MonoBehaviour
         blueTeamPlayerNameList.Clear();
         redTeamPlayerNameList.Clear();
 
+        GameManager.Data.BlueTeamPlayerNameList.Clear();
+        GameManager.Data.RedTeamPlayerNameList.Clear();
+
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             PlayerEntry entry;
@@ -341,12 +346,17 @@ public class RoomPanel : MonoBehaviour
                 ++blueTeamCount;
                 entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
                 blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+
+
+                GameManager.Data.BlueTeamPlayerNameList.Add(player.NickName);
             }
             else
             {
                 ++redTeamCount;
                 entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
                 redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
+
+                GameManager.Data.RedTeamPlayerNameList.Add(player.NickName);
             }
 
             entry.SetPlayer(player);
@@ -366,6 +376,7 @@ public class RoomPanel : MonoBehaviour
         }
 
         redTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetRedTeamPlayerList());
+
         foreach (string playerName in redTeamPlayerNameList)
         {
             ++redTeamCount;

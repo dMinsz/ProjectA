@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FieryFist
   m_EditorClassIdentifier: 
   skillName: Fiery Fist
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 8483127d5508a8e41824d4bed30c974b, type: 3}
   effectPrefab: {fileID: 8711735227204697444, guid: 3bb7aa54f5bd16a488fcef36f9efba8a,
     type: 3}
   description: 

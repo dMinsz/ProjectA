@@ -27,6 +27,11 @@ public class GameManager : MonoBehaviour
     private static UIManager uiManager;
     public static UIManager UI { get { return uiManager; } }
 
+    //data manager
+
+    private static DataManager dataManager;
+
+    public static DataManager Data { get { return dataManager; } }
 
     private GameManager() { }
 
@@ -77,7 +82,14 @@ public class GameManager : MonoBehaviour
         sObj.name = "SceneManagerEX";
         sObj.transform.SetParent(transform);
         sceneManager = sObj.AddComponent<SceneManagerEX>();
-       
+
+
+        GameObject dObj = new GameObject();
+        dObj.name = "DataManager";
+        dObj.transform.SetParent(transform);
+        dataManager = dObj.AddComponent<DataManager>();
+
+
         poolManager.Init();
     }
 }
