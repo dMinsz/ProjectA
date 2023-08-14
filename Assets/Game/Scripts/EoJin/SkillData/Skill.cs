@@ -22,6 +22,7 @@ public class Skill : ScriptableObject
 
     [SerializeField] public string skillName;
     [SerializeField] public Sprite image;
+    [SerializeField] public GameObject effectPrefab;
     [SerializeField] public string description;
 
     [SerializeField] public Key key;
@@ -33,8 +34,7 @@ public class Skill : ScriptableObject
     [SerializeField] public bool isDash;
     [SerializeField] public float duration;
     [SerializeField] public float coolTime;
-    [SerializeField] public int playerKnockback;
-    [SerializeField] public int coreKnockback;
+    [SerializeField] public int damage;
 
     public void Init(Skill skill)
     {
@@ -45,9 +45,7 @@ public class Skill : ScriptableObject
         skill.angle = angle;
         skill.isDash = isDash;
         skill.coolTime = coolTime;
-
-        skill.playerKnockback = playerKnockback;
-        skill.coreKnockback = coreKnockback;
+        skill.damage = damage;
     }
 
     public void Use(Skill skill)

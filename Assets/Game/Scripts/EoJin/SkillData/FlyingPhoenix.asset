@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Flying Phoenix
   image: {fileID: 0}
+  effectPrefab: {fileID: 8711735227204697444, guid: 3bb7aa54f5bd16a488fcef36f9efba8a,
+    type: 3}
   description: 
   key: 2
   rangeStyle: 2
@@ -23,5 +25,4 @@ MonoBehaviour:
   isDash: 1
   duration: 4
   coolTime: 3
-  playerKnockback: 160
-  coreKnockback: 920
+  damage: 0
