@@ -15,7 +15,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     DataManager data;
     [SerializeField] bool debug;
     [SerializeField] float control; //플레이어 위치에서 얼마나 떨어진 거리에서 어택 범위 발동할 지
-    float range;
+     public float range;
     float additionalRange;
     public float angle;
     public bool isSkillingPrimary = false;
@@ -41,6 +41,11 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     [SerializeField] DrawSkillRange DrawRange;
     private Animator anim;
+
+    //실험
+    public playercontroll playerdash;
+
+
 
     public void Awake()
     {
@@ -148,7 +153,6 @@ public class PlayerSkillAttacker : MonoBehaviour
             skill = data.CurCharacter.specialSkill;
             aim.attacksize = skill.range;
 
-
             DrawRange.SetIsDrawingTrue();
 
             isQDubleClick = false;
@@ -156,11 +160,13 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (isRDubleClick)
             {
-
+                
                 anim.SetTrigger("Special");
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
                 ApplyDamage();
+                //실험
+                playerdash.Dash();
                 isRDubleClick = false;
 
                 DrawRange.SetIsDrawingFalse();

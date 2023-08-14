@@ -4496,8 +4496,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647034664}
-  m_LocalRotation: {x: 0.3513574, y: 0.61200494, z: -0.3486432, w: 0.616803}
-  m_LocalPosition: {x: -80.307594, y: 128.08319, z: -5.2886095}
+  m_LocalRotation: {x: 0.32265836, y: 0.62961936, z: -0.32324955, w: 0.628475}
+  m_LocalPosition: {x: -60.762062, y: 85.7064, z: -10.821227}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10584,7 +10584,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-211148
+  m_Name: pb_Mesh39818
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11914,7 +11914,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-211172
+  m_Name: pb_Mesh40356
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15392,7 +15392,6 @@ MonoBehaviour:
   thickness: 0.5
   color: {r: 0.54494524, g: 1, b: 0, a: 0}
   segments: 50
-  isDrawing: 0
   arcPoints: []
 --- !u!114 &1162768311297086788
 MonoBehaviour:
@@ -15438,6 +15437,7 @@ MonoBehaviour:
   skill: {fileID: 0}
   debug: 0
   control: 0
+  range: 0
   angle: 0
   isSkillingPrimary: 0
   isSkillingSecondary: 0
@@ -15449,6 +15449,10 @@ MonoBehaviour:
   mousePosObj: {fileID: 0}
   cubeForLookAt: {fileID: 0}
   DrawRange: {fileID: 1162768311297086787}
+  playerdash: {fileID: 6672377798906706667}
+  isQDubleClick: 0
+  isEDubleClick: 0
+  isRDubleClick: 0
 --- !u!1001 &1162768311966220582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15889,8 +15893,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774833533014658918}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.583259, y: -0.69, z: -13.204891}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1162768311071418008}
@@ -18642,6 +18646,8 @@ MonoBehaviour:
   movespeed: 30
   playerat: {fileID: 4891213646432742634}
   playerdir: {x: 0, y: 0}
+  dashskill: {fileID: 0}
+  dashdir: {x: 0, y: 0, z: 0}
 --- !u!54 &4891213646432742642
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19306,6 +19312,7 @@ MonoBehaviour:
   skill: {fileID: 0}
   debug: 0
   control: 0
+  range: 0
   angle: 0
   isSkillingPrimary: 0
   isSkillingSecondary: 0
@@ -19317,6 +19324,10 @@ MonoBehaviour:
   mousePosObj: {fileID: 5162250092699867567}
   cubeForLookAt: {fileID: 5162250092768889694}
   DrawRange: {fileID: 5162250093325832695}
+  playerdash: {fileID: 0}
+  isQDubleClick: 0
+  isEDubleClick: 0
+  isRDubleClick: 0
 --- !u!114 &5162250093325832694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19354,7 +19365,6 @@ MonoBehaviour:
   thickness: 0.5
   color: {r: 0.54494524, g: 1, b: 0, a: 0}
   segments: 50
-  isDrawing: 0
   arcPoints: []
 --- !u!4 &5162250093384327724
 Transform:
@@ -19802,7 +19812,6 @@ MonoBehaviour:
   thickness: 0.5
   color: {r: 1, g: 0, b: 0, a: 1}
   segments: 50
-  isDrawing: 0
   arcPoints: []
 --- !u!114 &5600442608797486209
 MonoBehaviour:
@@ -19861,6 +19870,7 @@ MonoBehaviour:
   skill: {fileID: 0}
   debug: 0
   control: 0
+  range: 0
   angle: 0
   isSkillingPrimary: 0
   isSkillingSecondary: 0
@@ -19872,6 +19882,10 @@ MonoBehaviour:
   mousePosObj: {fileID: 0}
   cubeForLookAt: {fileID: 0}
   DrawRange: {fileID: 5600442608797486208}
+  playerdash: {fileID: 0}
+  isQDubleClick: 0
+  isEDubleClick: 0
+  isRDubleClick: 0
 --- !u!114 &5600442608797486211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19947,6 +19961,8 @@ MonoBehaviour:
   movespeed: 10
   playerat: {fileID: 5600442608797486216}
   playerdir: {x: 0, y: 0}
+  dashskill: {fileID: 0}
+  dashdir: {x: 0, y: 0, z: 0}
 --- !u!114 &5600442608797486216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20702,6 +20718,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playerpostionUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619337866734952139, guid: d3114944b11e07c449b69d9766d652fb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6087528799189393061, guid: d3114944b11e07c449b69d9766d652fb,
         type: 3}
@@ -21664,6 +21685,8 @@ MonoBehaviour:
   movespeed: 30
   playerat: {fileID: 1321557638}
   playerdir: {x: 0, y: 0}
+  dashskill: {fileID: 1162768311297086791}
+  dashdir: {x: 0, y: 0, z: 0}
 --- !u!4 &6681559098428129001
 Transform:
   m_ObjectHideFlags: 0
