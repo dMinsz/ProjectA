@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class playerrange : MonoBehaviour
 {
-    [SerializeField] PlayerAimTest aim;
+    [SerializeField] PlayerAim aim;
 
     private float size;
     private void Awake()

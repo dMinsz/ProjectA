@@ -8,15 +8,15 @@ public class DrawSkillEffect : MonoBehaviour
 {
     PlayerSkillAttacker skillAttacker;
     List<GameObject> effects = new List<GameObject>();
-    [SerializeField] GameObject cubeForLookAt;
+    //[SerializeField] GameObject cubeForLookAt;
     Vector3 startPos;
     Vector3 destination;
-    PlayerAimTest aim;
+    PlayerAim aim;
 
     private void Awake()
     {
         skillAttacker = GetComponent<PlayerSkillAttacker>();
-        aim = GetComponent<PlayerAimTest>();
+        aim = GetComponent<PlayerAim>();
     }
 
     private void FixedUpdate()
@@ -27,7 +27,7 @@ public class DrawSkillEffect : MonoBehaviour
             Vector3 instVecButYIsZero = new Vector3(playerNInst.x, 0f, playerNInst.z);
             
             //2.5f더한 이유는 조금 오바되는 게 시각적으로 좋을 것 같아서 이펙트 속도 0.3기준
-            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + 2.5f || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + 2.5f)
+            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + 4f || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + 4f)
                 DestroyAllEffects();
         }
     }
@@ -59,12 +59,12 @@ public class DrawSkillEffect : MonoBehaviour
         destination = playerNmouse * skillAttacker.skill.range;
 
         Vector3 dir = (transform.position - aim.mousepos);
-        cubeForLookAt.transform.rotation = Quaternion.LookRotation(transform.position - aim.mousepos);
+        var effectRotation = Quaternion.LookRotation(transform.position - aim.mousepos);
 
         for (int i = -10; i <= 10; i++)
         {
             float angle = skillAttacker.skill.angle * (0.1f * i);
-            GameObject instance = Instantiate(skillAttacker.skill.effectPrefab, transform.position, cubeForLookAt.transform.rotation * Quaternion.Euler(0f, angle, 0f));
+            GameObject instance = Instantiate(skillAttacker.skill.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
             
             effects.Add(instance);
         }

@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 8694239420522866147}
   - component: {fileID: 1825931157103470107}
   - component: {fileID: 8115375228466044405}
+  - component: {fileID: 772755358635208740}
   m_Layer: 6
   m_Name: Players
   m_TagString: Player
@@ -385,7 +386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a86a2ce8e30a240a7e2f5030c7ffe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouse: {fileID: 0}
   attacksize: 3
   layerMask:
     serializedVersion: 2
@@ -416,6 +416,18 @@ MonoBehaviour:
   playerdir: {x: 0, y: 0}
   dashskill: {fileID: 4333708700515693145}
   dashdir: {x: 0, y: 0, z: 0}
+--- !u!114 &772755358635208740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3794264224922478712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbe867d101352114d819d42e8e553f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4064084028064206527
 GameObject:
   m_ObjectHideFlags: 0

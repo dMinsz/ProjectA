@@ -52,14 +52,14 @@ public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
 
         return mousepos;
     }
-    /*
-    public void Attack() 
+
+    public void Attack()
     {
         photonView.RPC("PuckAttack", RpcTarget.AllViaServer);
     }
 
     [PunRPC]
-    private void PuckAttack() 
+    private void PuckAttack()
     {
         Vector3 dir = attackdir.normalized;
         Vector3 newVelocity = dir * attackpower;
@@ -67,7 +67,7 @@ public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
         puck.GetComponent<Puck>().SetPos(newVelocity, puck.transform.position);
     }
 
-    
+
     private void OnAttack(InputValue Value)
     {
         photonView.RPC("ResultAttack", RpcTarget.AllViaServer, SetMousePos(), transform.position, puck.transform.position);
@@ -84,7 +84,7 @@ public class PlayerAim : MonoBehaviourPun, IPunInstantiateMagicCallback
     {
         StartCoroutine(AttackTimeing(mousePos, playerPos, puckPos));
     }
-    */
+
 
 
     // 어택 범위 설정
