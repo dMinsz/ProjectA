@@ -16,7 +16,8 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: 19e6379586dbefc438437ec22cdc57a9, type: 3}
   avatar: {fileID: 0}
   animator: {fileID: 0}
-  model: {fileID: 0}
+  modeling: {fileID: 8396495726863173827, guid: 8675dcbcf64d3344ea06e727f970323b,
+    type: 3}
   stat: {fileID: 0}
   primarySkill: {fileID: 0}
   secondarySkill: {fileID: 0}
