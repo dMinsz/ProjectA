@@ -19,8 +19,8 @@ MonoBehaviour:
   description: 
   key: 0
   rangeStyle: 0
-  angle: 60
-  range: 6
+  angle: 90
+  range: 10
   additionalRange: 0
   isDash: 0
   duration: 3
