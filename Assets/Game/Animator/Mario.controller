@@ -363,7 +363,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: b1bad8ccfe384e545a5f29f8da25619d,
+  m_Motion: {fileID: -203655887218126122, guid: 173c585dbd87fff478376740105d14a9,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -520,7 +520,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpecailSkill
-  m_Speed: 1
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3260486762315683133}
@@ -533,7 +533,8 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e5dd8ae71386b664998bad41bc7d4bb7, type: 2}
+  m_Motion: {fileID: -203655887218126122, guid: 15131dfcebfa3cd49aa6b92580cc582a,
+    type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
