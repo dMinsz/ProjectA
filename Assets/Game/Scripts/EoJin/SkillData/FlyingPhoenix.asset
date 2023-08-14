@@ -17,8 +17,8 @@ MonoBehaviour:
   description: 
   key: 2
   rangeStyle: 2
-  angle: 0
-  range: 10
+  angle: 10
+  range: 7
   additionalRange: 2
   isDash: 1
   duration: 4

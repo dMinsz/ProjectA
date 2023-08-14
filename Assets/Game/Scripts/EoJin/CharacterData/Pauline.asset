@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: Mario
+  m_Name: Pauline
   m_EditorClassIdentifier: 
-  characterName: Mario
+  characterName: Pauline
   Image: {fileID: 0}
-  avatar: {fileID: 9000000, guid: 2d08fb3d8744f324e905ffd826df01b3, type: 3}
+  avatar: {fileID: 9000000, guid: 4cb38d9f68c0b4a49b0167b142a58767, type: 3}
   animator: {fileID: 9100000, guid: 7059a0a09fbcb1e438cc5aca812c3c15, type: 2}
-  skillEffect: {fileID: 11400000, guid: b83bcd6baeba7544abd38387bc50a92c, type: 2}
+  skillEffect: {fileID: 11400000, guid: b72903a4cc008144c8d7954d718d4072, type: 2}
   stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
   primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
   secondarySkill: {fileID: 11400000, guid: b465fe4de9b506b4d8abbb4813e96b8a, type: 2}
