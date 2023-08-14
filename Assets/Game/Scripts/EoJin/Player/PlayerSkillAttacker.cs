@@ -67,7 +67,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     Coroutine specialSkillCoroutine;
 
 
-  [SerializeField]  bool isQDubleClick = false;
+    [SerializeField]  bool isQDubleClick = false;
     [SerializeField] bool isEDubleClick = false;
     [SerializeField] bool isRDubleClick = false;
 

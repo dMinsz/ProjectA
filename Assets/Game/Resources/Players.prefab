@@ -154,6 +154,7 @@ MonoBehaviour:
   skill: {fileID: 0}
   debug: 1
   control: 0
+  range: 0
   angle: 0
   isSkillingPrimary: 0
   isSkillingSecondary: 0
@@ -163,6 +164,7 @@ MonoBehaviour:
   canSkillSpecial: 1
   aim: {fileID: 0}
   DrawRange: {fileID: 4333708700515693149}
+  playerdash: {fileID: 8115375228466044405}
   isQDubleClick: 0
   isEDubleClick: 0
   isRDubleClick: 0
@@ -412,6 +414,8 @@ MonoBehaviour:
   movespeed: 30
   playerat: {fileID: 1825931157103470107}
   playerdir: {x: 0, y: 0}
+  dashskill: {fileID: 4333708700515693145}
+  dashdir: {x: 0, y: 0, z: 0}
 --- !u!1 &4064084028064206527
 GameObject:
   m_ObjectHideFlags: 0
