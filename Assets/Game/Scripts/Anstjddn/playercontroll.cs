@@ -8,8 +8,6 @@ using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-using static UnityEngine.Rendering.DebugUI;
 
     public class playercontroll : MonoBehaviour
     {
