@@ -41,13 +41,17 @@ using UnityEngine.InputSystem;
 
         private void Update()                          
         {
+        if (playerdashing)
+        {
+            return;
+        }
 
-            if (!playerat.isattack)
-             {
+        if (!playerat.isattack)
+        {
                  Move();
                  Look();
-             }
-            else
+        }
+        else
         {
                 //플레이어 어택할때마다 숙이는거 수정
                 Vector3 aimpos = new Vector3(playerat.attackdir.x, transform.position.y, playerat.attackdir.z);
@@ -67,10 +71,6 @@ using UnityEngine.InputSystem;
             {
                 return;
             }
-        if (playerdashing)
-        {
-            return;
-        }
 
     }
         private void Move()
@@ -92,14 +92,15 @@ using UnityEngine.InputSystem;
     {
         if (!playerdashing)
         {
-               movedir.x = Value.Get<Vector2>().x;
-               movedir.z = Value.Get<Vector2>().y;
+            movedir.x = Value.Get<Vector2>().x;
+            movedir.z = Value.Get<Vector2>().y;
         }
-
+        
     }
         public void Dash()
         {
-           dashdir = playerat.mousepos;
+        playerrb.velocity = Vector3.zero;
+        dashdir = playerat.mousepos;
            transform.LookAt(dashdir);
 
         Vector3 dashDistance = (playerat.mousepos - transform.position); //거리
@@ -126,7 +127,7 @@ using UnityEngine.InputSystem;
     {
         playerdashing = true;
         float distance = Mathf.Abs(Vector3.Distance(transform.position, destination));
-        while (distance > 1f)
+        while (distance > 0.1f)
         {
             distance = Mathf.Abs(Vector3.Distance(transform.position,destination));
             float xspeed = destination.x - transform.position.x;

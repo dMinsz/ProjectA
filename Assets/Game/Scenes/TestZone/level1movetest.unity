@@ -7667,7 +7667,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh656404
+  m_Name: pb_Mesh69958
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8250,7 +8250,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh655866
+  m_Name: pb_Mesh69420
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15446,7 +15446,7 @@ MonoBehaviour:
   canSkillPrimary: 1
   canSkillSecondary: 1
   canSkillSpecial: 1
-  aim: {fileID: 0}
+  aim: {fileID: 1321557638}
   mousePosObj: {fileID: 0}
   cubeForLookAt: {fileID: 0}
   DrawRange: {fileID: 1162768311297086787}
@@ -17845,7 +17845,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774833533014658918}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9a86a2ce8e30a240a7e2f5030c7ffe7, type: 3}
   m_Name: 
