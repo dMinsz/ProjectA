@@ -6,8 +6,9 @@ using UnityEngine.ProBuilder.Shapes;
 
 public class DrawSkillEffect : MonoBehaviour
 {
+    [SerializeField] DataManager data;
     PlayerSkillAttacker skillAttacker;
-    List<GameObject> effects = new List<GameObject>();
+    List<GameObject> effectClones = new List<GameObject>();
     [SerializeField] GameObject cubeForLookAt;
     Vector3 startPos;
     Vector3 destination;
@@ -15,30 +16,31 @@ public class DrawSkillEffect : MonoBehaviour
 
     private void Awake()
     {
+        data = GameObject.FindWithTag("DataManager").GetComponent<DataManager>();
         skillAttacker = GetComponent<PlayerSkillAttacker>();
         aim = GetComponent<PlayerAimTest>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (effects.Count > 0)
+        if (effectClones.Count > 0)
         {
-            Vector3 playerNInst = startPos - effects[10].transform.position;
+            Vector3 playerNInst = startPos - effectClones[10].transform.position;
             Vector3 instVecButYIsZero = new Vector3(playerNInst.x, 0f, playerNInst.z);
             
             //2.5f더한 이유는 조금 오바되는 게 시각적으로 좋을 것 같아서 이펙트 속도 0.3기준
-            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + 2.5f || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + 2.5f)
+            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + data.CurCharacter.skillEffect.additionalTime || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + data.CurCharacter.skillEffect.additionalTime)
                 DestroyAllEffects();
         }
     }
 
     private void DestroyAllEffects()
     {
-        for (int i = 0; i < effects.Count; i++)
+        for (int i = 0; i < effectClones.Count; i++)
         {
-            Destroy(effects[i]);
+            Destroy(effectClones[i]);
         }
-        effects.Clear();
+        effectClones.Clear();
     }
 
     public void OnEnable()
@@ -64,9 +66,9 @@ public class DrawSkillEffect : MonoBehaviour
         for (int i = -10; i <= 10; i++)
         {
             float angle = skillAttacker.skill.angle * (0.1f * i);
-            GameObject instance = Instantiate(skillAttacker.skill.effectPrefab, transform.position, cubeForLookAt.transform.rotation * Quaternion.Euler(0f, angle, 0f));
+            GameObject instance = Instantiate(data.CurCharacter.skillEffect.effectPrefab, transform.position, cubeForLookAt.transform.rotation * Quaternion.Euler(0f, angle, 0f));
             
-            effects.Add(instance);
+            effectClones.Add(instance);
         }
     }
 

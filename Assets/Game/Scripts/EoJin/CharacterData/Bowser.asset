@@ -15,7 +15,8 @@ MonoBehaviour:
   characterName: Bowser
   Image: {fileID: 0}
   avatar: {fileID: 9000000, guid: 87f26da7a5983ca4c9c1e4e3634a6a10, type: 3}
-  animator: {fileID: 9100000, guid: 7059a0a09fbcb1e438cc5aca812c3c15, type: 2}
+  animator: {fileID: 9100000, guid: a4ef3a481603e924487dbdde4e405ea4, type: 2}
+  skillEffect: {fileID: 11400000, guid: 4591fd167f107c04b8101a374c229c84, type: 2}
   stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
   primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
   secondarySkill: {fileID: 11400000, guid: b465fe4de9b506b4d8abbb4813e96b8a, type: 2}

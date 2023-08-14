@@ -9,18 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b9dfe044253fc74789a044cf1b18f82, type: 3}
-  m_Name: FlyingPhoenix
+  m_Script: {fileID: 11500000, guid: c2c110bdbe66cee49a0e3e135dce9d5a, type: 3}
+  m_Name: PeachEffect
   m_EditorClassIdentifier: 
-  skillName: Flying Phoenix
-  image: {fileID: 0}
-  description: 
-  key: 2
-  rangeStyle: 2
-  angle: 10
-  range: 7
-  additionalRange: 2
-  isDash: 1
-  duration: 4
-  coolTime: 3
-  damage: 0
+  effectPrefab: {fileID: 100012, guid: 3aac37fb72232164187651a79f1c27a1, type: 3}
+  additionalTime: 0
