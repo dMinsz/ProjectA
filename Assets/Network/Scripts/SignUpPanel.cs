@@ -29,7 +29,7 @@ public class SignUpPanel : MonoBehaviour
             string id = idInputField.text;
             if (id == null) 
             {
-                //StatePanel.Instance.AddMessage($"CheckID is null error :");
+                StatePanel.Instance.AddMessage($"CheckID is null error :");
             }
 
             string sqlCommand = string.Format("SELECT id FROM user_info WHERE id='{0}'", id);
@@ -39,7 +39,7 @@ public class SignUpPanel : MonoBehaviour
             if (!DB.reader.HasRows)
             {
                 canUsedId = true;
-                //StatePanel.Instance.AddMessage($"That ID can be used.");
+                StatePanel.Instance.AddMessage($"That ID can be used.");
 
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
@@ -47,7 +47,7 @@ public class SignUpPanel : MonoBehaviour
             else 
             {
                 canUsedId = false;
-                //StatePanel.Instance.AddMessage($"That ID cannot be used.");
+                StatePanel.Instance.AddMessage($"That ID cannot be used.");
 
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
@@ -56,7 +56,7 @@ public class SignUpPanel : MonoBehaviour
         }
         catch (Exception ex)
         {
-            //StatePanel.Instance.AddMessage($"SignUp CheckID error : {ex.Message}");
+            StatePanel.Instance.AddMessage($"SignUp CheckID error : {ex.Message}");
             Debug.Log(ex.Message);
         }
     }
