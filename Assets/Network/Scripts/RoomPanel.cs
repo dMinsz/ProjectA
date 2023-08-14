@@ -221,7 +221,7 @@ public class RoomPanel : MonoBehaviour
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
         //goto Game
-        PhotonNetwork.LoadLevel("PuckTestZone");
+        PhotonNetwork.LoadLevel("GameScene");
     }
 
     public void LeaveRoom()
