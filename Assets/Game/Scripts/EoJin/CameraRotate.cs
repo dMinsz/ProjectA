@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CameraRotate : MonoBehaviour
 {
+    [SerializeField] Camera thiscamera;
+
     void Update()
     {
-        transform.RotateAround(transform.position, new Vector3(0, 1, 0), 0.1f);
+        if (thiscamera.enabled == true)
+            transform.RotateAround(transform.position, new Vector3(0, 1, 0), 0.01f);
     }
 }

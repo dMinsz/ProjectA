@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: NoneChar
+  m_Name: Mario
   m_EditorClassIdentifier: 
-  characterName: None
-  Image: {fileID: 21300000, guid: 19e6379586dbefc438437ec22cdc57a9, type: 3}
+  characterName: Mario
+  Image: {fileID: 20535933, guid: 8e41f658eba1b6a41a54de40df6725fa, type: 3}
   avatar: {fileID: 0}
   animator: {fileID: 0}
   modeling: {fileID: 8396495726863173827, guid: 8675dcbcf64d3344ea06e727f970323b,

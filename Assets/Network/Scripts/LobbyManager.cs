@@ -6,7 +6,7 @@ using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    public enum Panel { Login, Menu, Lobby, Room , SignUp }
+    public enum Panel { Login, Menu, Room, SignUp }
 
     [SerializeField] StatePanel statePanel;
 
@@ -14,14 +14,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] SignUpPanel signUpPanel;
     [SerializeField] MenuPanel menuPanel;
     [SerializeField] RoomPanel roomPanel;
-    [SerializeField] LobbyPanel lobbyPanel;
 
     public void SetActivePanel(Panel panel)
     {
         loginPanel.gameObject?.SetActive(panel == Panel.Login);
         menuPanel.gameObject?.SetActive(panel == Panel.Menu);
         roomPanel.gameObject?.SetActive(panel == Panel.Room);
-        lobbyPanel.gameObject?.SetActive(panel == Panel.Lobby);
         signUpPanel.gameObject?.SetActive(panel == Panel.SignUp);
     }
 
@@ -97,23 +95,4 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         roomPanel.MasterClientSwitched(newMasterClient);
     }
-
-    public override void OnJoinedLobby()
-    {
-        SetActivePanel(Panel.Lobby);
-    }
-
-    public override void OnLeftLobby()
-    {
-        SetActivePanel(Panel.Menu);
-    }
-
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        lobbyPanel.UpdateRoomList(roomList);
-    }
-
-
-    
-
 }

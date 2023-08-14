@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: NoneChar
+  m_Name: Pauline
   m_EditorClassIdentifier: 
-  characterName: None
-  Image: {fileID: 21300000, guid: 19e6379586dbefc438437ec22cdc57a9, type: 3}
+  characterName: Pauline
+  Image: {fileID: 355380137, guid: 19afd81dad7437349b7675da5c493053, type: 3}
   avatar: {fileID: 0}
   animator: {fileID: 0}
-  modeling: {fileID: 8396495726863173827, guid: 8675dcbcf64d3344ea06e727f970323b,
+  modeling: {fileID: 4709529341637407410, guid: 42524f259805c13408bf3d9a6cf06e96,
     type: 3}
   stat: {fileID: 0}
   primarySkill: {fileID: 0}

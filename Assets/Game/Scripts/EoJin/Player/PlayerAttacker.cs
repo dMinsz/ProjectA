@@ -111,9 +111,9 @@ public class PlayerAttacker : MonoBehaviour
         if (!debug)
             return;
 
-        Handles.color = Color.cyan;
-        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, rangeAmount);
-        Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, rangeAmount);
+        //Handles.color = Color.cyan;
+        //Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, -angle, rangeAmount);
+        //Handles.DrawSolidArc(transform.position, Vector3.up, (aim.mousepos - transform.position).normalized, angle, rangeAmount);
     }
     */
 }

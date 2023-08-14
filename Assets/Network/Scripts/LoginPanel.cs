@@ -11,9 +11,19 @@ public class LoginPanel : MonoBehaviour
     [SerializeField] TMP_InputField PWInputField;
     [SerializeField] DBManager DB;
     [SerializeField] LobbyManager Lm;
+    [SerializeField] Camera loginPanelCamera;
+    [SerializeField] GameObject loginMap;
+
     private void OnEnable()
     {
-        //idInputField.text = string.Format("Player {0}", UnityEngine.Random.Range(1000, 10000));
+        loginPanelCamera.enabled = true;
+        loginMap.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        loginPanelCamera.enabled = false;
+        loginMap.SetActive(false);
     }
 
     private void Start()
@@ -96,5 +106,14 @@ public class LoginPanel : MonoBehaviour
     public void GotoSignUp() 
     {
         Lm.SetActivePanel(LobbyManager.Panel.SignUp);
+    }
+
+    public void OnExitButton()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
     }
 }

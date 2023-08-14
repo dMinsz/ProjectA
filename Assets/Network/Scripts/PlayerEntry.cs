@@ -12,15 +12,12 @@ public class PlayerEntry : MonoBehaviour
     [SerializeField] TMP_Text playerTeam;
     [SerializeField] TMP_Text characterName;
     [SerializeField] Image characterImage;
-    [SerializeField] Button playerReadyButton;
+    //[SerializeField] Button playerReadyButton;
     [SerializeField] Character curCharacter;
-    [SerializeField] DataManager dataManager;
-    [SerializeField]
-    [Range(0, 3)] int test;
+    [SerializeField] public DataManager dataManager;
     private Player player;
 
     public enum TeamColor { Blue, Red }
-   // public enum CharacterName { None, AChar, BChar, CChar, DChar }
 
     private void OnEnable()
     {
@@ -34,7 +31,7 @@ public class PlayerEntry : MonoBehaviour
         playerReady.text = player.GetReady() ? "Ready" : "";
         //Team(player.GetTeamColor());
         SelectCharacter(player.GetCharacterName());
-        playerReadyButton.gameObject.SetActive(PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber);
+        //playerReadyButton.gameObject.SetActive(PhotonNetwork.LocalPlayer.ActorNumber == player.ActorNumber);
     }
 
     public void Ready()
@@ -47,7 +44,7 @@ public class PlayerEntry : MonoBehaviour
         player.SetReady(ready);
     }
 
-    //public void Team(int team)
+    //public void Team(int team)    // Team Mark
     //{
     //    if (team == (int)TeamColor.Blue)
     //    {
@@ -87,7 +84,7 @@ public class PlayerEntry : MonoBehaviour
             playerReady.text = "";
         }
 
-        //if (property.TryGetValue(CustomProperty.TEAM, out object teamValue))
+        //if (property.TryGetValue(CustomProperty.TEAM, out object teamValue))  // Team Mark
         //{
         //    int team = (int)teamValue;
         //    Team(team); 
