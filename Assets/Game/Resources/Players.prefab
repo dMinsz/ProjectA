@@ -163,6 +163,9 @@ MonoBehaviour:
   canSkillSpecial: 1
   aim: {fileID: 0}
   DrawRange: {fileID: 4333708700515693149}
+  isQDubleClick: 0
+  isEDubleClick: 0
+  isRDubleClick: 0
 --- !u!114 &4333708700515693146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1890,6 +1893,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 2744620300284729291, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
+        type: 3}
+      propertyPath: m_text
+      value: Mario
+      objectReference: {fileID: 0}
     - target: {fileID: 2744620300863622008, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1999,6 +2007,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: playernameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2744620300863622011, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
+        type: 3}
+      propertyPath: nickname
+      value: Mario
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6f462e93b7d6c64e9f1cfb46277ee06, type: 3}
