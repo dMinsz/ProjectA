@@ -8,6 +8,7 @@ using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 using static UnityEngine.Rendering.DebugUI;
 
     public class playercontroll : MonoBehaviour
@@ -23,14 +24,14 @@ using static UnityEngine.Rendering.DebugUI;
 
 
         public Vector2 playerdir;
-       
 
-            
+        public bool playerdashing = false;
+
 
        //대쉬 어택 할때 조건 받을려고넣어둠
         public PlayerSkillAttacker dashskill;
 
-    public Vector3 dashdir;
+        public Vector3 dashdir;
 
         private void Awake()
         {
@@ -42,13 +43,14 @@ using static UnityEngine.Rendering.DebugUI;
 
         private void Update()                          
         {
-            if (!playerat.isattack&&dashskill.isSkillingSpecial)
-            {
-                Move();
-                Look();
-            }
-            else                                 
-            {
+
+            if (!playerat.isattack)
+             {
+                 Move();
+                 Look();
+             }
+            else
+        {
                 //플레이어 어택할때마다 숙이는거 수정
                 Vector3 aimpos = new Vector3(playerat.attackdir.x, transform.position.y, playerat.attackdir.z);
                transform.LookAt(aimpos);
@@ -67,15 +69,12 @@ using static UnityEngine.Rendering.DebugUI;
             {
                 return;
             }
-
-        //대시 스킬중에 움직이거나 바라보는 방향 안바뀌게끔 조정
-        if (dashskill.isSkillingSpecial&&!playerat.isattack)
+        if (playerdashing)
         {
-            transform.LookAt(dashdir);
-          
+            return;
         }
 
-        }
+    }
         private void Move()
         {
           
@@ -91,43 +90,54 @@ using static UnityEngine.Rendering.DebugUI;
             transform.rotation = lookrotation;
         }
 
-        private void OnMove(InputValue Value)
+    private void OnMove(InputValue Value)
+    {
+        if (!playerdashing)
         {
-        if (!dashskill.isSkillingSpecial)
-        {
-            movedir.x = Value.Get<Vector2>().x;
-            movedir.z = Value.Get<Vector2>().y;
+               movedir.x = Value.Get<Vector2>().x;
+               movedir.z = Value.Get<Vector2>().y;
         }
-         //   movedir.x = Value.Get<Vector2>().x;
-         //   movedir.z = Value.Get<Vector2>().y;
-        }
+
+    }
         public void Dash()
         {
            dashdir = playerat.mousepos;
            transform.LookAt(dashdir);
-        Vector3 mos = (playerat.mousepos - transform.position); //거리
-        float dismos = mos.sqrMagnitude; //거리제곱
 
-        if (dismos< dashskill.range* dashskill.range)    //스킬 범위 안에 있을때 움직이게
-        {                                                         //일단 플레이어y 좌표값에 따라 적용되게끔 적음, y좌표 0이면 y좌표에 0넣으면됨
-            Vector3 targetpos = new Vector3(playerat.mousepos.x, transform.position.y, playerat.mousepos.z);
+        Vector3 dashDistance = (playerat.mousepos - transform.position); //거리
+        float dashDistanceSquare = dashDistance.sqrMagnitude; //거리제곱
 
-           
-            
+        if (dashDistanceSquare< dashskill.range* dashskill.range)    //스킬 범위 안에 있을때 움직이게
+        {                                                         
+            StartCoroutine(PlayerSkillRangeDash(playerat.mousepos,0.05f));
 
-         //  transform.position = new Vector3(playerat.mousepos.x, transform.position.y, playerat.mousepos.z);
-            
         }
-        else                    //마우스 포인트가 스킬범위 밖에 있고 스킬을 사용하면 마우스가 향하는 방향이면서 스킬끝범위로 나가게끔
+        else                    //스킬범위 바깥일때
         {
 
             float x =(playerat.mousepos.x - transform.position.x);
-           float z = playerat.mousepos.z - transform.position.z;
+            float z = (playerat.mousepos.z - transform.position.z);
              Vector3 dir = new Vector3(x, 0, z).normalized;
-            transform.position += new Vector3(dir.x * dashskill.range, 0, dir.z*dashskill.range);
+            Vector3 destination = transform.position;
+            destination+= new Vector3(dir.x * dashskill.range, 0, dir.z * dashskill.range);
+            StartCoroutine(PlayerSkillRangeDash(destination,0.1f));
+        }
         }
 
-           // playerat.mousepos //마우스 위치
-           // dashskill.range //레인지
+    IEnumerator PlayerSkillRangeDash(Vector3 destination, float dashspeed)
+    {
+        playerdashing = true;
+        float distance = Mathf.Abs(Vector3.Distance(transform.position, destination));
+        while (distance > 1f)
+        {
+            distance = Mathf.Abs(Vector3.Distance(transform.position,destination));
+            float xspeed = destination.x - transform.position.x;
+            float zspeed = destination.z - transform.position.z;
+            Vector3 dashdirspeed = new Vector3(xspeed, 0, zspeed).normalized * dashspeed;
+            transform.position += dashdirspeed;
+            yield return null;
         }
+        playerdashing = false;
     }
+
+ }

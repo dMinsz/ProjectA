@@ -25,6 +25,8 @@ public class PlayerAimTest : MonoBehaviour
     [SerializeField] GameObject aimobj;
 
         [SerializeField] private GameObject effectprefabs;
+    
+    [SerializeField] playercontroll playerdash; //대쉬중에 공격하는거 막을려고 
 
     [SerializeField] private UnityEvent Attacksound;  //나중에 어택 사운드
 
@@ -53,6 +55,7 @@ public class PlayerAimTest : MonoBehaviour
     }
     private void OnAttack(InputValue Value)
     {
+        if(!playerdash.playerdashing)               //대쉬중 공격 하는거 막기
         Attack();
     }
 
