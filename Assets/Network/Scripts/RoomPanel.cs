@@ -375,7 +375,7 @@ public class RoomPanel : MonoBehaviour
 
     private void SwitchLocalPlayerBlueTeam(Player player)
     {
-        if (player.GetReady() || blueTeamCount >= maxBlueTeamCount)
+        if (player.GetReady())
         {
             StatePanel.Instance.AddMessage("Can't change team while ready");
             return;
@@ -384,6 +384,12 @@ public class RoomPanel : MonoBehaviour
         if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
             return;
 
+        if (blueTeamCount >= maxBlueTeamCount)
+        {
+            StatePanel.Instance.AddMessage("\r\nCannot change team because the team is full");
+            return;
+        }
+
         player.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
         RenewalPlayerEntry();
         AllPlayerTeamCheck();
@@ -391,7 +397,7 @@ public class RoomPanel : MonoBehaviour
 
     private void SwitchLocalPlayerRedTeam(Player player)
     {
-        if (player.GetReady() || redTeamCount >= maxRedTeamCount)
+        if (player.GetReady())
         {
             StatePanel.Instance.AddMessage("Can't change team while ready");
             return;
@@ -399,6 +405,12 @@ public class RoomPanel : MonoBehaviour
 
         if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red)
             return;
+
+        if (redTeamCount >= maxRedTeamCount)
+        {
+            StatePanel.Instance.AddMessage("\r\nCannot change team because the team is full");
+            return;
+        }
 
         player.SetTeamColor((int)PlayerEntry.TeamColor.Red);
         RenewalPlayerEntry();
