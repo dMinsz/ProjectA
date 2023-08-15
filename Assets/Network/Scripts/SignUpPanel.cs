@@ -69,7 +69,7 @@ public class SignUpPanel : MonoBehaviour
             if (canUsedId == false) 
             {
                 Debug.Log("Please check id duplicate");
-                //StatePanel.Instance.AddMessage("Please check id duplicate");
+                StatePanel.Instance.AddMessage("Please check id duplicate");
                 return;
             }
 
@@ -83,13 +83,13 @@ public class SignUpPanel : MonoBehaviour
 
             if (cmd.ExecuteNonQuery() == 1)
             {
-                //StatePanel.Instance.AddMessage(name + "Member registration complete, id : " + id);
+                StatePanel.Instance.AddMessage(name + "Member registration complete, id : " + id);
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
             }
             else
             {
-                //StatePanel.Instance.AddMessage("registration error");
+                StatePanel.Instance.AddMessage("registration error");
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
             }
@@ -99,7 +99,7 @@ public class SignUpPanel : MonoBehaviour
         }
         catch (Exception ex)
         {
-            //StatePanel.Instance.AddMessage($"SignUp error : {ex.Message}");
+            StatePanel.Instance.AddMessage($"SignUp error : {ex.Message}");
             Debug.Log(ex.Message);
         }
     }
