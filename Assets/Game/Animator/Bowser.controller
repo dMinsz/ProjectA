@@ -155,7 +155,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PrimarySkill
-  m_Speed: 1
+  m_Speed: 3.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -9056744107105412091}
@@ -254,7 +254,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SecondarySkill
-  m_Speed: 1
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5225846109949808913}
@@ -318,7 +318,7 @@ AnimatorStateMachine:
     m_Position: {x: 250, y: -90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5028390314302455029}
-    m_Position: {x: 250, y: -30, z: 0}
+    m_Position: {x: 250, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1400910231888155778}
     m_Position: {x: 250, y: 290, z: 0}
@@ -348,7 +348,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Death
-  m_Speed: 4
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4294076584312764123}
@@ -361,7 +361,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 173c585dbd87fff478376740105d14a9,
+  m_Motion: {fileID: -203655887218126122, guid: 3c960d77dd011df4880fd6588dbbf17a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -592,7 +592,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Punching
-  m_Speed: 2
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1133314799287581191}

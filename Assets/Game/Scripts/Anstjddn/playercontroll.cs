@@ -136,12 +136,10 @@ public class playercontroll : MonoBehaviour
             transform.position += dashdirspeed;
             yield return null;
         }
-
         if (distance < 0.1f)
         {
             playerdashing = false;
         }
-
     }
 
 }

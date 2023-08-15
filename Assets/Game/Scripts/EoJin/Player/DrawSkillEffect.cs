@@ -26,8 +26,9 @@ public class DrawSkillEffect : MonoBehaviourPun
         {
             Vector3 playerNInst = startPos - effects[10].transform.position;
             Vector3 instVecButYIsZero = new Vector3(playerNInst.x, 0f, playerNInst.z);
-            
+
             //2.5f더한 이유는 조금 오바되는 게 시각적으로 좋을 것 같아서 이펙트 속도 0.3기준
+            //if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + GameManager.Data.CurCharacter.skillEffect.additionalTime || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + GameManager.Data.CurCharacter.skillEffect.additionalTime)
             if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + 4f || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + 4f)
                 DestroyAllEffects();
         }
@@ -51,16 +52,14 @@ public class DrawSkillEffect : MonoBehaviourPun
     //{
     //    skillAttacker.OnSkillStart -= EffectStart;
     //}
-
-    Coroutine destroyRoutine;
-    public void EffectStart(int skillnum , Vector3 mousePos) // 0 == primary, 1 == secondory, 2 == special skill
+    public void EffectStart(int skillnum, Vector3 mousePos) // 0 == primary, 1 == secondory, 2 == special skill
     {
         //object[] skilldata = new object[] { skill.skillName };
         photonView.RPC("RequestEffectStart", RpcTarget.AllViaServer, skillnum, mousePos);
     }
 
     [PunRPC]
-    private void RequestEffectStart(int skillnum, Vector3 mousePos) 
+    private void RequestEffectStart(int skillnum, Vector3 mousePos)
     {
         var skill = GameManager.Data.CurCharacter.primarySkill;
         switch (skillnum)
@@ -78,6 +77,7 @@ public class DrawSkillEffect : MonoBehaviourPun
                 break;
         }
 
+
         startPos = transform.position;
         Vector3 playerNmouse = (startPos - mousePos).normalized;
         destination = playerNmouse * skill.range;
@@ -88,7 +88,7 @@ public class DrawSkillEffect : MonoBehaviourPun
         for (int i = -10; i <= 10; i++)
         {
             float angle = skill.angle * (0.1f * i);
-            GameObject instance = Instantiate(skill.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
+            GameObject instance = Instantiate(GameManager.Data.CurCharacter.skillEffect.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
 
             effects.Add(instance);
         }

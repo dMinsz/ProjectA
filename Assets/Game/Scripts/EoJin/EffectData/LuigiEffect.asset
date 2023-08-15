@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1995179ff9869fb43800b0eed863fc25, type: 3}
-  m_Name: JulietteStat
+  m_Script: {fileID: 11500000, guid: c2c110bdbe66cee49a0e3e135dce9d5a, type: 3}
+  m_Name: LuigiEffect
   m_EditorClassIdentifier: 
-  hp: 30
-  power: 100
-  speed: 450
+  effectPrefab: {fileID: 100008, guid: 1caf2b25b73682246b4f22e654cefec7, type: 3}
+  additionalTime: 0
