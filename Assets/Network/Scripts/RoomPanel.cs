@@ -439,7 +439,13 @@ public class RoomPanel : MonoBehaviour
 
     private void SwitchLocalPlayerBlueTeam(Player player)
     {
-        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue || player.GetReady() || blueTeamCount >= maxBlueTeamCount)
+        if (player.GetReady() || blueTeamCount >= maxBlueTeamCount)
+        {
+            StatePanel.Instance.AddMessage("Can't change team while ready");
+            return;
+        }
+
+        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
             return;
 
         player.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
@@ -449,7 +455,13 @@ public class RoomPanel : MonoBehaviour
 
     private void SwitchLocalPlayerRedTeam(Player player)
     {
-        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red || player.GetReady() || redTeamCount >= maxRedTeamCount)
+        if (player.GetReady() || redTeamCount >= maxRedTeamCount)
+        {
+            StatePanel.Instance.AddMessage("Can't change team while ready");
+            return;
+        }
+
+        if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Red)
             return;
 
         player.SetTeamColor((int)PlayerEntry.TeamColor.Red);

@@ -8,6 +8,7 @@ public class StatePanel : MonoBehaviour
 {
     //[SerializeField] RectTransform content;
     //[SerializeField] TMP_Text logPrefab;
+    [SerializeField] GameObject UI;
     [SerializeField] TMP_Text textArea;
 
     private ClientState state;
@@ -42,17 +43,13 @@ public class StatePanel : MonoBehaviour
 
     public void NewText(string newText)
     {
-        StartCoroutine(NewTextRoutine(newText));
+        UI.SetActive(true);
+        textArea.text = newText;
     }
 
-    IEnumerator NewTextRoutine(string newText)
+    public void CloseButton()
     {
-        textArea.text = newText;
-
-        yield return new WaitForSeconds(2f);
-
         textArea.text = "";
-
-        yield break;
+        UI.SetActive(false);
     }
 }
