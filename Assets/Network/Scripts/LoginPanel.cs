@@ -97,7 +97,8 @@ public class LoginPanel : MonoBehaviour
         {
             //StatePanel.Instance.AddMessage($"Login error : {ex.Message}");
             Debug.Log(ex.Message);
-            DB.reader.Close();
+            if (!DB.reader.IsClosed)
+                DB.reader.Close();
         }
 
     }

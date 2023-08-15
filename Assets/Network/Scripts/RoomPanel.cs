@@ -7,7 +7,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomPanel : MonoBehaviour
@@ -17,12 +16,8 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] GameObject[] blueTeamCharacterSpot;
     [SerializeField] GameObject[] redTeamCharacterSpot;
     [SerializeField] PlayerEntry playerEntryPrefab;
-    //[SerializeField] TMP_Text blueTeamsCountText;
-    //[SerializeField] TMP_Text redTeamsCountText;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
-    [SerializeField] Button readyButton;
-    //[SerializeField] TMP_Text[] CharacterName;
 
     private DataManager dataManager;
     private int blueTeamCount;
@@ -41,7 +36,6 @@ public class RoomPanel : MonoBehaviour
     {
         dataManager = GameManager.Data;
         playerDictionary = new Dictionary<int, PlayerEntry>();
-        //playerCharacterModeling = new Dictionary<int, GameObject>();      // playerDictionary랑 합치는게 좋을듯
         blueTeamPlayerDic = new Dictionary<Player, Character>();            // TeamManager 쓰면 안만들고 TeamManager의 함수 쓰면 됨
         redTeamPlayerDic = new Dictionary<Player, Character>();
         blueTeamPlayerNameList = new List<string>();                        // CurrnetRoom 의 CustomProperty 와 동기화 할 때 쓰는 놈
@@ -51,31 +45,10 @@ public class RoomPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        blueTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList());
+        blueTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList());     // 입장하면 각 팀의 플레이어 정보 가져옴
         redTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetRedTeamPlayerList());
 
-        //foreach (Player player in PhotonNetwork.PlayerList)     // 팀별로 구분
-        //{
-        //    PlayerEntry entry;
-
-        //    if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-        //    {
-        //        entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
-        //        blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-        //        blueTeamPlayerNameList.Add(player.NickName);
-        //    }
-        //    else
-        //    {
-        //        entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
-        //        redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-        //        redTeamPlayerNameList.Add(player.NickName);
-        //    }
-
-        //    entry.SetPlayer(player);
-        //    playerDictionary.Add(player.ActorNumber, entry);
-        //}
-
-        foreach (string playerName in blueTeamPlayerNameList)
+        foreach (string playerName in blueTeamPlayerNameList)                                   // 각 팀의 정보에 맞추어 PlayerEntry 생성
         {
             Player player = PhotonNetwork.CurrentRoom.Players.Values.FirstOrDefault(player => player.NickName == playerName);
             PlayerEntry entry;
@@ -95,7 +68,7 @@ public class RoomPanel : MonoBehaviour
             playerDictionary.Add(player.ActorNumber, entry);
         }
 
-        PhotonNetwork.LocalPlayer.SetCharacterName("None");
+        PhotonNetwork.LocalPlayer.SetCharacterName("None");             // LocalPlayer의 CustomProperty들 기본값으로 초기화
         PhotonNetwork.LocalPlayer.SetLoad(false);
         PhotonNetwork.LocalPlayer.SetReady(false);
         AllPlayerTeamCheck();
@@ -109,47 +82,38 @@ public class RoomPanel : MonoBehaviour
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    private void OnDisable()
+    private void OnDisable()    // CurrentRoom과 관련된 사항들 초기화
     {
         foreach (int actorNumber in playerDictionary.Keys)
-        {
             Destroy(playerDictionary[actorNumber].gameObject);
-        }
 
         PhotonNetwork.LocalPlayer.SetTeamColor(0);
-        playerDictionary.Clear();
-        blueTeamPlayerDic.Clear();
-        blueTeamPlayerNameList.Clear();
-        redTeamPlayerDic.Clear();
-        redTeamPlayerNameList.Clear();
 
         foreach (GameObject characterModeling in compliteSpotCharacterList)
         {
             Destroy(characterModeling.gameObject);
         }
+
+        playerDictionary.Clear();
+        blueTeamPlayerDic.Clear();
+        blueTeamPlayerNameList.Clear();
+        redTeamPlayerDic.Clear();
+        redTeamPlayerNameList.Clear();
         compliteSpotCharacterList.Clear();
         PhotonNetwork.AutomaticallySyncScene = false;
     }
 
     public void PlayerEnterRoom(Player newPlayer)
     {
-        if (PhotonNetwork.CurrentRoom.GetBlueTeamsCount() <= PhotonNetwork.CurrentRoom.GetRedTeamsCount())
-            newPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Blue);
-        else
+        if (PhotonNetwork.CurrentRoom.GetBlueTeamsCount() > PhotonNetwork.CurrentRoom.GetRedTeamsCount())
             newPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
 
         PlayerEntry entry;
 
         if (newPlayer.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-        {
             entry = Instantiate(playerEntryPrefab, blueTeamPlayerContent);
-            //blueTeamPlayerDic.Add(newPlayer.NickName, dataManager.SetCharacter(newPlayer.GetCharacterName()));    // 아마도 none일거임, 확인필요
-        }
         else
-        {
             entry = Instantiate(playerEntryPrefab, redTeamPlayerContent);
-            //redTeamplayerDic.Add(newPlayer.NickName, dataManager.SetCharacter(newPlayer.GetCharacterName()));
-        }
 
         entry.SetPlayer(newPlayer);
         playerDictionary.Add(newPlayer.ActorNumber, entry);
@@ -183,11 +147,7 @@ public class RoomPanel : MonoBehaviour
         playerDictionary[targetPlayer.ActorNumber].ChangeCustomProperty(changedProps);
 
         if (changedProps.ContainsKey(CustomProperty.TEAM))
-        {
             RenewalPlayerEntry();
-            //PhotonNetwork.CurrentRoom.SetBlueTeamPlayerList(blueTeamPlayerNameList);
-            //PhotonNetwork.CurrentRoom.SetRedTeamPlayerList(redTeamPlayerNameList);
-        }
 
         if (changedProps.ContainsKey(CustomProperty.CHARACTERNAME))
         {
@@ -201,12 +161,7 @@ public class RoomPanel : MonoBehaviour
             SetCharactorAtSpot();
         }
 
-        //if (changedProps.ContainsKey(CustomProperty.BLUETEAMSPLAYERLIST))
-        //    //playerDictionary[targetPlayer.NickName].
-
         AllPlayerReadyCheck();
-        //blueTeamsCountText.text = $"{blueTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
-        //redTeamsCountText.text = $"{redTeamsCount} / {PhotonNetwork.CurrentRoom.MaxPlayers / 2}";
     }
 
     public void MasterClientSwitched(Player newMasterClient)
@@ -220,8 +175,6 @@ public class RoomPanel : MonoBehaviour
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        //GameManager.Data.BlueTeamPlayerList = PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList();
-        //GameManager.Data.RedTeamPlayerList = PhotonNetwork.CurrentRoom.GetRedTeamPlayerList();
         //goto Game
         PhotonNetwork.LoadLevel("GameScene");
     }
@@ -275,27 +228,10 @@ public class RoomPanel : MonoBehaviour
     {
         blueTeamCount = 0;
         redTeamCount = 0;
-        blueTeamPlayerDic.Clear();    // 싹 초기화하고 다시 만드는것보다는 TeamCheck 밖에서 각 항목을 삭제, 추가하는게 좋을것같음, 근데 어짜피 Renewal에서 기존 dic을 초기화 시켜주는데 걍 통일시키자
+        blueTeamPlayerDic.Clear();
         redTeamPlayerDic.Clear();
         blueTeamPlayerNameList.Clear();
         redTeamPlayerNameList.Clear();
-
-        //foreach (Player player in PhotonNetwork.PlayerList)
-        //{
-        //    if (player.GetTeamColor() == (int)PlayerEntry.TeamColor.Blue)
-        //    {
-        //        ++blueTeamCount;
-        //        blueTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-        //        blueTeamPlayerNameList.Add(player.NickName);
-        //    }
-        //    else
-        //    {
-        //        ++redTeamCount;
-        //        redTeamPlayerDic.Add(player, dataManager.GetCharacter(player.GetCharacterName()));
-        //        redTeamPlayerNameList.Add(player.NickName);
-        //    }
-        //}
-
         blueTeamPlayerNameList.AddRange(PhotonNetwork.CurrentRoom.GetBlueTeamPlayerList());
         foreach (string playerName in blueTeamPlayerNameList)
         {
