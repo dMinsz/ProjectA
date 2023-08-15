@@ -11,6 +11,10 @@ public class SoundManager : MonoBehaviour
     public enum Sound { Master, Music, Effect, Voice };
     string str;
 
+    [SerializeField] List<AudioClip> playerSound;
+    [SerializeField] List<AudioClip> musics;
+    [SerializeField] List<AudioClip> voices;
+
     /// <summary>
     /// value must be over 0, under 1
     /// </summary>

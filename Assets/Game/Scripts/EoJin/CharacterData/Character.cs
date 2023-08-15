@@ -10,6 +10,7 @@ public class Character : ScriptableObject
     [SerializeField] public Avatar avatar; //모델은 이미 플레이어가 갖고 있게 했으므로 아바타만 변경해줌
     [SerializeField] public RuntimeAnimatorController animator;
     [SerializeField] public Effect skillEffect;
+    [SerializeField] public bool hasFemaleVoice;
 
     [SerializeField] public Stat stat;
     [SerializeField] public Skill primarySkill; //마우스 우클릭
