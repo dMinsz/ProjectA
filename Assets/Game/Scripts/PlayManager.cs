@@ -118,9 +118,12 @@ public class PlayManager : MonoBehaviourPunCallbacks
             var player = PhotonNetwork.Instantiate("Players", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
 
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
-            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", "Mario");
+            //test
+            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", "PeachFarmer");
 
-            GameManager.Data.ChangeCharacter("Mario");
+            GameManager.Data.ChangeCharacter("PeachFarmer");
+
+            
 
             pPlayerList.Add(player);
 
@@ -190,18 +193,6 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             redTeamChecker.Add(true);
         }
-
-        //foreach (var player in PhotonNetwork.PlayerList)
-        //{
-        //    if (player.GetTeamColor() == 0) // blue
-        //    {
-        //        blueTeamChecker.Add(true);
-        //    }
-        //    else
-        //    {
-        //        redTeamChecker.Add(true);
-        //    }
-        //}
     }
 
     private int PlayerLoadCount()
@@ -234,7 +225,6 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     public void ResetRound()
     {
-
         RespawnPuck();
         ResetPlayers();
     }
