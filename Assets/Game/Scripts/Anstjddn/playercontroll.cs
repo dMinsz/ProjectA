@@ -136,7 +136,10 @@ using UnityEngine.InputSystem;
             transform.position += dashdirspeed;
             yield return null;
         }
-        playerdashing = false;
+        if (distance < 0.1f)
+        {
+            playerdashing = false;
+        }
     }
 
  }
