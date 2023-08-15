@@ -104,5 +104,9 @@ public class SignUpPanel : MonoBehaviour
         }
     }
 
+    public void OnCancelButton()
+    {
+        Lm.SetActivePanel(LobbyManager.Panel.Login);
+    }
 
 }

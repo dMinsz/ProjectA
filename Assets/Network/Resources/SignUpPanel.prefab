@@ -478,7 +478,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6008917846960432759
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2736,7 +2736,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5398436063833943599}
         m_TargetAssemblyTypeName: SignUpPanel, Assembly-CSharp
-        m_MethodName: SignUp
+        m_MethodName: OnCancelButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
