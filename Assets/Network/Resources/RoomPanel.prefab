@@ -321,7 +321,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 550, y: 197.5}
+  m_AnchoredPosition: {x: 550, y: 135}
   m_SizeDelta: {x: 700, y: 685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5848180984937332010
@@ -2095,7 +2095,6 @@ MonoBehaviour:
     type: 3}
   gameTypeText: {fileID: 7976770418309211869}
   startButton: {fileID: 1849734128114047811}
-  readyButton: {fileID: 5454343046331419146}
 --- !u!1 &5454343045551250796
 GameObject:
   m_ObjectHideFlags: 0
@@ -3888,7 +3887,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -550, y: 197.5}
+  m_AnchoredPosition: {x: -550, y: 135}
   m_SizeDelta: {x: 700, y: 685}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5454343047667415288
