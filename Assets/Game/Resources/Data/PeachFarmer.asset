@@ -17,6 +17,7 @@ MonoBehaviour:
   avatar: {fileID: 9000000, guid: b82224baedd2f1f4fb06cef1b9f41801, type: 3}
   animator: {fileID: 9100000, guid: 577a58c4bf4370341ade2e0876e2815b, type: 2}
   modeling: {fileID: 695872585106519997, guid: 18e38a41787ee9b438746335309001b3, type: 3}
+  skillEffect: {fileID: 11400000, guid: 13e4dd7511ffe244fb1a5a85c69ffa46, type: 2}
   stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
   primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
   secondarySkill: {fileID: 11400000, guid: b465fe4de9b506b4d8abbb4813e96b8a, type: 2}
