@@ -465,12 +465,17 @@ public class RoomPanel : MonoBehaviour
     public void OnSwitchRedTeamButton()
     {
         SwitchLocalPlayerRedTeam(PhotonNetwork.LocalPlayer);
+
     }
 
     public void OnSelectCharacterButton()
     {
         if (PhotonNetwork.LocalPlayer.GetReady())
+        {
+            StatePanel.Instance.AddMessage("Can't change character while ready");
+            
             return;
+        }
 
         GameObject clickButton = EventSystem.current.currentSelectedGameObject;
         PhotonNetwork.LocalPlayer.SetCharacterName((clickButton.GetComponentInChildren<TMP_Text>().text));
@@ -479,7 +484,11 @@ public class RoomPanel : MonoBehaviour
     public void OnReadyButton()
     {
         if (PhotonNetwork.LocalPlayer.GetCharacterName() == "None")
+        {
+            StatePanel.Instance.AddMessage("Pleas Select Character");
+
             return;
+        }
 
         bool ready = PhotonNetwork.LocalPlayer.GetReady();
         ready = !ready;

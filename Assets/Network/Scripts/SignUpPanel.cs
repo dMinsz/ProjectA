@@ -29,7 +29,7 @@ public class SignUpPanel : MonoBehaviour
             string id = idInputField.text;
             if (id == null) 
             {
-                //StatePanel.Instance.AddMessage($"CheckID is null error :");
+                StatePanel.Instance.AddMessage($"CheckID is null error :");
             }
 
             string sqlCommand = string.Format("SELECT id FROM user_info WHERE id='{0}'", id);
@@ -39,7 +39,7 @@ public class SignUpPanel : MonoBehaviour
             if (!DB.reader.HasRows)
             {
                 canUsedId = true;
-                //StatePanel.Instance.AddMessage($"That ID can be used.");
+                StatePanel.Instance.AddMessage($"That ID can be used.");
 
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
@@ -47,7 +47,7 @@ public class SignUpPanel : MonoBehaviour
             else 
             {
                 canUsedId = false;
-                //StatePanel.Instance.AddMessage($"That ID cannot be used.");
+                StatePanel.Instance.AddMessage($"That ID cannot be used.");
 
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
@@ -56,7 +56,7 @@ public class SignUpPanel : MonoBehaviour
         }
         catch (Exception ex)
         {
-            //StatePanel.Instance.AddMessage($"SignUp CheckID error : {ex.Message}");
+            StatePanel.Instance.AddMessage($"SignUp CheckID error : {ex.Message}");
             Debug.Log(ex.Message);
         }
     }
@@ -69,7 +69,7 @@ public class SignUpPanel : MonoBehaviour
             if (canUsedId == false) 
             {
                 Debug.Log("Please check id duplicate");
-                //StatePanel.Instance.AddMessage("Please check id duplicate");
+                StatePanel.Instance.AddMessage("Please check id duplicate");
                 return;
             }
 
@@ -83,13 +83,13 @@ public class SignUpPanel : MonoBehaviour
 
             if (cmd.ExecuteNonQuery() == 1)
             {
-                //StatePanel.Instance.AddMessage(name + "Member registration complete, id : " + id);
+                StatePanel.Instance.AddMessage(name + "Member registration complete, id : " + id);
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
             }
             else
             {
-                //StatePanel.Instance.AddMessage("registration error");
+                StatePanel.Instance.AddMessage("registration error");
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
             }
@@ -99,10 +99,14 @@ public class SignUpPanel : MonoBehaviour
         }
         catch (Exception ex)
         {
-            //StatePanel.Instance.AddMessage($"SignUp error : {ex.Message}");
+            StatePanel.Instance.AddMessage($"SignUp error : {ex.Message}");
             Debug.Log(ex.Message);
         }
     }
 
+    public void OnCancelButton()
+    {
+        Lm.SetActivePanel(LobbyManager.Panel.Login);
+    }
 
 }

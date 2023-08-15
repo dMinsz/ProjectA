@@ -62,7 +62,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SetActivePanel(Panel.Menu);
         Debug.Log($"Join random room failed with error({returnCode}) : {message}");
-        statePanel.AddMessage($"Join random room failed with error({returnCode}) : {message}");
+        //statePanel.AddMessage($"Join random room failed with error({returnCode}) : {message}");
         menuPanel.JoinRandomMathingFailed();
     }
 
