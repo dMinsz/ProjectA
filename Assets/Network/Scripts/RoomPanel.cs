@@ -174,8 +174,6 @@ public class RoomPanel : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("ASDFASDFASDFSADFASDFASDFASD");
-
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
@@ -221,6 +219,12 @@ public class RoomPanel : MonoBehaviour
                 startButton.gameObject.SetActive(false);
                 StartImage.gameObject.SetActive(false);
             }
+        }
+        else
+        {
+            allPlayerReadyImage.gameObject.SetActive(false);
+            startButton.gameObject.SetActive(false);
+            StartImage.gameObject.SetActive(false);
         }
     }
 

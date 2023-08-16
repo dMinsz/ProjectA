@@ -26,6 +26,11 @@ public class PlayerEntry : MonoBehaviour
         playerReady.text = player.GetReady() ? "Ready" : "";
         Team(player.GetTeamColor());
         SelectCharacter(player.GetCharacterName());
+
+        if (player == PhotonNetwork.LocalPlayer)
+            localPlayerBackGround.gameObject.SetActive(true);
+        else
+            localPlayerBackGround.gameObject.SetActive(false);
     }
 
     public void Ready()
@@ -55,13 +60,9 @@ public class PlayerEntry : MonoBehaviour
     public void SelectCharacter(string selectCharacterName)
     {
         GameManager.Data.ChangeCharacter(selectCharacterName);
-        localPlayerBackGround.enabled = false;
 
         if (player == PhotonNetwork.LocalPlayer)
-        {
             curCharacter = GameManager.Data.CurCharacter;
-            localPlayerBackGround.enabled = true;
-        }
 
         characterName.text = GameManager.Data.CurCharacter.name;
         characterImage.sprite = GameManager.Data.CurCharacter.Image;
