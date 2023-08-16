@@ -20,7 +20,8 @@ MonoBehaviour:
   hasFemaleVoice: 0
   modeling: {fileID: 2363307657413207293, guid: 41ff223d52cc4d442b192e765bf946c5,
     type: 3}
-  stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
-  primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
-  secondarySkill: {fileID: 11400000, guid: b465fe4de9b506b4d8abbb4813e96b8a, type: 2}
-  specialSkill: {fileID: 11400000, guid: 74963673851f31348941000e3c603037, type: 2}
+  stat: {fileID: 11400000, guid: 0a348a42d590cf64bae4100875bc8868, type: 2}
+  attackUIImage: {fileID: 21300000, guid: d85d505999c8b8840a96928b3d3bf536, type: 3}
+  primarySkill: {fileID: 11400000, guid: bafd6fc23636e744a98356636d078564, type: 2}
+  secondarySkill: {fileID: 11400000, guid: fcc9b6538b6aa1a4e8b2f19e46ba5dad, type: 2}
+  specialSkill: {fileID: 11400000, guid: af63e1e0a61d1d94ab87bac502cf226a, type: 2}

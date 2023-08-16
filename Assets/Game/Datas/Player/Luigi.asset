@@ -19,7 +19,8 @@ MonoBehaviour:
   skillEffect: {fileID: 11400000, guid: cd2aca0e13cd4d440acf5ec5638732c5, type: 2}
   hasFemaleVoice: 0
   modeling: {fileID: 275212714890997694, guid: ff1b5c7a1096c8d49b33c13c42787435, type: 3}
-  stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
-  primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
-  secondarySkill: {fileID: 11400000, guid: b465fe4de9b506b4d8abbb4813e96b8a, type: 2}
-  specialSkill: {fileID: 11400000, guid: 74963673851f31348941000e3c603037, type: 2}
+  stat: {fileID: 11400000, guid: e94c5745095a2aa44ac4461a1b76046f, type: 2}
+  attackUIImage: {fileID: 21300000, guid: c33b8e726eb264048ab29fc62938b4fa, type: 3}
+  primarySkill: {fileID: 11400000, guid: 755512c7e972cf64a8c1e4fd618fccc6, type: 2}
+  secondarySkill: {fileID: 11400000, guid: a90cad42e20326b41a3cadddc5c3511a, type: 2}
+  specialSkill: {fileID: 11400000, guid: d4c35b32df6b0a442b4ac2883ea61fad, type: 2}
