@@ -37,6 +37,15 @@ public class playercontroll : MonoBehaviour
         anim = GetComponent<Animator>();
 
 
+        if (GameManager.Data.CurCharacter == null)//debug Mode
+        {
+            movespeed = 30;
+        }
+        else 
+        {
+            movespeed = GameManager.Data.CurCharacter.stat.speed;
+        }
+
     }
 
     private void Update()
@@ -51,7 +60,7 @@ public class playercontroll : MonoBehaviour
             Move();
             Look();
         }
-        else
+        else // attack ing
         {
             //플레이어 어택할때마다 숙이는거 수정
             Vector3 aimpos = new Vector3(playerat.attackdir.x, transform.position.y, playerat.attackdir.z);
@@ -59,18 +68,19 @@ public class playercontroll : MonoBehaviour
             Move();
         }
 
-          if(playerrb.velocity ==new Vector3(0, 0, 0))
-            {
-                anim.SetBool("move", false);
-            }
-            else
-            {
-                anim.SetBool("move", true);
-            }
-          if(movedir.magnitude == 0)
-            {
-                return;
-            }
+        if (playerrb.velocity == new Vector3(0, 0, 0))
+        {
+            anim.SetBool("move", false);
+        }
+        else
+        {
+            anim.SetBool("move", true);
+        }
+        if (movedir.magnitude == 0)
+        {
+            return;
+        }
+
         if (dashskill.isskilling)
         {
             transform.LookAt(dashskill.skilldir);

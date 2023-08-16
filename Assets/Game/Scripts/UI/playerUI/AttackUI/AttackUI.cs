@@ -10,10 +10,14 @@ public class AttackUI : BaseUI
     [SerializeField] PlayerAim player;          //플레이어 attacktime받을려고 적음
     public TMP_Text playerAttackCoolTime;       // attacktime
     [SerializeField] GameObject mouseattackcolltimeUI;
+    [SerializeField] public Image attackUIImage;
     protected override void Awake()
     {
         base.Awake();
-   
+
+
+        attackUIImage.sprite = GameManager.Data.CurCharacter.attackUIImage;
+
         playerAttackCoolTime = texts["playerAttackCoolTime"];           //텍스트 받고
 
         playerAttackCoolTime.text = mouseattackcolltimeUI.GetComponent<Image>().fillAmount.ToString("F1");

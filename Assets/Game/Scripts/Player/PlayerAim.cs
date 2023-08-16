@@ -23,11 +23,13 @@ public class PlayerAim : MonoBehaviourPun //, IPunInstantiateMagicCallback
     private float circleReuslt;
 
     public Vector3 attackdir;
+    private AudioSource voice;
 
     private void Awake()
     {
         circleReuslt = Mathf.Pow(attacksize, 2);
         playeranim = GetComponent<Animator>();
+        voice = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -101,13 +103,14 @@ public class PlayerAim : MonoBehaviourPun //, IPunInstantiateMagicCallback
 
         if (circleReuslt >= Mathf.Pow(playerPos.x - puckPos.x, 2) + Mathf.Pow(playerPos.z - puckPos.z, 2)) // 원의 범위안에 좌표가있는지 확인 
         {
-
             Vector3 dir = (mousePos - playerPos).normalized;
             Vector3 newVelocity = dir * attackpower;
 
             puck.GetComponent<Puck>().SetPos(newVelocity, puckPos);//, info);
 
             isattack = true;
+            voice.Play();
+            playeranim.SetTrigger("attack");
             yield return new WaitForSeconds(attackCoolTime);
             isattack = false;
         }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlameFlurry
   m_EditorClassIdentifier: 
   skillName: Flame Flurry
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 7c0931be55762c24f80c80e861d88dd7, type: 3}
   description: 
   key: 1
   rangeStyle: 0

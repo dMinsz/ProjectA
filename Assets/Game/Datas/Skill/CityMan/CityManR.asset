@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b9dfe044253fc74789a044cf1b18f82, type: 3}
-  m_Name: FlyingPhoenix
+  m_Name: CityManR
   m_EditorClassIdentifier: 
-  skillName: Flying Phoenix
-  image: {fileID: 21300000, guid: fb5deb2ea7e516c4ca001ae551658fb3, type: 3}
+  skillName: 
+  image: {fileID: 21300000, guid: 702a199e5d4904b45af4229e84c0bb5c, type: 3}
   description: 
   key: 2
-  rangeStyle: 2
-  angle: 10
-  range: 7
-  additionalRange: 2
-  isDash: 1
-  duration: 4
-  coolTime: 3
+  rangeStyle: 0
+  angle: 60
+  range: 12
+  additionalRange: 0
+  isDash: 0
+  duration: 0
+  coolTime: 6
   damage: 10

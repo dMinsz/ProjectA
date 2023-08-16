@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "CharacterData", menuName = "Scriptable Object/CharacterData")]
 public class Character : ScriptableObject
@@ -13,15 +14,9 @@ public class Character : ScriptableObject
     [SerializeField] public bool hasFemaleVoice;
     [SerializeField] public GameObject modeling;//For Looby
     [SerializeField] public Stat stat;
+    [SerializeField] public Sprite attackUIImage;
     [SerializeField] public Skill primarySkill; //마우스 우클릭
     [SerializeField] public Skill secondarySkill; //스페이스바
     [SerializeField] public Skill specialSkill; //R
 
-    public void Init()
-    {
-        stat.Init(stat);
-        primarySkill.Init(primarySkill);
-        secondarySkill.Init(secondarySkill);
-        specialSkill.Init(specialSkill);
-    }
 }

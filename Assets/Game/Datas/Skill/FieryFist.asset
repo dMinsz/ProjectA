@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FieryFist
   m_EditorClassIdentifier: 
   skillName: Fiery Fist
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: 5f1b2283cebb33a4fbf5c9ffb1e50ee2, type: 3}
   description: 
   key: 0
   rangeStyle: 0

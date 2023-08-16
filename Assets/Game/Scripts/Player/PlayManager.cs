@@ -119,9 +119,9 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
             //test
-            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", "PeachFarmer");
+            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", "Mario");
 
-            GameManager.Data.ChangeCharacter("PeachFarmer");
+            GameManager.Data.ChangeCharacter("Mario");
 
             
 

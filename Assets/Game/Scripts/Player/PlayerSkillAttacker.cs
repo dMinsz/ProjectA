@@ -46,8 +46,10 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     private Character curCharacter;
 
+    private AudioSource voice;
     public void Awake()
     {
+        voice = GetComponent<AudioSource>();
         aim = gameObject.GetComponent<PlayerAim>();
         anim = GetComponent<Animator>();
 
@@ -106,14 +108,25 @@ public class PlayerSkillAttacker : MonoBehaviour
                 ApplyDamage(damage , 0 , aim.mousepos);
 
                 isQDubleClick = false;
+
+                if (curCharacter.primarySkill.isDash == true)
+                {
+                    playerdash.Dash();
+                    isQDubleClick = false;
+                }
+
+
+
                 DrawRange.SetIsDrawingFalse();
                 primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
-                //primarySkillCoroutine = StartCoroutine(skillDurationPrimary());
+                
             }
             else 
             {
                 isQDubleClick = true;
             }
+
+            voice.Play();
 
         }
 
@@ -146,6 +159,15 @@ public class PlayerSkillAttacker : MonoBehaviour
 
                 isEDubleClick = false;
 
+
+                if (curCharacter.secondarySkill.isDash == true)
+                {
+                    playerdash.Dash();
+                    isEDubleClick = false;
+                }
+
+
+
                 DrawRange.SetIsDrawingFalse();
                 secondarySkillCoroutine = StartCoroutine(skillCoolTimeSecondary());
                 //primarySkillCoroutine = StartCoroutine(skillDurationSecondary());
@@ -154,7 +176,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             {
                 isEDubleClick = true;
             }
-
+            voice.Play();
         }
     }
 
@@ -180,9 +202,13 @@ public class PlayerSkillAttacker : MonoBehaviour
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
                 ApplyDamage(damage,2, aim.mousepos);
-                //½ÇÇè
-                playerdash.Dash();
-                isRDubleClick = false;
+                
+                if (curCharacter.specialSkill.isDash == true) 
+                {
+                    playerdash.Dash();
+                    isRDubleClick = false;
+                }
+
 
                 DrawRange.SetIsDrawingFalse();
                 specialSkillCoroutine = StartCoroutine(skillCoolTimeSpecial());
@@ -191,7 +217,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             {
                 isRDubleClick = true;
             }
-
+            voice.Play();
         }
 
     }
@@ -200,6 +226,7 @@ public class PlayerSkillAttacker : MonoBehaviour
     {
         isskilling = true;
         skilldir = aim.mousepos;
+        transform.LookAt(skilldir);
         yield return new WaitForSeconds(0.5f);
         isskilling = false;
     }

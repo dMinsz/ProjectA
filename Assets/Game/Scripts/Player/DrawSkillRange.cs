@@ -52,7 +52,6 @@ public class DrawSkillRange : MonoBehaviour
     public void Update()
     {
 
-
         if (isDrawing)
         {
             Draw();
@@ -77,6 +76,10 @@ public class DrawSkillRange : MonoBehaviour
         if (attacker.skill.rangeStyle == Skill.RangeStyle.Arc)
         {
             DrawWithLineRenderer();
+            MakeArcWithLine();
+        }
+        else if (attacker.skill.rangeStyle == Skill.RangeStyle.Circle) 
+        {
             MakeArcWithLine();
         }
         else
@@ -150,6 +153,7 @@ public class DrawSkillRange : MonoBehaviour
 
     public void MakeArcWithLine()
     {
+        line.SetActive(true);
         line.GetComponent<LineRenderer>().positionCount = segments;
 
         Vector3 dir = (aim.mousepos - transform.position).normalized;
