@@ -137,7 +137,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", CharacterName);
 
-            GameManager.Data.ChangeCharacter(CharacterName);
+            //GameManager.Data.ChangeCharacter(CharacterName);
 
             
 
@@ -158,7 +158,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
             skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(CharacterName));
 
             player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Debug2", CharacterName);
-            GameManager.Data.ChangeCharacter(CharacterName);
+            //GameManager.Data.ChangeCharacter(CharacterName);
             //pPlayerList.Add(player);
 
             //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID , CharacterName };
