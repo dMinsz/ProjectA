@@ -45,7 +45,6 @@ using UnityEngine.InputSystem;
         {
             return;
         }
-
         if (!playerat.isattack)
         {
                  Move();
@@ -71,6 +70,11 @@ using UnityEngine.InputSystem;
             {
                 return;
             }
+        if (dashskill.isskilling)
+        {
+            transform.LookAt(dashskill.skilldir);
+            Move();
+        }
 
     }
         private void Move()
@@ -108,7 +112,7 @@ using UnityEngine.InputSystem;
 
         if (dashDistanceSquare< dashskill.range* dashskill.range)    //스킬 범위 안에 있을때 움직이게
         {                                                         
-            StartCoroutine(PlayerSkillRangeDash(playerat.mousepos,0.05f));
+            StartCoroutine(PlayerSkillRangeDash(playerat.mousepos, 0.05f));
 
         }
         else                    //스킬범위 바깥일때
@@ -119,7 +123,7 @@ using UnityEngine.InputSystem;
              Vector3 dir = new Vector3(x, 0, z).normalized;
             Vector3 destination = transform.position;
             destination+= new Vector3(dir.x * dashskill.range, 0, dir.z * dashskill.range);
-            StartCoroutine(PlayerSkillRangeDash(destination,0.1f));
+            StartCoroutine(PlayerSkillRangeDash(destination,1f));
         }
         }
 
@@ -127,7 +131,7 @@ using UnityEngine.InputSystem;
     {
         playerdashing = true;
         float distance = Mathf.Abs(Vector3.Distance(transform.position, destination));
-        while (distance > 0.1f)
+        while (distance > 1f)
         {
             distance = Mathf.Abs(Vector3.Distance(transform.position,destination));
             float xspeed = destination.x - transform.position.x;
@@ -136,10 +140,11 @@ using UnityEngine.InputSystem;
             transform.position += dashdirspeed;
             yield return null;
         }
-        if (distance < 0.1f)
+        if (distance < 1f)
         {
             playerdashing = false;
         }
+        playerdashing = false;
     }
 
  }

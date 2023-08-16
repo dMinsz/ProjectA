@@ -155,7 +155,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PrimarySkill
-  m_Speed: 5
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -9056744107105412091}
@@ -168,8 +168,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 4474117ff4d0bc74f95970010b33a2c5,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: a52b696e91502734fb328e64e762cc62, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -232,7 +231,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 3
+    m_ConditionEvent: Blend
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -255,7 +257,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SecondarySkill
-  m_Speed: 7
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5225846109949808913}
@@ -268,8 +270,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 8ad48b57b81a92f4abd5e4e0cf3cdf6e,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 2edb4e371f8e37946bb15392ddf6ea19, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -320,13 +321,13 @@ AnimatorStateMachine:
     m_Position: {x: 250, y: -90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5028390314302455029}
-    m_Position: {x: 250, y: -30, z: 0}
+    m_Position: {x: 250, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1400910231888155778}
     m_Position: {x: 250, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -695317677824792192}
-    m_Position: {x: 250, y: -400, z: 0}
+    m_Position: {x: 250, y: -390, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -6188460568014419358}
@@ -350,7 +351,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Death
-  m_Speed: 2
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4294076584312764123}
@@ -363,7 +364,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 46ea4dfdee71cdb4bbbe5fcd6dbcff54,
+  m_Motion: {fileID: -203655887218126122, guid: 1ff044d67a6ef7545b661e41e3f891f9,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -376,7 +377,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mario
+  m_Name: Pauline
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Blend
@@ -520,7 +521,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpecailSkill
-  m_Speed: 6
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3260486762315683133}
@@ -533,8 +534,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 15131dfcebfa3cd49aa6b92580cc582a,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 2fffd421622931b47b76f6edd14b5e27, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -608,7 +608,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 36807cae99d914347b778bb3240c61c8, type: 3}
+  m_Motion: {fileID: 7400000, guid: 4bc55654605f3ff4580547c658a400b8, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
