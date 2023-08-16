@@ -78,6 +78,12 @@ public class ScoreChecker : MonoBehaviour
             yield return new WaitForEndOfFrame();
 
 
+            if (Input.GetKey(KeyCode.F12)) // for Debug
+            {
+                break;
+            }
+
+
             if (BluePoint >= MaxGoal || RedPoint >= MaxGoal)
             {
                 break;
@@ -93,8 +99,8 @@ public class ScoreChecker : MonoBehaviour
         PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.LeaveRoom();
 
-        GameManager.Scene.LoadScene("LobbyScene");
-        //PhotonNetwork.LoadLevel("LobbyScene");
+        //GameManager.Scene.LoadScene("LobbyScene");
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     public void EndBattle() 
