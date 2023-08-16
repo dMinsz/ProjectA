@@ -153,7 +153,9 @@ public class DrawSkillRange : MonoBehaviour
 
     public void MakeArcWithLine()
     {
-        line.SetActive(true);
+        line.GetComponent<LineRenderer>().startWidth = thickness;
+        line.GetComponent<LineRenderer>().endWidth = thickness;
+        line.GetComponent<LineRenderer>().materials[0].SetColor("_EmissionColor", color);
         line.GetComponent<LineRenderer>().positionCount = segments;
 
         Vector3 dir = (aim.mousepos - transform.position).normalized;

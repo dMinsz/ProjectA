@@ -80,10 +80,11 @@ public class DrawSkillEffect : MonoBehaviourPun
 
         startPos = transform.position;
         Vector3 playerNmouse = (startPos - mousePos).normalized;
+
         destination = playerNmouse * skill.range;
 
-        Vector3 dir = (transform.position - mousePos);
-        var effectRotation = Quaternion.LookRotation(transform.position - mousePos);
+        Vector3 dir = (transform.position - mousePos).normalized;
+        var effectRotation = Quaternion.LookRotation(new Vector3(dir.x, 0f, dir.z));
 
         for (int i = -10; i <= 10; i++)
         {
