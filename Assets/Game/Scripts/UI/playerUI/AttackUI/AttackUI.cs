@@ -3,22 +3,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AttackUI : BaseUI
+public class AttackUI : MonoBehaviour
 {
 
 
-    [SerializeField] PlayerAim player;          //플레이어 attacktime받을려고 적음
+    [HideInInspector] public PlayerAim player;          //플레이어 attacktime받을려고 적음
     public TMP_Text playerAttackCoolTime;       // attacktime
     [SerializeField] GameObject mouseattackcolltimeUI;
     [SerializeField] public Image attackUIImage;
-    protected override void Awake()
+
+    public void SetUp(PlayerAim pl, Character nowCharacter)
     {
-        base.Awake();
+        player = pl;
 
-
-        attackUIImage.sprite = GameManager.Data.CurCharacter.attackUIImage;
-
-        playerAttackCoolTime = texts["playerAttackCoolTime"];           //텍스트 받고
+        attackUIImage.sprite = nowCharacter.attackUIImage;
 
         playerAttackCoolTime.text = mouseattackcolltimeUI.GetComponent<Image>().fillAmount.ToString("F1");
 
@@ -27,24 +25,22 @@ public class AttackUI : BaseUI
         mouseattackcolltimeUI.GetComponent<Image>().fillAmount = player.attackCoolTime;        //플레이어 공속 돌아가는거 시각화;
     }
 
- 
+
     private void Update()
     {
-        if (player.isattack)
+        if (player != null && player.isattack)
         {
             startcooltime();
         }
- 
+
     }
     private void startcooltime()
     {
-            StartCoroutine(cooltime(player.attackCoolTime));
+        StartCoroutine(cooltime(player.attackCoolTime));
     }
 
     IEnumerator cooltime(float time)
     {
-
-
 
         if (mouseattackcolltimeUI.GetComponent<Image>().fillAmount > 0)
         {
@@ -52,7 +48,7 @@ public class AttackUI : BaseUI
             mouseattackcolltimeUI.SetActive(true);
             mouseattackcolltimeUI.GetComponent<Image>().fillAmount -= Time.deltaTime;
         }
-        
+
         yield return new WaitForSeconds(time);
         if (mouseattackcolltimeUI.GetComponent<Image>().fillAmount <= 0)
         {
@@ -61,5 +57,5 @@ public class AttackUI : BaseUI
         }
 
     }
- 
+
 }

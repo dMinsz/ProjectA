@@ -16,7 +16,7 @@ public class LinkSkillUI : MonoBehaviourPun
     [SerializeField] public GameObject qskilcolltimeUI;   //q스킬
 
 
-    [SerializeField] public PlayerSkillAttacker playerskill;    //isskilling 받을려고 사용
+    [HideInInspector] public PlayerSkillAttacker playerskill;    //isskilling 받을려고 사용
 
 
     public Image eSkillImage;
@@ -27,44 +27,43 @@ public class LinkSkillUI : MonoBehaviourPun
     public TMP_Text rskilCoolTime;       // rcooltime
     [SerializeField] public GameObject rskilcolltimeUI;   //r스킬
 
+    bool isSetup = false;
 
-
-    protected void Awake()
+    public void SetUp(PlayerSkillAttacker pl, Character nowCharacter) 
     {
+        isSetup = true;
+        playerskill = pl;
+        character = nowCharacter;
 
-        if (photonView.IsMine)
+        ChangeUI();
+
+        qskilCoolTime.text = (qskilcolltimeUI.GetComponent<Image>().fillAmount * character.primarySkill.coolTime).ToString("F1");
+        //fillamount 최대값이 1.0이라서 쿨타임 곱함
+        qskilcolltimeUI.SetActive(false);
+
+
+        eskilCoolTime.text = (eskilcolltimeUI.GetComponent<Image>().fillAmount * character.secondarySkill.coolTime).ToString("F1");
+        eskilcolltimeUI.SetActive(false);
+
+        rskilCoolTime.text = (rskilcolltimeUI.GetComponent<Image>().fillAmount * character.specialSkill.coolTime).ToString("F1");
+        rskilcolltimeUI.SetActive(false);
+
+        
+    }
+
+    public void ChangeUI() 
+    {
+        if (isSetup)
         {
-            if (GameManager.Data.CurCharacter == null)
-            {//for debug
-                character = GameManager.Data.characters[1];
-            }
-            else 
-            {
-                character = GameManager.Data.CurCharacter;
-            }
-
             qSkillImage.sprite = character.primarySkill.image;
             eSkillImage.sprite = character.secondarySkill.image;
             rSkillImage.sprite = character.specialSkill.image;
-
-
-            qskilCoolTime.text = (qskilcolltimeUI.GetComponent<Image>().fillAmount * character.primarySkill.coolTime).ToString("F1");
-            //fillamount 최대값이 1.0이라서 쿨타임 곱함
-            qskilcolltimeUI.SetActive(false);
-
-
-            eskilCoolTime.text = (eskilcolltimeUI.GetComponent<Image>().fillAmount * character.secondarySkill.coolTime).ToString("F1");
-            eskilcolltimeUI.SetActive(false);
-
-            rskilCoolTime.text = (rskilcolltimeUI.GetComponent<Image>().fillAmount * character.specialSkill.coolTime).ToString("F1");
-            rskilcolltimeUI.SetActive(false);
-
         }
-
     }
+
     private void Update()
     {
-        if (photonView.IsMine)
+        if (isSetup)
         {
             if (playerskill.isSkillingPrimary)
             {

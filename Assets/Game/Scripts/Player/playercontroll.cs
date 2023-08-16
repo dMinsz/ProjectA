@@ -167,7 +167,10 @@ public class playercontroll : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Blocker"))
         {
             playerdashing = false;
-            StopCoroutine(mainRoutine);
+            if (mainRoutine != null)
+            {
+                StopCoroutine(mainRoutine);
+            }
         }
         
     }

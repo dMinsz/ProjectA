@@ -11,7 +11,6 @@ public class PlayerSetup : MonoBehaviourPun, IPunInstantiateMagicCallback
     [SerializeField] Transform floorMark;
     [SerializeField] Image floorMarkImg;
     [SerializeField] List<Color> playerColor;
-    //[SerializeField] Renderer surface;
     [SerializeField] Transform AttackRangeMark;
 
     [HideInInspector] public int playerTeam;
@@ -37,6 +36,7 @@ public class PlayerSetup : MonoBehaviourPun, IPunInstantiateMagicCallback
             AttackRangeMark.gameObject.SetActive(false);
             Destroy(input);
         }
+
     }
 
 
