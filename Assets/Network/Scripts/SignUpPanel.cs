@@ -16,7 +16,7 @@ public class SignUpPanel : MonoBehaviour
     [SerializeField] LobbyManager Lm;
 
     bool canUsedId = false;
-
+        
     private void OnEnable()
     {
         if (DB.isConnect == false)
@@ -68,15 +68,16 @@ public class SignUpPanel : MonoBehaviour
 
     public void CheckID() 
     {
+        string id = idInputField.text;
+
+        if (!InputFiledCaseCheck(idInputField))
+        {
+            canUsedId = false;
+            return;
+        }
+
         try 
         {
-            string id = idInputField.text;
-
-            if (!InputFiledCaseCheck(idInputField))
-            {
-                canUsedId = false;
-                return;
-            }
 
             string sqlCommand = string.Format("SELECT id FROM user_info WHERE id='{0}'", id);
             MySqlCommand cmd = new MySqlCommand(sqlCommand, DB.connection);
@@ -102,13 +103,16 @@ public class SignUpPanel : MonoBehaviour
         }
         catch (Exception ex)
         {
-            //StatePanel.Instance.AddMessage($"SignUp CheckID error : {ex.Message}");
+            StatePanel.Instance.AddMessage($"Please check the server");
             Debug.Log(ex.Message);
         }
     }
 
     public void SignUp() 
     {
+        if (!InputFiledCaseCheck(nameInputField) || !InputFiledCaseCheck(PWInputField))
+            return;
+        
         try
         {
             if (canUsedId == false) 
@@ -117,9 +121,6 @@ public class SignUpPanel : MonoBehaviour
                 StatePanel.Instance.AddMessage("Please check id duplicate");
                 return;
             }
-
-            if (!InputFiledCaseCheck(nameInputField) || !InputFiledCaseCheck(PWInputField))
-                return;
 
             string id = idInputField.text;
             string name = nameInputField.text;
@@ -136,7 +137,7 @@ public class SignUpPanel : MonoBehaviour
             }
             else
             {
-                StatePanel.Instance.AddMessage("registration error");
+                StatePanel.Instance.AddMessage("Registration error");
                 if (!DB.reader.IsClosed)
                     DB.reader.Close();
             }
@@ -146,7 +147,7 @@ public class SignUpPanel : MonoBehaviour
         }
         catch (Exception ex)
         {
-            StatePanel.Instance.AddMessage($"SignUp error : {ex.Message}");
+            StatePanel.Instance.AddMessage($"Please check the server");
             Debug.Log(ex.Message);
         }
     }
