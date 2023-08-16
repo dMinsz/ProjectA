@@ -366,12 +366,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: {fileID: 625699801}
   playerReady: {fileID: 577569469}
-  playerTeam: {fileID: 3310270052916392608}
+  teamColorBar: {fileID: 2076804885779672937}
   characterName: {fileID: 3310270052916392608}
   characterImage: {fileID: 1628759371569721695}
   localPlayerBackGround: {fileID: 5927899629315516292}
   curCharacter: {fileID: 0}
-  dataManager: {fileID: 0}
 --- !u!114 &6913215301904229038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,7 +841,7 @@ GameObject:
   - component: {fileID: 4646667350979251229}
   - component: {fileID: 2076804885779672937}
   m_Layer: 5
-  m_Name: Bar
+  m_Name: TeamColorBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
