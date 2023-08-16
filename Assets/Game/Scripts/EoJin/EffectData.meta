@@ -1,14 +1,12 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Game/Scripts/EoJin/CharacterData/Link.asset.meta
-guid: 9782ef4992b49f246934fa9ac0c6e780
-NativeFormatImporter:
+<<<<<<<< HEAD:Assets/Game/Scenes/TestZone/testprefabs.meta
+guid: ef90aaa023e62c041b73215e58428f71
 ========
 guid: 40638932ab7fd7147bf9df2c59dc5dcd
+>>>>>>>> UIandSkillEffectTest:Assets/Game/Scripts/EoJin/EffectData.meta
 folderAsset: yes
 DefaultImporter:
->>>>>>>> 1d24096 (feat: now character have their own skill effect):Assets/Game/Scripts/EoJin/EffectData.meta
   externalObjects: {}
-  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

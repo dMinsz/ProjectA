@@ -22,7 +22,6 @@ public class Skill : ScriptableObject
 
     [SerializeField] public string skillName;
     [SerializeField] public Sprite image;
-    [SerializeField] public GameObject effectPrefab;
     [SerializeField] public string description;
 
     [SerializeField] public Key key;

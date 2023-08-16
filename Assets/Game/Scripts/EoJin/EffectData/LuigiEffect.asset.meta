@@ -1,11 +1,6 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Game/Prefabs/UI/playerpostionUI.prefab.meta
-guid: cd2aca0e13cd4d440acf5ec5638732c5
-PrefabImporter:
-========
 guid: 6d1a7f8f632228a48823ef332b9ff186
 NativeFormatImporter:
->>>>>>>> 1d24096 (feat: now character have their own skill effect):Assets/Game/Scripts/EoJin/EffectData/LuigiEffect.asset.meta
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 
