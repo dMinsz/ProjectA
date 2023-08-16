@@ -192,6 +192,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpbar: {fileID: 0}
   playerState: {fileID: 0}
+  hpbarcolor: {fileID: 619857384529680164}
+  teamcolor: {r: 0.4453504, g: 1, b: 0, a: 1}
+  playerTransform: {fileID: 0}
+  offset: 0
 --- !u!1 &619857384529680166
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +382,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 28.1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &619857384939266153
