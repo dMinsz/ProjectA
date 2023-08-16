@@ -59,17 +59,22 @@ public class playercontroll : MonoBehaviour
             Move();
         }
 
-        if (playerrb.velocity == new Vector3(0, 0, 0))
+          if(playerrb.velocity ==new Vector3(0, 0, 0))
+            {
+                anim.SetBool("move", false);
+            }
+            else
+            {
+                anim.SetBool("move", true);
+            }
+          if(movedir.magnitude == 0)
+            {
+                return;
+            }
+        if (dashskill.isskilling)
         {
-            anim.SetBool("move", false);
-        }
-        else
-        {
-            anim.SetBool("move", true);
-        }
-        if (movedir.magnitude == 0)
-        {
-            return;
+            transform.LookAt(dashskill.skilldir);
+            Move();
         }
 
     }
@@ -127,7 +132,7 @@ public class playercontroll : MonoBehaviour
     {
         playerdashing = true;
         float distance = Mathf.Abs(Vector3.Distance(transform.position, destination));
-        while (distance > 0.1f)
+        while (distance > 1f)
         {
             distance = Mathf.Abs(Vector3.Distance(transform.position, destination));
             float xspeed = destination.x - transform.position.x;
@@ -136,10 +141,11 @@ public class playercontroll : MonoBehaviour
             transform.position += dashdirspeed;
             yield return null;
         }
-        if (distance < 0.1f)
+        if (distance < 1f)
         {
             playerdashing = false;
         }
+        playerdashing = false;
     }
 
 }

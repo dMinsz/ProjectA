@@ -41,6 +41,8 @@ public class PlayerSkillAttacker : MonoBehaviour
 
     //½ÇÇè
     public playercontroll playerdash;
+    [SerializeField] public bool isskilling= false;
+    public Vector3 skilldir;
 
     private Character curCharacter;
 
@@ -97,6 +99,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (isQDubleClick)
             {
+                StartCoroutine(skilldirRoutin());
                 anim.SetTrigger("Primary");
                 canSkillPrimary = false;
                 isSkillingPrimary = true;
@@ -135,6 +138,7 @@ public class PlayerSkillAttacker : MonoBehaviour
 
             if (isEDubleClick)
             {
+                StartCoroutine(skilldirRoutin());
                 anim.SetTrigger("Secondary");
                 canSkillSecondary = false;
                 isSkillingSecondary = true;
@@ -191,6 +195,16 @@ public class PlayerSkillAttacker : MonoBehaviour
         }
 
     }
+
+    IEnumerator skilldirRoutin()
+    {
+        isskilling = true;
+        skilldir = aim.mousepos;
+        yield return new WaitForSeconds(0.5f);
+        isskilling = false;
+    }
+
+
 
     IEnumerator skillDurationPrimary()
     {

@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
-  m_Name: Luigi
+  m_Name: Kanji
   m_EditorClassIdentifier: 
-  characterName: Luigi
+<<<<<<< HEAD:Assets/Game/Scripts/EoJin/CharacterData/Kanji.asset
+  characterName: Kanji
+  avatar: {fileID: 9000000, guid: f7ad42a6d418d0b4d974cb46a4131ec9, type: 3}
+  animator: {fileID: 9100000, guid: 2ec8621d668cc824780ed77ec43ee7f3, type: 2}
+=======
+  characterName: Bowser
   Image: {fileID: 0}
-  avatar: {fileID: 9000000, guid: a0446afddb5f4e042931ad54890c823b, type: 3}
-  animator: {fileID: 9100000, guid: 39eddd35f98dc0e4182491fc6ea726a5, type: 2}
-  skillEffect: {fileID: 11400000, guid: 6d1a7f8f632228a48823ef332b9ff186, type: 2}
+  avatar: {fileID: 9000000, guid: 87f26da7a5983ca4c9c1e4e3634a6a10, type: 3}
+  animator: {fileID: 9100000, guid: a4ef3a481603e924487dbdde4e405ea4, type: 2}
+  skillEffect: {fileID: 11400000, guid: 4591fd167f107c04b8101a374c229c84, type: 2}
+>>>>>>> 1d24096 (feat: now character have their own skill effect):Assets/Game/Scripts/EoJin/CharacterData/Bowser.asset
   stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
   primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
   secondarySkill: {fileID: 11400000, guid: 74963673851f31348941000e3c603037, type: 2}
