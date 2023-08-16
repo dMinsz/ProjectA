@@ -405,7 +405,6 @@ public class PlayerSkillAttacker : MonoBehaviourPun
 
     private void DetectObjectsCollider(Collider[] colliders , int damage)
     {
-        
         foreach (Collider collider in colliders)
         {
             Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
@@ -436,13 +435,13 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                     if(voice.isPlaying==false)
                         voice.Play();
 
-                    if (PhotonNetwork.LocalPlayer.GetTeamColor() != collider.gameObject.GetComponent<PlayerSetup>().playerTeam)
+                    var test = PhotonNetwork.LocalPlayer.GetTeamColor();
+                    if (GetComponent<PlayerSetup>().playerTeam != collider.gameObject.GetComponent<PlayerSetup>().playerTeam)
                         collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration , damage);
                 }
             }
         }
         
-
     }
 
     [PunRPC]

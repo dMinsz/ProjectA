@@ -70,7 +70,7 @@ public static class CustomProperty
         if (property.ContainsKey(TEAM))
             return (int)property[TEAM];
         else
-            return 0;
+            return -1;
     }
 
     public static void SetTeamColor(this Player player, int team)

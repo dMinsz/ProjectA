@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: 
   image: {fileID: 21300000, guid: 9938543a23263bf49b500cc8b3cb1c03, type: 3}
   description: 
-  key: 0
+  key: 2
   rangeStyle: 1
   angle: 180
   range: 8
