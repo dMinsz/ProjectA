@@ -63,14 +63,14 @@ public class DrawSkillEffect : MonoBehaviourPun
     //{
     //    skillAttacker.OnSkillStart -= EffectStart;
     //}
-    public void EffectStart(int skillnum, Vector3 mousePos) // 0 == primary, 1 == secondory, 2 == special skill
+    public void EffectStart(int skillnum, Vector3 mousePos,string nick) // 0 == primary, 1 == secondory, 2 == special skill
     {
         //object[] skilldata = new object[] { skill.skillName };
-        photonView.RPC("RequestEffectStart", RpcTarget.AllViaServer, skillnum, mousePos);
+        photonView.RPC("RequestEffectStart", RpcTarget.AllViaServer, skillnum, mousePos,nick);
     }
 
     [PunRPC]
-    private void RequestEffectStart(int skillnum, Vector3 mousePos)
+    private void RequestEffectStart(int skillnum, Vector3 mousePos, string nick)
     {
         var skill = GameManager.Data.CurCharacter.primarySkill;
         switch (skillnum)
@@ -100,7 +100,10 @@ public class DrawSkillEffect : MonoBehaviourPun
         for (int i = -10; i <= 10; i++)
         {
             float angle = skill.angle * (0.1f * i);
-            GameObject instance = Instantiate(GameManager.Data.CurCharacter.skillEffect.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
+
+
+            //GameManager.Data.CurCharacter.skillEffect.effectPrefab
+            GameObject instance = Instantiate(GameManager.Data.GetCharacter(nick).skillEffect.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
 
             effects.Add(instance);
         }

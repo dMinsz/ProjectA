@@ -299,6 +299,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
         player.GetComponent<Animator>().runtimeAnimatorController = GameManager.Data.GetCharacter(name).runtimeAnimator;
         player.GetComponent<Animator>().avatar = GameManager.Data.GetCharacter(name).avatar;
+        
 
         pPlayerList.Add(player);
     }
