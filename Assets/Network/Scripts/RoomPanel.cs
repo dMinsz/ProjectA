@@ -345,8 +345,8 @@ public class RoomPanel : MonoBehaviour
         SetCharactorAtSpot();
     }
 
-    private void SetCharactorAtSpot()   // TODO : 보수 필요, Instantiate와 Destroy를 사용하는게 아닌 PoolManager, SetActive 또는 다른 디자인 패턴을 사용하는게 좋을것같음
-    {                                   // 일단은 넘어가고 다른 기능들 먼저 구현하기
+    private void SetCharactorAtSpot()
+    {
         int compliteSpotCount = 0;
 
         foreach (GameObject CharactorModeling in compliteSpotCharacterList)

@@ -8,6 +8,8 @@ using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MenuPanel : MonoBehaviour
 {
+    [SerializeField] GameObject settingPopUpUI;
+
     private int maxPlayerCount;
 
     private void OnEnable()
@@ -72,7 +74,7 @@ public class MenuPanel : MonoBehaviour
 
     public void OnSettingButton()
     {
-        Debug.Log("OnSetting UI");
+        settingPopUpUI.SetActive(true);
     }
 
 }

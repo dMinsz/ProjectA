@@ -45,3 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ce7466aaaeafa744e81f33563bf211c5, type: 2}
+  playerSound:
+  - {fileID: 0}
+  musics:
+  - {fileID: 0}
+  voices:
+  - {fileID: 0}
