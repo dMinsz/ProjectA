@@ -11,6 +11,9 @@ public class cameraHpbar : BaseUI
     [SerializeField] public Image hpbarcolor;
     [SerializeField] public Color teamcolor;
 
+    [SerializeField] Transform playerTransform;
+    [SerializeField] int offset;
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,6 +32,10 @@ public class cameraHpbar : BaseUI
     }
     private void LateUpdate()
     {
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(playerTransform.position + Vector3.up * 2);
+        screenPos += Vector3.up * 44;
+        transform.position = Camera.main.ScreenToWorldPoint(screenPos);
+
         transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
     }
 }
