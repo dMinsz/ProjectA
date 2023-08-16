@@ -2091,10 +2091,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  playerEntryPrefab: {fileID: 3731023699572381743, guid: e0c1dc03971a59b498170865691445f0,
+  playerEntryPrefab: {fileID: 3731023699572381743, guid: e6e87caa82c916447b533b2eb2185a63,
     type: 3}
   gameTypeText: {fileID: 7976770418309211869}
   startButton: {fileID: 1849734128114047811}
+  allPlayerReadyImage: {fileID: 0}
 --- !u!1 &5454343045551250796
 GameObject:
   m_ObjectHideFlags: 0
