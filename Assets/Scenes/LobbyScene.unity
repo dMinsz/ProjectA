@@ -1073,6 +1073,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SignUpPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2420085702764627676, guid: 23dc556c986999c4e884da8a75997106,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5398436063833943599, guid: 23dc556c986999c4e884da8a75997106,
         type: 3}
       propertyPath: DB
