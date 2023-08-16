@@ -39,7 +39,7 @@ public class PlayerCharacter : MonoBehaviour
 
 
         anim.avatar = GameManager.Data.GetCharacter(name).avatar;
-        anim.runtimeAnimatorController = GameManager.Data.GetCharacter(name).animator;
+        anim.runtimeAnimatorController = GameManager.Data.GetCharacter(name).runtimeAnimator;
     }
 
 }

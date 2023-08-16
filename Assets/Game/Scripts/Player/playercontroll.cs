@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
 
-public class playercontroll : MonoBehaviour
+public class playercontroll : MonoBehaviourPun
 {
 
     //플레이어 무브 관련
@@ -34,11 +34,13 @@ public class playercontroll : MonoBehaviour
 
     Coroutine mainRoutine;
 
+    private NetWorkedAnimation nAnim;
+
     private void Awake()
     {
         playerrb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
-
+        //anim = GetComponent<Animator>();
+        nAnim = GetComponent<NetWorkedAnimation>();
 
         if (GameManager.Data.CurCharacter == null)//debug Mode
         {
@@ -73,11 +75,15 @@ public class playercontroll : MonoBehaviour
 
         if (playerrb.velocity == new Vector3(0, 0, 0))
         {
-            anim.SetBool("move", false);
+            nAnim.SendPlayAnimationEvent(photonView.ViewID,"move", "Bool", false);
+            //photonView.RPC("animSetBool",RpcTarget.All,"move",false);
+            //anim.SetBool("move", false);
         }
         else
         {
-            anim.SetBool("move", true);
+            nAnim.SendPlayAnimationEvent(photonView.ViewID, "move", "Bool", true);
+            //photonView.RPC("animSetBool", RpcTarget.All, "move", true);
+            //anim.SetBool("move", true);
         }
         if (movedir.magnitude == 0)
         {
@@ -175,4 +181,10 @@ public class playercontroll : MonoBehaviour
         
     }
 
+    [PunRPC]
+    public void animSetBool(string name, bool b) 
+    {
+        anim = GetComponent<Animator>();
+        anim.SetBool(name, b);
+    }
 }

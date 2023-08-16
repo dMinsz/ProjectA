@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: CityMan
   Image: {fileID: 453642891, guid: d7ac720ebe166734486928a6462f653d, type: 3}
   avatar: {fileID: 9000000, guid: 432266b824addd24c9c87d57f4ee56ae, type: 3}
-  animator: {fileID: 9100000, guid: d7b1c3033f15ae444b24f9cd3fe2376d, type: 2}
+  runtimeAnimator: {fileID: 9100000, guid: d7b1c3033f15ae444b24f9cd3fe2376d, type: 2}
   skillEffect: {fileID: 11400000, guid: 9483e5b59e1b92a4dbbc66e4297a74f9, type: 2}
   hasFemaleVoice: 0
   modeling: {fileID: 2363307657413207293, guid: 41ff223d52cc4d442b192e765bf946c5,

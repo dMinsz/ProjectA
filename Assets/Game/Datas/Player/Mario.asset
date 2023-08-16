@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Mario
   Image: {fileID: 20535933, guid: 8e41f658eba1b6a41a54de40df6725fa, type: 3}
   avatar: {fileID: 9000000, guid: 2d08fb3d8744f324e905ffd826df01b3, type: 3}
-  animator: {fileID: 9100000, guid: 7059a0a09fbcb1e438cc5aca812c3c15, type: 2}
+  runtimeAnimator: {fileID: 9100000, guid: 7059a0a09fbcb1e438cc5aca812c3c15, type: 2}
   skillEffect: {fileID: 11400000, guid: b83bcd6baeba7544abd38387bc50a92c, type: 2}
   hasFemaleVoice: 0
   modeling: {fileID: 8396495726863173827, guid: 9e1a0f0f7c2a9e14a891d562702febd7,

@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Pauline
   Image: {fileID: 355380137, guid: 19afd81dad7437349b7675da5c493053, type: 3}
   avatar: {fileID: 9000000, guid: 4cb38d9f68c0b4a49b0167b142a58767, type: 3}
-  animator: {fileID: 9100000, guid: 577a58c4bf4370341ade2e0876e2815b, type: 2}
+  runtimeAnimator: {fileID: 9100000, guid: 577a58c4bf4370341ade2e0876e2815b, type: 2}
   skillEffect: {fileID: 11400000, guid: b72903a4cc008144c8d7954d718d4072, type: 2}
   hasFemaleVoice: 1
   modeling: {fileID: 4709529341637407410, guid: bee81b0db02dc034183cfb8dde48aabc,

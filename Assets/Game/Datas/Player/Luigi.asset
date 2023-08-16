@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Luigi
   Image: {fileID: 1965397675, guid: 97dceadc4ae9ad34c860d6abda849065, type: 3}
   avatar: {fileID: 9000000, guid: a0446afddb5f4e042931ad54890c823b, type: 3}
-  animator: {fileID: 9100000, guid: 39eddd35f98dc0e4182491fc6ea726a5, type: 2}
+  runtimeAnimator: {fileID: 9100000, guid: 39eddd35f98dc0e4182491fc6ea726a5, type: 2}
   skillEffect: {fileID: 11400000, guid: cd2aca0e13cd4d440acf5ec5638732c5, type: 2}
   hasFemaleVoice: 0
   modeling: {fileID: 275212714890997694, guid: ff1b5c7a1096c8d49b33c13c42787435, type: 3}

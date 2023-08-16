@@ -65,7 +65,7 @@ public class LoginPanel : MonoBehaviour
                     string readID = DB.reader["id"].ToString();
                     string readPass = DB.reader["password"].ToString();
 
-                    Debug.Log($"id : {readID}, password : {readPass}");
+                    //Debug.Log($"id : {readID}, password : {readPass}");
 
                     if (pass == readPass)
                     {

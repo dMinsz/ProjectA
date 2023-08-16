@@ -28,8 +28,19 @@ public class DrawSkillEffect : MonoBehaviourPun
             Vector3 instVecButYIsZero = new Vector3(playerNInst.x, 0f, playerNInst.z);
 
             //2.5f더한 이유는 조금 오바되는 게 시각적으로 좋을 것 같아서 이펙트 속도 0.3기준
-            //if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + GameManager.Data.CurCharacter.skillEffect.additionalTime || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + GameManager.Data.CurCharacter.skillEffect.additionalTime)
-            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + 4f || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + 4f)
+            //if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + 4f || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + 4f)
+
+            float additionalTime = 0f;
+
+            if (PhotonNetwork.LocalPlayer.GetCharacterName() == "None") // for debug
+            {
+                additionalTime = GameManager.Data.GetCharacter("Mario").skillEffect.additionalTime;
+            }
+            else 
+            {
+                additionalTime = GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()).skillEffect.additionalTime;
+            }
+            if (Mathf.Abs(instVecButYIsZero.x) > Mathf.Abs(destination.x) + additionalTime || Mathf.Abs(instVecButYIsZero.z) > Mathf.Abs(destination.z) + additionalTime)
                 DestroyAllEffects();
         }
     }

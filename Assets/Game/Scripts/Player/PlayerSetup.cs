@@ -95,6 +95,15 @@ public class PlayerSetup : MonoBehaviourPun, IPunInstantiateMagicCallback
 
 
         aim.puck = puckview.gameObject;
+
+
+        string CharacterName = (string)instantiationData[1];
+
+        var character = GameManager.Data.GetCharacter(CharacterName);
+
+        GetComponent<Animator>().runtimeAnimatorController = character.runtimeAnimator;
+        GetComponent<Animator>().avatar = character.avatar;
+
     }
 }
 

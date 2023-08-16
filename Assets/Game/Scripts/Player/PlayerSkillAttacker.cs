@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 
-public class PlayerSkillAttacker : MonoBehaviour
+public class PlayerSkillAttacker : MonoBehaviourPun
 {
     /*
      * 윗면의 반만 투명화된 메쉬를 입힌 큐브를 기준으로 작성 됐으므로 무조건 prefab에 있는 큐브에 적용시킬 것
@@ -47,11 +48,13 @@ public class PlayerSkillAttacker : MonoBehaviour
     private Character curCharacter;
 
     private AudioSource voice;
+    private NetWorkedAnimation nAnim;
     public void Awake()
     {
         voice = GetComponent<AudioSource>();
         aim = gameObject.GetComponent<PlayerAim>();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
+        nAnim = gameObject.GetComponent<NetWorkedAnimation>();
 
         RotatedPos = new GameObject("RoatateObjectforAttacker").transform;
 
@@ -102,12 +105,19 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (isQDubleClick)
             {
                 StartCoroutine(skilldirRoutin());
-                anim.SetTrigger("Primary");
+                //anim.SetTrigger("Primary");
+                //photonView.RPC("AnimSetTrigger", RpcTarget.All, "Primary");
+
+                nAnim.SendPlayAnimationEvent(photonView.ViewID, "Primary", "Trigger");
+
                 canSkillPrimary = false;
                 isSkillingPrimary = true;
                 ApplyDamage(damage , 0 , aim.mousepos);
 
                 isQDubleClick = false;
+
+                if (voice.isPlaying == false)
+                    voice.Play();
 
                 if (curCharacter.primarySkill.isDash == true)
                 {
@@ -115,9 +125,9 @@ public class PlayerSkillAttacker : MonoBehaviour
                     isQDubleClick = false;
                 }
 
-
-
                 DrawRange.SetIsDrawingFalse();
+
+
                 primarySkillCoroutine = StartCoroutine(skillCoolTimePrimary());
                 
             }
@@ -149,13 +159,17 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (isEDubleClick)
             {
                 StartCoroutine(skilldirRoutin());
-                anim.SetTrigger("Secondary");
+                //anim.SetTrigger("Secondary");
+                //photonView.RPC("AnimSetTrigger", RpcTarget.All, "Secondary");
+                nAnim.SendPlayAnimationEvent(photonView.ViewID, "Secondary", "Trigger");
                 canSkillSecondary = false;
                 isSkillingSecondary = true;
                 ApplyDamage(damage,1, aim.mousepos);
 
                 isEDubleClick = false;
 
+                if (voice.isPlaying == false)
+                    voice.Play();
 
                 if (curCharacter.secondarySkill.isDash == true)
                 {
@@ -194,12 +208,17 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (isRDubleClick)
             {
                 
-                anim.SetTrigger("Special");
+                //anim.SetTrigger("Special");
+                //photonView.RPC("AnimSetTrigger", RpcTarget.All, "Special");
+                nAnim.SendPlayAnimationEvent(photonView.ViewID, "Special", "Trigger");
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
                 ApplyDamage(damage,2, aim.mousepos);
 
                 isRDubleClick = false;
+
+                if (voice.isPlaying == false)
+                    voice.Play();
 
                 if (curCharacter.specialSkill.isDash == true) 
                 {
@@ -404,7 +423,8 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
             {
                 aim.Attack(aim.attackdir);
-                voice.Play();
+                if (voice.isPlaying == false)
+                    voice.Play();
                 continue;
             }
 
@@ -421,6 +441,14 @@ public class PlayerSkillAttacker : MonoBehaviour
         }
         
 
+    }
+
+    [PunRPC]
+    private void AnimSetTrigger(string name) 
+    {
+        
+        anim = GetComponent<Animator>();
+        anim.SetTrigger(name);
     }
 
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: PeachFarmer
   Image: {fileID: -45273879, guid: bfb075b6db465a844a0b9c6098d879a8, type: 3}
   avatar: {fileID: 9000000, guid: b82224baedd2f1f4fb06cef1b9f41801, type: 3}
-  animator: {fileID: 9100000, guid: e130f25df7b30354d8a0cbcf5c5741be, type: 2}
+  runtimeAnimator: {fileID: 9100000, guid: e130f25df7b30354d8a0cbcf5c5741be, type: 2}
   skillEffect: {fileID: 11400000, guid: 13e4dd7511ffe244fb1a5a85c69ffa46, type: 2}
   hasFemaleVoice: 1
   modeling: {fileID: 695872585106519997, guid: f987ee40f02c0f046b3059a484abfd19, type: 3}

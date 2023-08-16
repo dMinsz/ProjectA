@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class PlayerState : MonoBehaviour
+public class PlayerState : MonoBehaviourPun
 {
 
     public List<GameObject> deactivatedObjects = new List<GameObject>();
@@ -23,18 +24,35 @@ public class PlayerState : MonoBehaviour
 
     Coroutine Routine;
 
+    NetWorkedAnimation nAnim;
     private void Awake()
     {
+        nAnim = GetComponent<NetWorkedAnimation>();
         setup = GetComponent<PlayerSetup>();
     }
 
     public void SetUp(Character nowCharacter) 
     {
-        character = nowCharacter;
+        //anim = GetComponent<Animator>();
+        //character = GameManager.Data.GetCharacter(nowCharacter.characterName);
+        ////anim.runtimeAnimatorController = nowCharacter.animator;
+
+        //playermaxhp = character.stat.hp;
+        //playercurhp = playermaxhp;
+        //isdie = false;
+
+        photonView.RPC("ResultSetUp", RpcTarget.All, nowCharacter.characterName);
+    }
+
+    [PunRPC]
+    private void ResultSetUp(string characterName) 
+    {
+        anim = GetComponent<Animator>();
+        character = GameManager.Data.GetCharacter(characterName);
+        //anim.runtimeAnimatorController = nowCharacter.animator;
 
         playermaxhp = character.stat.hp;
         playercurhp = playermaxhp;
-        anim = GetComponent<Animator>();
         isdie = false;
     }
 
@@ -43,13 +61,15 @@ public class PlayerState : MonoBehaviour
         if (!isdie && playercurhp <= 0)
         {
             //Destroy(gameObject, 2f);
-            Routine = StartCoroutine(Respawn());
-            Deactivate();
             isdie = true;
             if (isdie)
             {
+                //photonView.RPC("playerdie",RpcTarget.All,"die");
+                nAnim.SendPlayAnimationEvent(photonView.ViewID, "die", "Trigger");
                 ondied?.Invoke();
             }
+            Routine = StartCoroutine(Respawn());
+            Deactivate();
 
         }
         //test
@@ -59,9 +79,12 @@ public class PlayerState : MonoBehaviour
         //    Debug.Log(playercurhp);
         //}
     }
-    public void playerdie()
+
+    [PunRPC]
+    private void playerdie(string name)
     {
-        anim.SetTrigger("die");
+        anim = GetComponent<Animator>();
+        anim.SetTrigger(name);
     }
 
 

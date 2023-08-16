@@ -10,6 +10,7 @@ using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 using System.Linq;
 using Unity.VisualScripting;
 using System;
+using UnityEngine.TextCore.Text;
 
 public class PlayManager : MonoBehaviourPunCallbacks
 {
@@ -71,7 +72,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.LocalPlayer.NickName == blueTeamPlayerNameList[num])
             {
 
-                object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
+                object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID , PhotonNetwork.LocalPlayer.GetCharacterName() };
                 var player = PhotonNetwork.Instantiate("Players", blueSpwans[num].position, blueSpwans[num].rotation, 0, puckData);
 
                 player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
@@ -85,8 +86,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
                 pPlayerList.Add(player);
 
-                object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
-                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
+                //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName() };
+                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
                 //blueTeamChecker[num] = false;
             }
         }
@@ -96,7 +97,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.LocalPlayer.NickName == redTeamPlayerNameList[num]) //&& redTeamChecker[num] == true)
             {
-                object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
+                object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName() };
                 var player = PhotonNetwork.Instantiate("Players", redSpwans[num].position, redSpwans[num].rotation, 0, puckData);
 
                 player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
@@ -110,8 +111,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
                 pPlayerList.Add(player);
 
-                object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
-                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
+                //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName() };
+                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
                 //redTeamChecker[num] = false;
             }
         }
@@ -125,12 +126,12 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 0)
         {
-            object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
+            object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID, CharacterName };
             var player = PhotonNetwork.Instantiate("Players", blueSpwans[0].position, blueSpwans[0].rotation, 0, puckData);
+            player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(CharacterName));
 
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
-            player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(CharacterName));
             attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter(CharacterName));
             skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(CharacterName));
 
@@ -142,17 +143,17 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             pPlayerList.Add(player);
 
-            object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
-            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
+            //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, CharacterName };
+            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
         }
         else
         {
-            object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
+            object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID, CharacterName };
             var player = PhotonNetwork.Instantiate("Players", redSpwans[0].position, redSpwans[0].rotation, 0, puckData);
+            player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(CharacterName));
 
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
-            player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(CharacterName));
             attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter(CharacterName));
             skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(CharacterName));
 
@@ -160,8 +161,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
             GameManager.Data.ChangeCharacter(CharacterName);
             pPlayerList.Add(player);
 
-            object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };
-            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, playerData);
+            //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID , CharacterName };
+            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
         }
 
         scoreChecker.StartTimer();
@@ -287,9 +288,13 @@ public class PlayManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void AddPlayer(int viewId)
+    private void AddPlayer(int viewId , string name)
     {
         var player = PhotonView.Find(viewId).gameObject;
+
+        player.GetComponent<Animator>().runtimeAnimatorController = GameManager.Data.GetCharacter(name).runtimeAnimator;
+        player.GetComponent<Animator>().avatar = GameManager.Data.GetCharacter(name).avatar;
+
         pPlayerList.Add(player);
     }
 
