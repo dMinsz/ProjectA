@@ -126,10 +126,7 @@ public class PlayerSkillAttacker : MonoBehaviour
                 isQDubleClick = true;
             }
 
-            voice.Play();
-
         }
-
     }
 
     public void OnSecondarySkill(InputValue value)
@@ -176,7 +173,6 @@ public class PlayerSkillAttacker : MonoBehaviour
             {
                 isEDubleClick = true;
             }
-            voice.Play();
         }
     }
 
@@ -219,9 +215,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             {
                 isRDubleClick = true;
             }
-            voice.Play();
         }
-
     }
 
     IEnumerator skilldirRoutin()
@@ -410,6 +404,7 @@ public class PlayerSkillAttacker : MonoBehaviour
             if (collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
             {
                 aim.Attack(aim.attackdir);
+                voice.Play();
                 continue;
             }
 
@@ -417,6 +412,9 @@ public class PlayerSkillAttacker : MonoBehaviour
             {
                 if (collider.gameObject.GetComponent<PlayerGetDamage>().damaged == false)
                 {
+                    if(voice.isPlaying==false)
+                        voice.Play();
+
                     collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration , damage);
                 }
             }

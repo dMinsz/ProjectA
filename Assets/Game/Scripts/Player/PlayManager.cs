@@ -76,6 +76,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
                 player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
+                player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()));
                 attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()));
                 skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()));
 
@@ -100,6 +101,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
                 player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
+                player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()));
                 attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()));
                 skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()));
 
@@ -119,6 +121,8 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     private void DebugGameStart()
     {
+        var CharacterName = "Mario";
+
         if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 0)
         {
             object[] puckData = new object[] { playPuck.GetComponent<PhotonView>().ViewID };
@@ -126,13 +130,13 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
+            player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(CharacterName));
+            attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter(CharacterName));
+            skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(CharacterName));
 
-            attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter("Mario"));
-            skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter("Mario"));
+            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", CharacterName);
 
-            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", "Mario");
-
-            GameManager.Data.ChangeCharacter("Mario");
+            GameManager.Data.ChangeCharacter(CharacterName);
 
             
 
@@ -148,11 +152,12 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
 
-            attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter("Mario"));
-            skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter("Mario"));
+            player.GetComponent<PlayerState>().SetUp(GameManager.Data.GetCharacter(CharacterName));
+            attackUI.SetUp(player.GetComponent<PlayerAim>(), GameManager.Data.GetCharacter(CharacterName));
+            skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(CharacterName));
 
-            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Debug2", "Mario");
-            GameManager.Data.ChangeCharacter("Mario");
+            player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Debug2", CharacterName);
+            GameManager.Data.ChangeCharacter(CharacterName);
             pPlayerList.Add(player);
 
             object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID };

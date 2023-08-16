@@ -96,7 +96,7 @@ public class DataManager : MonoBehaviour
             {
                 CurCharacter = characters[i];
                 OnChangeCharacter?.Invoke(); //Player.csÀÇ ChangePlayerableCharacter
-                Debug.Log($"DataManager: player's current character is {characters[i].characterName}");
+               // Debug.Log($"DataManager: player's current character is {characters[i].characterName}");
             }
         }
     }

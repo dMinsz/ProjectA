@@ -13,25 +13,13 @@ public class PlayerGetDamage : MonoBehaviourPun
         playerState = GetComponent<PlayerState>();
     }
 
-    //public void OnEnable()
-    //{
-    //    if (attacker != null)
-    //        attacker.OnPlayerAttack += GetDamaged;
-    //}
-
-    //public void OnDisable()
-    //{
-    //    if (attacker != null)
-    //        attacker.OnPlayerAttack -= GetDamaged;
-    //}
-
     public void GetDamaged(GameObject who, float damageTime, int damage)
     {
         damaged = false;
 
         whoHurtedYou = who;
         attacker = whoHurtedYou.GetComponent<PlayerSkillAttacker>();
-        Debug.Log($"{gameObject.name}이 {who}에게 {attacker.skill.skillName}을 받음");
+        //Debug.Log($"{gameObject.name}이 {who}에게 {attacker.skill.skillName}을 받음");
 
         //object[] damagedata = new object[] { damage };
         photonView.RPC("Damaged",RpcTarget.AllViaServer, damage);

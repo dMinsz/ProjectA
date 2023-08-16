@@ -39,6 +39,15 @@ public class PlayerSetup : MonoBehaviourPun, IPunInstantiateMagicCallback
 
     }
 
+    public void ReSetUp() 
+    {
+        if (!photonView.IsMine)
+        {
+            floorMark.gameObject.SetActive(false);
+            AttackRangeMark.gameObject.SetActive(false);
+        }
+    }
+
 
     [PunRPC]
     public void SentSetUp(PlayerEntry.TeamColor color, string nickName , string characterName)

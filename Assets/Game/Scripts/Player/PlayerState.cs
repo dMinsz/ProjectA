@@ -11,28 +11,33 @@ public class PlayerState : MonoBehaviour
     public List<GameObject> deactivatedObjects = new List<GameObject>();
 
     private Character character;
-    public float playercurhp;
+    public float playercurhp = 1;
     public float playermaxhp;
     [SerializeField] private UnityEvent ondied;
     [SerializeField] private UnityEvent onRespawn;
     private Animator anim;
-    private bool isdie;
+    private bool isdie =false;
+
+
+    PlayerSetup setup;
 
     Coroutine Routine;
+
     private void Awake()
     {
-        character = GameManager.Data.CurCharacter;
+        setup = GetComponent<PlayerSetup>();
+    }
 
-        if (character == null)
-        {
-            character = GameManager.Data.characters[1];//mario
-        }
+    public void SetUp(Character nowCharacter) 
+    {
+        character = nowCharacter;
 
         playermaxhp = character.stat.hp;
         playercurhp = playermaxhp;
         anim = GetComponent<Animator>();
         isdie = false;
     }
+
     private void Update()
     {
         if (!isdie && playercurhp <= 0)
@@ -90,6 +95,8 @@ public class PlayerState : MonoBehaviour
 
         GetComponent<PlayerDelayCompensation>().SetSyncronize(true);
         Activate();
+
+        setup.ReSetUp();
 
         isdie = false;
         onRespawn?.Invoke();

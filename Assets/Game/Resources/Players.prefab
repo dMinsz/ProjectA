@@ -261,7 +261,6 @@ MonoBehaviour:
   deactivatedObjects:
   - {fileID: 4333708700843655557}
   - {fileID: 4064084028703475679}
-  - {fileID: 3084981876927182970}
   - {fileID: 6742253263017958266}
   - {fileID: 8294996095761416089}
   playercurhp: 0
@@ -2293,12 +2292,6 @@ PrefabInstance:
 --- !u!4 &2421773318545957568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4837679103659945484, guid: bb7374b3d3d628c44a0ec8ab4d94cdca,
-    type: 3}
-  m_PrefabInstance: {fileID: 7113784723360992460}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3084981876927182970 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5217757924072060086, guid: bb7374b3d3d628c44a0ec8ab4d94cdca,
     type: 3}
   m_PrefabInstance: {fileID: 7113784723360992460}
   m_PrefabAsset: {fileID: 0}
