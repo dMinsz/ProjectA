@@ -11,7 +11,7 @@ public class ScoreChecker : MonoBehaviour
     public TMP_Text redScore;
     public TMP_Text timeBoard;
 
-    public TMP_Text testEnd;
+    public EndBattleUI endBattleUI;
 
     public float roundTime;
 
@@ -92,24 +92,21 @@ public class ScoreChecker : MonoBehaviour
         PhotonNetwork.LoadLevel("LobbyScene");
     }
 
-    //just test
     public void EndBattle() 
     {
         pm.RespawnPuck();
 
-        testEnd.gameObject.SetActive(true);
-
         if (BluePoint == RedPoint)
         {
-            testEnd.text = "Draw!";
+            endBattleUI.ShowDrawUI();
         }
         else if (BluePoint > RedPoint)
         {
-            testEnd.text = "Blue Team Win!";
+            endBattleUI.ShowBlueWinUI();
         }
         else 
         {
-            testEnd.text = "Red Team Win!";
+            endBattleUI.ShowRedWinUI();
         }
         
     }

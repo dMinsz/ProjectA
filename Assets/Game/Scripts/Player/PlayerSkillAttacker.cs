@@ -202,7 +202,9 @@ public class PlayerSkillAttacker : MonoBehaviour
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
                 ApplyDamage(damage,2, aim.mousepos);
-                
+
+                isRDubleClick = false;
+
                 if (curCharacter.specialSkill.isDash == true) 
                 {
                     playerdash.Dash();

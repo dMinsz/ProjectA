@@ -17,8 +17,11 @@ public class Puck : MonoBehaviourPun
 
     Coroutine mainRoutine;
 
+    private AudioSource sound;
+
     private void Awake()
     {
+        sound = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         ren = GetComponent<MeshRenderer>();
         velocityMaxSpeed = new Vector3(maxSpeed, 0, maxSpeed);
@@ -59,6 +62,7 @@ public class Puck : MonoBehaviourPun
     {
         if (Physics.SphereCast(transform.position, (ren.bounds.extents.x + 0.1f), rb.velocity.normalized, out RaycastHit hit, rb.velocity.magnitude * Time.fixedDeltaTime, layerMask))
         {
+            sound.Play();
             rb.velocity = Vector3.Reflect(rb.velocity, hit.normal);
         }
     }

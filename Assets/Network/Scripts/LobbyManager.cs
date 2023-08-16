@@ -15,6 +15,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] MenuPanel menuPanel;
     [SerializeField] RoomPanel roomPanel;
 
+    private LobbySoundSelector musicSelector;
+
+    private void Awake()
+    {
+        musicSelector = GetComponent<LobbySoundSelector>();
+    }
+
     public void SetActivePanel(Panel panel)
     {
         loginPanel.gameObject?.SetActive(panel == Panel.Login);
@@ -68,11 +75,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        musicSelector.PlayCharacterChooseSound();
         SetActivePanel(Panel.Room);
     }
 
     public override void OnLeftRoom()
     {
+        musicSelector.ResetMusic();
         SetActivePanel(Panel.Menu);
     }
 
