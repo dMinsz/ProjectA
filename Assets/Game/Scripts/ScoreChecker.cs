@@ -89,7 +89,12 @@ public class ScoreChecker : MonoBehaviour
         EndBattle();
 
         yield return new WaitForSeconds(2);
-        PhotonNetwork.LoadLevel("LobbyScene");
+
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.LeaveRoom();
+
+        GameManager.Scene.LoadScene("LobbyScene");
+        //PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     public void EndBattle() 
