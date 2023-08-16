@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,7 +65,11 @@ public class PlayerState : MonoBehaviourPun
             isdie = true;
             if (isdie)
             {
-                //photonView.RPC("playerdie",RpcTarget.All,"die");
+                if (GetComponent<playercontroll>().mainRoutine != null) // dash Remove
+                {
+                    StopCoroutine(GetComponent<playercontroll>().mainRoutine);
+                }
+
                 nAnim.SendPlayAnimationEvent(photonView.ViewID, "die", "Trigger");
                 ondied?.Invoke();
             }

@@ -78,12 +78,6 @@ public class ScoreChecker : MonoBehaviour
             yield return new WaitForEndOfFrame();
 
 
-            if (Input.GetKey(KeyCode.F12)) // for Debug
-            {
-                break;
-            }
-
-
             if (BluePoint >= MaxGoal || RedPoint >= MaxGoal)
             {
                 break;

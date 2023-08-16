@@ -198,7 +198,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         Debug.Log("Game Start!");
         infoText.text = "Game Start!";
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         infoText.text = "";
     }
 
@@ -254,6 +254,11 @@ public class PlayManager : MonoBehaviourPunCallbacks
     {
         foreach (var player in pPlayerList)
         {
+            if (player.GetComponent<playercontroll>().mainRoutine != null) // dash Remove
+            {
+                StopCoroutine(player.GetComponent<playercontroll>().mainRoutine);
+            }
+
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(false);
 
             player.transform.position = player.GetComponent<PlayerSetup>().originPos;
