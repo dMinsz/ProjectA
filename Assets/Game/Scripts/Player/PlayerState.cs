@@ -125,7 +125,7 @@ public class PlayerState : MonoBehaviourPun
         Activate();
 
         setup.ReSetUp();
-
+        nAnim.SendPlayAnimationEvent(photonView.ViewID, "move", "Bool", true);
         isdie = false;
         onRespawn?.Invoke();
 
