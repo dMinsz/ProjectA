@@ -12,6 +12,7 @@ public class PlayerEntry : MonoBehaviour
     [SerializeField] TMP_Text playerTeam;
     [SerializeField] TMP_Text characterName;
     [SerializeField] Image characterImage;
+    [SerializeField] Image localPlayerBackGround;
     //[SerializeField] Button playerReadyButton;
     [SerializeField] Character curCharacter;
     [SerializeField] public DataManager dataManager;
@@ -58,10 +59,17 @@ public class PlayerEntry : MonoBehaviour
 
     public void SelectCharacter(string selectCharacterName)
     {
-        GameManager.Data.ChangeCharacter(selectCharacterName);
-        characterName.text = GameManager.Data.CurCharacter.name;
-        characterImage.sprite = GameManager.Data.CurCharacter.Image;
-        dataManager.CurCharacter = GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName());
+        dataManager.ChangeCharacter(selectCharacterName);
+        localPlayerBackGround.enabled = false;
+
+        if (player == PhotonNetwork.LocalPlayer)
+        {
+            curCharacter = dataManager.CurCharacter;
+            localPlayerBackGround.enabled = true;
+        }
+
+        characterName.text = dataManager.CurCharacter.name;
+        characterImage.sprite = dataManager.CurCharacter.Image;
     }
 
     public void DebugCharacter()
