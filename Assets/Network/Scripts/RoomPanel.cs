@@ -205,19 +205,18 @@ public class RoomPanel : MonoBehaviour
         }
 
         if (readyCount == PhotonNetwork.PlayerList.Length && StartCheck())  // ready 갯수가 maxPlayer 수와 같다면
-            startButton.gameObject.SetActive(true);
-        else
-            startButton.gameObject.SetActive(false);
-
-        if (!PhotonNetwork.IsMasterClient)              // 마스터 클라이언트가 아니면 Start(false)
         {
-            allPlayerReadyImage.gameObject.SetActive(true);
-            startButton.gameObject.SetActive(false);
-
-            return;
+            if (PhotonNetwork.IsMasterClient)                              // 마스터 클라이언트가 아니면 Start(false)
+            {
+                allPlayerReadyImage.gameObject.SetActive(false);
+                startButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                allPlayerReadyImage.gameObject.SetActive(true);
+                startButton.gameObject.SetActive(false);
+            }
         }
-
-        allPlayerReadyImage.gameObject.SetActive(false);
     }
 
     private bool StartCheck()
