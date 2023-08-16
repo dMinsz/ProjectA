@@ -1073,6 +1073,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SignUpPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2420085702764627676, guid: 23dc556c986999c4e884da8a75997106,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5398436063833943599, guid: 23dc556c986999c4e884da8a75997106,
         type: 3}
       propertyPath: DB
@@ -2102,7 +2107,7 @@ PrefabInstance:
     - target: {fileID: 473717961588101208, guid: 332dcd04a4366f14ab185569caadf9c5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7879752747591637588, guid: 332dcd04a4366f14ab185569caadf9c5,
         type: 3}
@@ -2124,6 +2129,21 @@ PrefabInstance:
       propertyPath: loginPanelCamera
       value: 
       objectReference: {fileID: 992121592}
+    - target: {fileID: 8254217808647312597, guid: 332dcd04a4366f14ab185569caadf9c5,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.3679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 8254217808647312597, guid: 332dcd04a4366f14ab185569caadf9c5,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.3679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 8254217808647312597, guid: 332dcd04a4366f14ab185569caadf9c5,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.3679245
+      objectReference: {fileID: 0}
     - target: {fileID: 8387059405785608435, guid: 332dcd04a4366f14ab185569caadf9c5,
         type: 3}
       propertyPath: m_Pivot.x

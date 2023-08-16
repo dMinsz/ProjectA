@@ -80,6 +80,7 @@ public class DrawSkillEffect : MonoBehaviourPun
 
         startPos = transform.position;
         Vector3 playerNmouse = (startPos - mousePos).normalized;
+
         destination = playerNmouse * skill.range;
 
         Vector3 dir = (transform.position - mousePos);
