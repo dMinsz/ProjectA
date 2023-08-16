@@ -84,10 +84,10 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, blueTeamPlayerNameList[num], PhotonNetwork.LocalPlayer.GetCharacterName());
 
 
-                pPlayerList.Add(player);
+                //pPlayerList.Add(player);
 
                 //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName() };
-                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
+                photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
                 //blueTeamChecker[num] = false;
             }
         }
@@ -109,10 +109,10 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, redTeamPlayerNameList[num], PhotonNetwork.LocalPlayer.GetCharacterName());
 
 
-                pPlayerList.Add(player);
+                //pPlayerList.Add(player);
 
                 //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName() };
-                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
+                photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
                 //redTeamChecker[num] = false;
             }
         }
@@ -141,7 +141,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             
 
-            pPlayerList.Add(player);
+            //pPlayerList.Add(player);
 
             //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, CharacterName };
             photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
@@ -159,7 +159,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Debug2", CharacterName);
             GameManager.Data.ChangeCharacter(CharacterName);
-            pPlayerList.Add(player);
+            //pPlayerList.Add(player);
 
             //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID , CharacterName };
             photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
