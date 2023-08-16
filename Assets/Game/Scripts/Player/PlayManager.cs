@@ -168,7 +168,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         while (startTimer > (PhotonNetwork.ServerTimestamp - loadTime) / 1000f)
         {
             int remainTime = (int)(startTimer - (PhotonNetwork.ServerTimestamp - loadTime) / 1000f) + 1;
-            infoText.text = $"All Player Loaded, Start count down : {remainTime}";
+            infoText.text = $"Start Count Down : {remainTime}";
             yield return new WaitForEndOfFrame();
         }
         Debug.Log("Game Start!");
@@ -177,7 +177,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
         GameStart();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         infoText.text = "";
     }
 
