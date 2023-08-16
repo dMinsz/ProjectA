@@ -59,13 +59,10 @@ public class PlayerEntry : MonoBehaviour
 
     public void SelectCharacter(string selectCharacterName)
     {
-        GameManager.Data.GetCharacter(selectCharacterName);
+        GameManager.Data.ChangeCharacter(selectCharacterName);
 
         if (player == PhotonNetwork.LocalPlayer)
-        {
             curCharacter = GameManager.Data.CurCharacter;
-           
-        }
 
         characterName.text = GameManager.Data.CurCharacter.name;
         characterImage.sprite = GameManager.Data.CurCharacter.Image;
