@@ -18,6 +18,8 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] PlayerEntry playerEntryPrefab;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
+    [SerializeField] Image StartImage;
+    [SerializeField] Image allPlayerReadyImage;
 
     private DataManager dataManager;
     private int blueTeamCount;
@@ -172,6 +174,8 @@ public class RoomPanel : MonoBehaviour
 
     public void StartGame()
     {
+        Debug.Log("ASDFASDFASDFSADFASDFASDFASD");
+
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
@@ -196,23 +200,28 @@ public class RoomPanel : MonoBehaviour
 
     private void AllPlayerReadyCheck()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            startButton.gameObject.SetActive(false);
-            return;
-        }
-
         int readyCount = 0;
-        foreach (Player player in PhotonNetwork.PlayerList)
+        foreach (Player player in PhotonNetwork.PlayerList)     // ready 갯수 체크
         {
             if (player.GetReady())
                 readyCount++;
         }
 
-        if (readyCount == PhotonNetwork.PlayerList.Length && StartCheck())
-            startButton.gameObject.SetActive(true);
-        else
-            startButton.gameObject.SetActive(false);
+        if (readyCount == PhotonNetwork.PlayerList.Length && StartCheck())  // ready 갯수가 maxPlayer 수와 같다면
+        {
+            if (PhotonNetwork.IsMasterClient)                              // 마스터 클라이언트가 아니면 Start(false)
+            {
+                allPlayerReadyImage.gameObject.SetActive(false);
+                startButton.gameObject.SetActive(true);
+                StartImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                allPlayerReadyImage.gameObject.SetActive(true);
+                startButton.gameObject.SetActive(false);
+                StartImage.gameObject.SetActive(false);
+            }
+        }
     }
 
     private bool StartCheck()
