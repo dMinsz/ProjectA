@@ -18,6 +18,7 @@ public class RoomPanel : MonoBehaviour
     [SerializeField] PlayerEntry playerEntryPrefab;
     [SerializeField] TMP_Text gameTypeText;
     [SerializeField] Button startButton;
+    [SerializeField] Image StartImage;
     [SerializeField] Image allPlayerReadyImage;
 
     private DataManager dataManager;
@@ -173,6 +174,8 @@ public class RoomPanel : MonoBehaviour
 
     public void StartGame()
     {
+        Debug.Log("ASDFASDFASDFSADFASDFASDFASD");
+
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
@@ -210,11 +213,13 @@ public class RoomPanel : MonoBehaviour
             {
                 allPlayerReadyImage.gameObject.SetActive(false);
                 startButton.gameObject.SetActive(true);
+                StartImage.gameObject.SetActive(true);
             }
             else
             {
                 allPlayerReadyImage.gameObject.SetActive(true);
                 startButton.gameObject.SetActive(false);
+                StartImage.gameObject.SetActive(false);
             }
         }
     }
