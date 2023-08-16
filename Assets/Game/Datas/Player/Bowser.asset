@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 795bd8193f3553941843aac05baba149, type: 3}
+  m_Name: Bowser
+  m_EditorClassIdentifier: 
+  characterName: Bowser
+  Image: {fileID: -218850195, guid: c5832afac1794a6479ec5e09a07f8d54, type: 3}
+  avatar: {fileID: 9000000, guid: 87f26da7a5983ca4c9c1e4e3634a6a10, type: 3}
+  animator: {fileID: 9100000, guid: a4ef3a481603e924487dbdde4e405ea4, type: 2}
+  skillEffect: {fileID: 11400000, guid: 44a9d90c7a7119844a0e9a74a355c91b, type: 2}
+  hasFemaleVoice: 0
+  modeling: {fileID: 8675947133054151271, guid: 84ce4268326b8f449b2a87eabc6c6d2c,
+    type: 3}
+  stat: {fileID: 11400000, guid: cab10ac2c571acf43b416ce8efa72879, type: 2}
+  primarySkill: {fileID: 11400000, guid: d673fc6407873cf4ca2fa782a1b3cb85, type: 2}
+  secondarySkill: {fileID: 11400000, guid: b465fe4de9b506b4d8abbb4813e96b8a, type: 2}
+  specialSkill: {fileID: 11400000, guid: 74963673851f31348941000e3c603037, type: 2}

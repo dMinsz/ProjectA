@@ -1605,6 +1605,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5454343045551250798, guid: aa9d17700908b5447a6fa3a3caddfd0b,
+        type: 3}
+      propertyPath: m_text
+      value: PeachFarmer
+      objectReference: {fileID: 0}
     - target: {fileID: 5454343045741798320, guid: aa9d17700908b5447a6fa3a3caddfd0b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1640,6 +1645,12 @@ PrefabInstance:
       propertyPath: Lm
       value: 
       objectReference: {fileID: 1615726873}
+    - target: {fileID: 5454343046678678283, guid: aa9d17700908b5447a6fa3a3caddfd0b,
+        type: 3}
+      propertyPath: playerEntryPrefab
+      value: 
+      objectReference: {fileID: 3731023699572381743, guid: e6e87caa82c916447b533b2eb2185a63,
+        type: 3}
     - target: {fileID: 5454343046678678283, guid: aa9d17700908b5447a6fa3a3caddfd0b,
         type: 3}
       propertyPath: redTeamCharacterSpot.Array.data[0]
@@ -1759,6 +1770,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 9017923185064265347, guid: aa9d17700908b5447a6fa3a3caddfd0b,
+        type: 3}
+      propertyPath: m_text
+      value: CityMan
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa9d17700908b5447a6fa3a3caddfd0b, type: 3}
