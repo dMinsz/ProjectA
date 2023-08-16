@@ -113,7 +113,7 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                 canSkillPrimary = false;
                 isSkillingPrimary = true;
 
-                ApplyDamage(damage , 0 , aim.mousepos,PhotonNetwork.LocalPlayer.NickName);
+                ApplyDamage(damage , 0 , aim.mousepos, PhotonNetwork.LocalPlayer.GetCharacterName());
 
                 isQDubleClick = false;
 
@@ -165,7 +165,7 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                 nAnim.SendPlayAnimationEvent(photonView.ViewID, "Secondary", "Trigger");
                 canSkillSecondary = false;
                 isSkillingSecondary = true;
-                ApplyDamage(damage,1, aim.mousepos, PhotonNetwork.LocalPlayer.NickName);
+                ApplyDamage(damage,1, aim.mousepos, PhotonNetwork.LocalPlayer.GetCharacterName());
 
                 isEDubleClick = false;
 
@@ -214,7 +214,7 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                 nAnim.SendPlayAnimationEvent(photonView.ViewID, "Special", "Trigger");
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
-                ApplyDamage(damage,2, aim.mousepos, PhotonNetwork.LocalPlayer.NickName);
+                ApplyDamage(damage,2, aim.mousepos, PhotonNetwork.LocalPlayer.GetCharacterName());
 
                 isRDubleClick = false;
 
@@ -329,12 +329,12 @@ public class PlayerSkillAttacker : MonoBehaviourPun
         canSkillSpecial = true;
     }
 
-    public void ApplyDamage(int damage , int skillnum , Vector3 mousepos,string nick)
+    public void ApplyDamage(int damage , int skillnum , Vector3 mousepos,string CharacterName)
     {
         OnSkillStart?.Invoke();
 
 
-        GetComponent<DrawSkillEffect>().EffectStart(skillnum,mousepos,nick);
+        GetComponent<DrawSkillEffect>().EffectStart(skillnum,mousepos, CharacterName);
 
         if (skill == null)
             return;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.TextCore.Text;
 
 public class DrawSkillEffect : MonoBehaviourPun
 {
@@ -63,26 +64,36 @@ public class DrawSkillEffect : MonoBehaviourPun
     //{
     //    skillAttacker.OnSkillStart -= EffectStart;
     //}
-    public void EffectStart(int skillnum, Vector3 mousePos,string nick) // 0 == primary, 1 == secondory, 2 == special skill
+    public void EffectStart(int skillnum, Vector3 mousePos,string CharacterName) // 0 == primary, 1 == secondory, 2 == special skill
     {
         //object[] skilldata = new object[] { skill.skillName };
-        photonView.RPC("RequestEffectStart", RpcTarget.AllViaServer, skillnum, mousePos,nick);
+        photonView.RPC("RequestEffectStart", RpcTarget.AllViaServer, skillnum, mousePos, CharacterName);
     }
 
     [PunRPC]
-    private void RequestEffectStart(int skillnum, Vector3 mousePos, string nick)
+    private void RequestEffectStart(int skillnum, Vector3 mousePos, string CharacterName)
     {
-        var skill = GameManager.Data.CurCharacter.primarySkill;
+        Skill skill;
+        Character character;
+        if (CharacterName == "None")
+        {//forDebug
+            character = GameManager.Data.GetCharacter("Mario");
+        }
+        else 
+        {
+            character = GameManager.Data.GetCharacter(CharacterName);
+        }
+        skill = character.primarySkill;
         switch (skillnum)
         {
             case 0:
-                skill = GameManager.Data.CurCharacter.primarySkill;
+                skill = character.primarySkill;
                 break;
             case 1:
-                skill = GameManager.Data.CurCharacter.secondarySkill;
+                skill = character.secondarySkill;
                 break;
             case 2:
-                skill = GameManager.Data.CurCharacter.specialSkill;
+                skill = character.specialSkill;
                 break;
             default:
                 break;
@@ -103,7 +114,7 @@ public class DrawSkillEffect : MonoBehaviourPun
 
 
             //GameManager.Data.CurCharacter.skillEffect.effectPrefab
-            GameObject instance = Instantiate(GameManager.Data.GetCharacter(nick).skillEffect.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
+            GameObject instance = Instantiate(character.skillEffect.effectPrefab, transform.position, effectRotation * Quaternion.Euler(0f, angle, 0f));
 
             effects.Add(instance);
         }
