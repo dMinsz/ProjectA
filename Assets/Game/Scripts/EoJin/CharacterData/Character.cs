@@ -11,7 +11,7 @@ public class Character : ScriptableObject
     [SerializeField] public RuntimeAnimatorController animator;
     [SerializeField] public Effect skillEffect;
     [SerializeField] public bool hasFemaleVoice;
-
+    [SerializeField] public GameObject modeling;//For Looby
     [SerializeField] public Stat stat;
     [SerializeField] public Skill primarySkill; //마우스 우클릭
     [SerializeField] public Skill secondarySkill; //스페이스바
