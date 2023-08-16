@@ -436,7 +436,8 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                     if(voice.isPlaying==false)
                         voice.Play();
 
-                    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration , damage);
+                    if (PhotonNetwork.LocalPlayer.GetTeamColor() != collider.gameObject.GetComponent<PlayerSetup>().playerTeam)
+                        collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration , damage);
                 }
             }
         }
