@@ -14,7 +14,14 @@ public class cameraname : BaseUI
     {
         base.Awake();
         playername = texts["Playername"];
-        playername.text = nickname;
+        //if (GameManager.Data.CurCharacter == null)
+        //{
+        //    playername.text = "Debug";
+        //}
+        //else 
+        //{
+        //    playername.text = GameManager.Data.CurCharacter.characterName;
+        //}
     }
     
     private void LateUpdate()
@@ -23,7 +30,7 @@ public class cameraname : BaseUI
         Vector3 screenPos = Camera.main.WorldToScreenPoint(playerTransform.position + Vector3.up * 2);
 
         //½ºÅ©¸° ÁÂÇ¥·Î ´õÇÏ°í
-        screenPos += Vector3.up * 75;
+        screenPos += Vector3.up * offset;
 
         //´Ù½Ã ½ºÅ©¸°»óÀÇ ÁÂÇ¥¸¦ ¿ùµå ÁÂÇ¥·Î ¿Å±è
         transform.position = Camera.main.ScreenToWorldPoint(screenPos);

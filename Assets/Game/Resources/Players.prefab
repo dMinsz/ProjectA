@@ -2954,6 +2954,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 619857384131742003, guid: 71732a3f94838f14888aff6fa158807a,
         type: 3}
+      propertyPath: offset
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 619857384131742003, guid: 71732a3f94838f14888aff6fa158807a,
+        type: 3}
       propertyPath: hpbarcolor
       value: 
       objectReference: {fileID: 8294996097517248627}
@@ -2982,6 +2987,11 @@ PrefabInstance:
       propertyPath: teamcolor.r
       value: 0.4453504
       objectReference: {fileID: 0}
+    - target: {fileID: 619857384131742003, guid: 71732a3f94838f14888aff6fa158807a,
+        type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 4606126446141403842}
     - target: {fileID: 619857384529680167, guid: 71732a3f94838f14888aff6fa158807a,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3040,12 +3050,17 @@ PrefabInstance:
     - target: {fileID: 2744620300284729288, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2744620300284729291, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
         type: 3}
       propertyPath: m_text
       value: Mario
+      objectReference: {fileID: 0}
+    - target: {fileID: 2744620300284729291, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2744620300863622008, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
         type: 3}
@@ -3164,6 +3179,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2744620300863622011, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
         type: 3}
+      propertyPath: offset
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2744620300863622011, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
+        type: 3}
       propertyPath: nickname
       value: Mario
       objectReference: {fileID: 0}
@@ -3172,6 +3192,11 @@ PrefabInstance:
       propertyPath: playername
       value: 
       objectReference: {fileID: 6742253262388725704}
+    - target: {fileID: 2744620300863622011, guid: c6f462e93b7d6c64e9f1cfb46277ee06,
+        type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 4606126446141403842}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6f462e93b7d6c64e9f1cfb46277ee06, type: 3}
 --- !u!114 &6742253262388725704 stripped

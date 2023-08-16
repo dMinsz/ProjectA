@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ public class playercontroll : MonoBehaviour
     public PlayerSkillAttacker dashskill;
 
     public Vector3 dashdir;
+
+    Coroutine mainRoutine;
 
     private void Awake()
     {
@@ -123,7 +126,7 @@ public class playercontroll : MonoBehaviour
 
         if (dashDistanceSquare < dashskill.range * dashskill.range)    //스킬 범위 안에 있을때 움직이게
         {
-            StartCoroutine(PlayerSkillRangeDash(playerat.mousepos, 0.05f));
+            mainRoutine = StartCoroutine(PlayerSkillRangeDash(playerat.mousepos, 0.05f));
 
         }
         else                    //스킬범위 바깥일때
@@ -134,7 +137,7 @@ public class playercontroll : MonoBehaviour
             Vector3 dir = new Vector3(x, 0, z).normalized;
             Vector3 destination = transform.position;
             destination += new Vector3(dir.x * dashskill.range, 0, dir.z * dashskill.range);
-            StartCoroutine(PlayerSkillRangeDash(destination, 1f));
+            mainRoutine = StartCoroutine(PlayerSkillRangeDash(destination, 1f));
         }
     }
 
@@ -156,6 +159,17 @@ public class playercontroll : MonoBehaviour
             playerdashing = false;
         }
         playerdashing = false;
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Blocker"))
+        {
+            playerdashing = false;
+            StopCoroutine(mainRoutine);
+        }
+        
     }
 
 }
