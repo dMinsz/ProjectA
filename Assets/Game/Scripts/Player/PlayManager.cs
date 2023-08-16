@@ -144,7 +144,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
             //pPlayerList.Add(player);
 
             //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, CharacterName };
-            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
+            photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, CharacterName);
         }
         else
         {
@@ -162,7 +162,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
             //pPlayerList.Add(player);
 
             //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID , CharacterName };
-            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
+            photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, CharacterName);
         }
 
         scoreChecker.StartTimer();
@@ -184,7 +184,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         MakeBlocker();
 
         // Time Syncronize by Sever Time
-        int loadTime = PhotonNetwork.CurrentRoom.GetLoadTime();
+        int loadTime = PhotonNetwork.CurrentRoom.GetLoadTime() + 3;
 
         while (startTimer > (PhotonNetwork.ServerTimestamp - loadTime) / 1000f)
         {
@@ -192,13 +192,13 @@ public class PlayManager : MonoBehaviourPunCallbacks
             infoText.text = $"Start Count Down : {remainTime}";
             yield return new WaitForEndOfFrame();
         }
-        Debug.Log("Game Start!");
-        infoText.text = "Game Start!";
-
 
         GameStart();
 
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Game Start!");
+        infoText.text = "Game Start!";
+
+        yield return new WaitForSeconds(1f);
         infoText.text = "";
     }
 
