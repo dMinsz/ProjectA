@@ -13,14 +13,18 @@ public class LoginPanel : MonoBehaviour
     [SerializeField] LobbyManager Lm;
     [SerializeField] Camera loginPanelCamera;
     [SerializeField] GameObject loginMap;
-    [SerializeField] 
 
     private void OnEnable()
     {
-        loginPanelCamera.enabled = true;
+        loginPanelCamera.gameObject.SetActive(true);
         loginMap.SetActive(true);
         idInputField.text = "";
         PWInputField.text = "";
+    }
+
+    private void OnDisable()
+    {
+        loginPanelCamera.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -74,7 +78,6 @@ public class LoginPanel : MonoBehaviour
                         if (!DB.reader.IsClosed)
                             DB.reader.Close();
 
-                        loginPanelCamera.enabled = false;
                         loginMap.SetActive(false);
                         return;
                     }

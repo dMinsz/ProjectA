@@ -122,7 +122,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
     private void DebugGameStart()
     {
-        var CharacterName = "Mario";
+        var CharacterName = "Bowser";
 
         if (PhotonNetwork.LocalPlayer.GetPlayerNumber() == 0)
         {

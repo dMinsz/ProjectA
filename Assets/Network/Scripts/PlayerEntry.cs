@@ -96,7 +96,5 @@ public class PlayerEntry : MonoBehaviour
             string character = (string)characterValue;
             SelectCharacter(character);
         }
-        else
-            Debug.Log("UpdateProperty Error");
     }
 }
