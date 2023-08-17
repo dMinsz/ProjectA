@@ -42,6 +42,9 @@ public class RoomPanel : MonoBehaviour
 
     private void OnEnable()
     {
+        PlayerEntry entry = Instantiate(playerEntryPrefab);                     // CustomPropertyUpdate에서 사용하기 위해 임의의 위치에 생성
+        playerDictionary.Add(PhotonNetwork.LocalPlayer.ActorNumber, entry);
+
         if (PhotonNetwork.CurrentRoom.GetBlueTeamsCount() > PhotonNetwork.CurrentRoom.GetRedTeamsCount())
             PhotonNetwork.LocalPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
 
@@ -88,9 +91,8 @@ public class RoomPanel : MonoBehaviour
 
     public void PlayerEnterRoom(Player newPlayer)
     {
-        if (PhotonNetwork.CurrentRoom.GetBlueTeamsCount() > PhotonNetwork.CurrentRoom.GetRedTeamsCount())
-            newPlayer.SetTeamColor((int)PlayerEntry.TeamColor.Red);
-
+        PlayerEntry entry = Instantiate(playerEntryPrefab);                     // CustomPropertyUpdate에서 사용하기 위해 임의의 위치에 생성
+        playerDictionary.Add(newPlayer.ActorNumber, entry);
         AllPlayerReadyCheck();
         StartCoroutine(EnterRoomRoutine());
     }
@@ -102,8 +104,6 @@ public class RoomPanel : MonoBehaviour
         else
             redTeamPlayerDic.Remove(otherPlayer);
 
-        Destroy(playerDictionary[otherPlayer.ActorNumber].gameObject);
-        playerDictionary.Remove(otherPlayer.ActorNumber);
         AllPlayerReadyCheck();
         RenewalPlayerEntry();
     }

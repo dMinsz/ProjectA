@@ -42,7 +42,7 @@ public class MenuPanel : MonoBehaviour
     public void JoinRandomMathingFailed()   // 인원 수 지정을 위해 분리구현, OnJoinRandomFailed in LobbyManager 에서 실행
     {
         string name = $"Room {Random.Range(1000, 10000)}";
-        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayerCount };  // 팀 변경, 새로 만들면 이전 팀으로 설정되는거 수정 필요
+        RoomOptions options = new RoomOptions { MaxPlayers = maxPlayerCount };
         PhotonNetwork.CreateRoom(name, options);
     }
 
