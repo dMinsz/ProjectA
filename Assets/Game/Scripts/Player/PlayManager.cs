@@ -256,6 +256,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         {
             if (player.GetComponent<playercontroll>().mainRoutine != null) // dash Remove
             {
+                player.GetComponent<playercontroll>().playerdashing = false;
                 StopCoroutine(player.GetComponent<playercontroll>().mainRoutine);
             }
 
