@@ -13,7 +13,6 @@ public class LoginPanel : MonoBehaviour
     [SerializeField] LobbyManager Lm;
     [SerializeField] Camera loginPanelCamera;
     [SerializeField] GameObject loginMap;
-    [SerializeField] 
 
     private void OnEnable()
     {
@@ -21,6 +20,11 @@ public class LoginPanel : MonoBehaviour
         loginMap.SetActive(true);
         idInputField.text = "";
         PWInputField.text = "";
+    }
+
+    private void OnDisable()
+    {
+        loginPanelCamera.enabled = false;
     }
 
     private void Start()
