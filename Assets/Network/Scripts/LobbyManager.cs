@@ -14,6 +14,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] SignUpPanel signUpPanel;
     [SerializeField] MenuPanel menuPanel;
     [SerializeField] RoomPanel roomPanel;
+    [SerializeField] Camera loginPanelCamera;
 
     private LobbySoundSelector musicSelector;
 
@@ -82,6 +83,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         musicSelector.ResetMusic();
+        loginPanelCamera.gameObject.SetActive(false);
         SetActivePanel(Panel.Menu);
     }
 

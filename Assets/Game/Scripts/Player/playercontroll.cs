@@ -32,7 +32,7 @@ public class playercontroll : MonoBehaviourPun
 
     public Vector3 dashdir;
 
-    Coroutine mainRoutine;
+    public Coroutine mainRoutine;
 
     private NetWorkedAnimation nAnim;
 
@@ -132,7 +132,7 @@ public class playercontroll : MonoBehaviourPun
 
         if (dashDistanceSquare < dashskill.range * dashskill.range)    //스킬 범위 안에 있을때 움직이게
         {
-            mainRoutine = StartCoroutine(PlayerSkillRangeDash(playerat.mousepos, 0.05f));
+            mainRoutine = StartCoroutine(PlayerSkillRangeDash(playerat.mousepos,1f));
 
         }
         else                    //스킬범위 바깥일때

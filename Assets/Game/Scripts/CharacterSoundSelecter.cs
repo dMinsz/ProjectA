@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,13 +13,15 @@ public class CharacterSoundSelecter : MonoBehaviour
     {
         mainAudio = GetComponent<AudioSource>();
 
-        if (GameManager.Data.CurCharacter == null)
+        if (PhotonNetwork.LocalPlayer.GetCharacterName() == "None")
         {//for debug mode
             mainAudio.clip = voices[1];
         }
         else 
         {
-            if (GameManager.Data.CurCharacter.hasFemaleVoice == true) // women voice
+
+            
+            if (GameManager.Data.GetCharacter(PhotonNetwork.LocalPlayer.GetCharacterName()).hasFemaleVoice == true) // women voice
             {
                 mainAudio.clip = voices[0];
             }

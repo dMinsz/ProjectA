@@ -84,10 +84,10 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, blueTeamPlayerNameList[num], PhotonNetwork.LocalPlayer.GetCharacterName());
 
 
-                pPlayerList.Add(player);
+                //pPlayerList.Add(player);
 
                 //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName() };
-                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
+                photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
                 //blueTeamChecker[num] = false;
             }
         }
@@ -109,10 +109,10 @@ public class PlayManager : MonoBehaviourPunCallbacks
                 player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, redTeamPlayerNameList[num], PhotonNetwork.LocalPlayer.GetCharacterName());
 
 
-                pPlayerList.Add(player);
+                //pPlayerList.Add(player);
 
                 //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName() };
-                photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
+                photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, PhotonNetwork.LocalPlayer.GetCharacterName());
                 //redTeamChecker[num] = false;
             }
         }
@@ -137,14 +137,14 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
             player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Blue, "Debug1", CharacterName);
 
-            GameManager.Data.ChangeCharacter(CharacterName);
+            //GameManager.Data.ChangeCharacter(CharacterName);
 
             
 
-            pPlayerList.Add(player);
+            //pPlayerList.Add(player);
 
             //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID, CharacterName };
-            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
+            photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, CharacterName);
         }
         else
         {
@@ -158,11 +158,11 @@ public class PlayManager : MonoBehaviourPunCallbacks
             skillUI.SetUp(player.GetComponent<PlayerSkillAttacker>(), GameManager.Data.GetCharacter(CharacterName));
 
             player.GetComponent<PlayerSetup>().SentSetUp(PlayerEntry.TeamColor.Red, "Debug2", CharacterName);
-            GameManager.Data.ChangeCharacter(CharacterName);
-            pPlayerList.Add(player);
+            //GameManager.Data.ChangeCharacter(CharacterName);
+            //pPlayerList.Add(player);
 
             //object[] playerData = new object[] { player.GetComponent<PhotonView>().ViewID , CharacterName };
-            photonView.RPC("AddPlayer", RpcTarget.OthersBuffered, player.GetComponent<PhotonView>().ViewID, CharacterName);
+            photonView.RPC("AddPlayer", RpcTarget.AllViaServer, player.GetComponent<PhotonView>().ViewID, CharacterName);
         }
 
         scoreChecker.StartTimer();
@@ -184,7 +184,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
         MakeBlocker();
 
         // Time Syncronize by Sever Time
-        int loadTime = PhotonNetwork.CurrentRoom.GetLoadTime();
+        int loadTime = PhotonNetwork.CurrentRoom.GetLoadTime() + 3;
 
         while (startTimer > (PhotonNetwork.ServerTimestamp - loadTime) / 1000f)
         {
@@ -192,13 +192,13 @@ public class PlayManager : MonoBehaviourPunCallbacks
             infoText.text = $"Start Count Down : {remainTime}";
             yield return new WaitForEndOfFrame();
         }
-        Debug.Log("Game Start!");
-        infoText.text = "Game Start!";
-
 
         GameStart();
 
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Game Start!");
+        infoText.text = "Game Start!";
+
+        yield return new WaitForSeconds(1.5f);
         infoText.text = "";
     }
 
@@ -254,6 +254,11 @@ public class PlayManager : MonoBehaviourPunCallbacks
     {
         foreach (var player in pPlayerList)
         {
+            if (player.GetComponent<playercontroll>().mainRoutine != null) // dash Remove
+            {
+                StopCoroutine(player.GetComponent<playercontroll>().mainRoutine);
+            }
+
             player.GetComponent<PlayerDelayCompensation>().SetSyncronize(false);
 
             player.transform.position = player.GetComponent<PlayerSetup>().originPos;
@@ -294,6 +299,7 @@ public class PlayManager : MonoBehaviourPunCallbacks
 
         player.GetComponent<Animator>().runtimeAnimatorController = GameManager.Data.GetCharacter(name).runtimeAnimator;
         player.GetComponent<Animator>().avatar = GameManager.Data.GetCharacter(name).avatar;
+        
 
         pPlayerList.Add(player);
     }

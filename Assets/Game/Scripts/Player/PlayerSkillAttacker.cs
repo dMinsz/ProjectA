@@ -112,7 +112,8 @@ public class PlayerSkillAttacker : MonoBehaviourPun
 
                 canSkillPrimary = false;
                 isSkillingPrimary = true;
-                ApplyDamage(damage , 0 , aim.mousepos);
+
+                ApplyDamage(damage , 0 , aim.mousepos, PhotonNetwork.LocalPlayer.GetCharacterName());
 
                 isQDubleClick = false;
 
@@ -164,7 +165,7 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                 nAnim.SendPlayAnimationEvent(photonView.ViewID, "Secondary", "Trigger");
                 canSkillSecondary = false;
                 isSkillingSecondary = true;
-                ApplyDamage(damage,1, aim.mousepos);
+                ApplyDamage(damage,1, aim.mousepos, PhotonNetwork.LocalPlayer.GetCharacterName());
 
                 isEDubleClick = false;
 
@@ -213,7 +214,7 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                 nAnim.SendPlayAnimationEvent(photonView.ViewID, "Special", "Trigger");
                 canSkillSpecial = false;
                 isSkillingSpecial = true;
-                ApplyDamage(damage,2, aim.mousepos);
+                ApplyDamage(damage,2, aim.mousepos, PhotonNetwork.LocalPlayer.GetCharacterName());
 
                 isRDubleClick = false;
 
@@ -328,12 +329,12 @@ public class PlayerSkillAttacker : MonoBehaviourPun
         canSkillSpecial = true;
     }
 
-    public void ApplyDamage(int damage , int skillnum , Vector3 mousepos)
+    public void ApplyDamage(int damage , int skillnum , Vector3 mousepos,string CharacterName)
     {
         OnSkillStart?.Invoke();
 
 
-        GetComponent<DrawSkillEffect>().EffectStart(skillnum,mousepos);
+        GetComponent<DrawSkillEffect>().EffectStart(skillnum,mousepos, CharacterName);
 
         if (skill == null)
             return;
@@ -404,7 +405,6 @@ public class PlayerSkillAttacker : MonoBehaviourPun
 
     private void DetectObjectsCollider(Collider[] colliders , int damage)
     {
-        
         foreach (Collider collider in colliders)
         {
             Vector3 playerNMouse = (aim.mousepos - transform.position).normalized;
@@ -435,12 +435,13 @@ public class PlayerSkillAttacker : MonoBehaviourPun
                     if(voice.isPlaying==false)
                         voice.Play();
 
-                    collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration , damage);
+                    var test = PhotonNetwork.LocalPlayer.GetTeamColor();
+                    if (GetComponent<PlayerSetup>().playerTeam != collider.gameObject.GetComponent<PlayerSetup>().playerTeam)
+                        collider.gameObject.GetComponent<PlayerGetDamage>().GetDamaged(this.gameObject, skill.duration , damage);
                 }
             }
         }
         
-
     }
 
     [PunRPC]

@@ -22,5 +22,5 @@ MonoBehaviour:
   additionalRange: 2
   isDash: 1
   duration: 0
-  coolTime: 2
+  coolTime: 3
   damage: 10
