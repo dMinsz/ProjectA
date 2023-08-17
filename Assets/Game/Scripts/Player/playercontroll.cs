@@ -147,6 +147,8 @@ public class playercontroll : MonoBehaviourPun
             Vector3 dir = new Vector3(x, 0, z).normalized;
             Vector3 destination = transform.position;
             destination += new Vector3(dir.x * dashskill.range, 0, dir.z * dashskill.range);
+
+           
             mainRoutine = StartCoroutine(PlayerSkillRangeDash(destination, 1f));
         }
     }
@@ -163,7 +165,7 @@ public class playercontroll : MonoBehaviourPun
             Vector3 dashdirspeed = new Vector3(xspeed, 0, zspeed).normalized * dashspeed;
 
             var temp = transform.position + dashdirspeed;
-
+            yield return new WaitForFixedUpdate();
             if (WallCheck(temp) == false)
             {
                 transform.position += dashdirspeed;
@@ -196,7 +198,7 @@ public class playercontroll : MonoBehaviourPun
     }
     private bool WallCheck(Vector3 pos)
     {
-        if (Physics.SphereCast(pos, (coll.bounds.extents.x + 0.1f), playerrb.velocity.normalized, out RaycastHit hit, playerrb.velocity.magnitude * Time.fixedDeltaTime, layerMask))
+        if (Physics.SphereCast(pos, 0.5f, playerrb.velocity.normalized, out RaycastHit hit, playerrb.velocity.magnitude * Time.fixedDeltaTime, layerMask))
         {
             return true;
         }
