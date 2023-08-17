@@ -16,7 +16,7 @@ public class LoginPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        loginPanelCamera.enabled = true;
+        loginPanelCamera.gameObject.SetActive(true);
         loginMap.SetActive(true);
         idInputField.text = "";
         PWInputField.text = "";
@@ -24,7 +24,7 @@ public class LoginPanel : MonoBehaviour
 
     private void OnDisable()
     {
-        loginPanelCamera.enabled = false;
+        loginPanelCamera.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -78,7 +78,6 @@ public class LoginPanel : MonoBehaviour
                         if (!DB.reader.IsClosed)
                             DB.reader.Close();
 
-                        loginPanelCamera.enabled = false;
                         loginMap.SetActive(false);
                         return;
                     }
