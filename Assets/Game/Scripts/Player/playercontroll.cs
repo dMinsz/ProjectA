@@ -8,10 +8,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem;
+using static SoundManager;
 
 public class playercontroll : MonoBehaviourPun
 {
 
+    public LayerMask layerMask;
+    private Collider coll;
     //플레이어 무브 관련
     private Rigidbody playerrb;
     private Vector3 movedir;
@@ -38,6 +41,7 @@ public class playercontroll : MonoBehaviourPun
 
     private void Awake()
     {
+        coll = GetComponent<Collider>();
         playerrb = GetComponent<Rigidbody>();
         //anim = GetComponent<Animator>();
         nAnim = GetComponent<NetWorkedAnimation>();
@@ -157,7 +161,17 @@ public class playercontroll : MonoBehaviourPun
             float xspeed = destination.x - transform.position.x;
             float zspeed = destination.z - transform.position.z;
             Vector3 dashdirspeed = new Vector3(xspeed, 0, zspeed).normalized * dashspeed;
-            transform.position += dashdirspeed;
+
+            var temp = transform.position + dashdirspeed;
+
+            if (WallCheck(temp) == false)
+            {
+                transform.position += dashdirspeed;
+            }
+            else 
+            {
+                break;
+            }
             yield return null;
         }
         if (distance < 1f)
@@ -179,6 +193,14 @@ public class playercontroll : MonoBehaviourPun
             }
         }
         
+    }
+    private bool WallCheck(Vector3 pos)
+    {
+        if (Physics.SphereCast(pos, (coll.bounds.extents.x + 0.1f), playerrb.velocity.normalized, out RaycastHit hit, playerrb.velocity.magnitude * Time.fixedDeltaTime, layerMask))
+        {
+            return true;
+        }
+        return false;
     }
 
     [PunRPC]
